@@ -194,6 +194,8 @@ class MotorAnaliticoDuckDB:
 
         serie: list[dict[str, Any]] = []
         cruzou_abaixo_encontrado = False
+        prev_prov: Decimal | None = None
+        prev_ap: Decimal | None = None
 
         for r in rows:
             dt = r[0]
@@ -201,11 +203,20 @@ class MotorAnaliticoDuckDB:
             t_prov = Decimal(str(r[2]))
             saldo = Decimal(str(round(r[3], 2)))
 
-            # Ponto exato onde provisão cruza abaixo da taxa de AP
+            # Ponto exato onde provisão cruza abaixo da taxa de AP (transição de Prov >= AP)
             marcador_cruzamento = False
-            if not cruzou_abaixo_encontrado and t_prov < t_ap:
+            if (
+                not cruzou_abaixo_encontrado
+                and prev_prov is not None
+                and prev_ap is not None
+                and prev_prov >= prev_ap
+                and t_prov < t_ap
+            ):
                 marcador_cruzamento = True
                 cruzou_abaixo_encontrado = True
+
+            prev_prov = t_prov
+            prev_ap = t_ap
 
             serie.append(
                 {
@@ -255,10 +266,10 @@ class MotorAnaliticoDuckDB:
     def calcular_decomposicao_ap(self, data_base: date) -> dict[str, Any]:
         """Calcula a quebra da origem do Ativo Problemático na data-base.
 
-        Categorias:
+        Categorias canônicas da Resolução CMN nº 4.966:
         1. Atraso Prolongado (> 90 dias)
         2. Renegociação por Estresse Financeiro (Forbearance)
-        3. Deterioração de Rating e Alertas Preventivos (SICR / Rating 10)
+        3. Deterioração de Rating (nível 10) e Indício Objetivo de Perda / Insolvência
 
         Args:
             data_base: Competência contábil de apuração.
@@ -273,7 +284,7 @@ class MotorAnaliticoDuckDB:
                 THEN saldo_devedor_contabil ELSE 0 END) AS renegociacao,
             SUM(CASE WHEN dias_atraso <= 90 AND indicador_renegociacao = 0 AND
                 indicador_ativo_problematico = 1
-                THEN saldo_devedor_contabil ELSE 0 END) AS outros_sicr,
+                THEN saldo_devedor_contabil ELSE 0 END) AS outros_insolvencia,
             SUM(CASE WHEN indicador_ativo_problematico = 1
                 THEN saldo_devedor_contabil ELSE 0 END) AS total_ap
         FROM f_Carteira_Mensal
@@ -282,9 +293,15 @@ class MotorAnaliticoDuckDB:
         res = self.con.execute(sql, [data_base]).fetchone()
         if not res:
             return {
-                "over90": Decimal("0.00"),
-                "renegociacao": Decimal("0.00"),
-                "outros": Decimal("0.00"),
+                "total_ativo_problematico": Decimal("0.00"),
+                "saldo_over90": Decimal("0.00"),
+                "percentual_over90": Decimal("0.00"),
+                "saldo_renegociacao": Decimal("0.00"),
+                "percentual_renegociacao": Decimal("0.00"),
+                "saldo_deterioracao_insolvencia": Decimal("0.00"),
+                "percentual_deterioracao_insolvencia": Decimal("0.00"),
+                "saldo_outros_preventivos": Decimal("0.00"),
+                "percentual_outros_preventivos": Decimal("0.00"),
             }
 
         over90 = Decimal(str(round(res[0] or 0.0, 2)))
@@ -308,6 +325,9 @@ class MotorAnaliticoDuckDB:
             "percentual_over90": p_over90,
             "saldo_renegociacao": reneg,
             "percentual_renegociacao": p_reneg,
+            "saldo_deterioracao_insolvencia": outros,
+            "percentual_deterioracao_insolvencia": p_outros,
+            # Chaves legadas preservadas para retrocompatibilidade
             "saldo_outros_preventivos": outros,
             "percentual_outros_preventivos": p_outros,
         }
@@ -317,6 +337,8 @@ class MotorAnaliticoDuckDB:
 
         Equação regulatória canônica:
         Despesa líquida de provisão acumulada em 12 meses dividida pela carteira média do período.
+        Para os meses iniciais (<12 meses), a despesa acumulada é anualizada pela
+        quantidade de meses apurados.
 
         Returns:
             Lista com os fechamentos contábeis mensais e os indicadores de CoR 12M.
@@ -334,14 +356,21 @@ class MotorAnaliticoDuckDB:
                 AVG(saldo_carteira_total) OVER (
                     ORDER BY data_fechamento
                     ROWS BETWEEN 11 PRECEDING AND CURRENT ROW
-                ) AS media_carteira_12m
+                ) AS media_carteira_12m,
+                COUNT(*) OVER (
+                    ORDER BY data_fechamento
+                    ROWS BETWEEN 11 PRECEDING AND CURRENT ROW
+                ) AS qtd_meses
             FROM f_DRE_Gerencial
         )
         SELECT
             data_fechamento,
             ROUND(despesa_pdd_12m, 2) AS despesa_pdd_12m,
             ROUND(media_carteira_12m, 2) AS media_carteira_12m,
-            ROUND((despesa_pdd_12m / NULLIF(media_carteira_12m, 0)) * 100, 2) AS percentual_cor_12m
+            ROUND(
+                ((despesa_pdd_12m * 12.0 / qtd_meses) / NULLIF(media_carteira_12m, 0)) * 100,
+                2
+            ) AS percentual_cor_12m
         FROM dre_acumulado
         ORDER BY data_fechamento;
         """

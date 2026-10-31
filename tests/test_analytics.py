@@ -81,6 +81,65 @@ def test_motor_analitico_cor_12m_janela_movel() -> None:
     assert ultimo_cor["despesa_pdd_12m"] > Decimal("0.00")
     assert ultimo_cor["media_carteira_12m"] > Decimal("0.00")
     assert ultimo_cor["percentual_cor_12m"] > Decimal("0.00")
+    # Meses iniciais (<12 meses) devem ter taxa anualizada calculada proporcionalmente
+    primeiro_cor = cor_lista[0]
+    assert primeiro_cor["percentual_cor_12m"] > Decimal("0.00")
+
+
+def test_motor_analitico_cruzamento_transicao_real() -> None:
+    """Verifica que o alerta de cruzamento só dispara em transição real Prov < AP (não no mês 0)."""
+    gen = SyntheticDataGenerator(seed=42)
+    base = gen.gerar_base_completa()
+
+    motor = MotorAnaliticoDuckDB()
+    motor.carregar_dados(
+        calendario=base["d_Calendario"],
+        associados=base["d_Associado"],
+        linhas=base["d_LinhaCredito"],
+        carteira=base["f_Carteira_Mensal"],
+        dre=base["f_DRE_Gerencial"],
+    )
+
+    serie = motor.calcular_serie_historica_mensal()
+    # No primeiro mês, a cooperativa não deve disparar cruzamento espúrio
+    assert not serie[0]["cruzamento_alerta"]
+    assert serie[0]["gap_cobertura"] >= Decimal("0.00")
+
+    # Deve existir exatamente 1 ponto de inflexão de cruzamento ao longo da série histórica
+    pontos_cruzamento = [s for s in serie if s["cruzamento_alerta"]]
+    assert len(pontos_cruzamento) == 1
+    pt = pontos_cruzamento[0]
+    assert pt["taxa_provisao"] < pt["taxa_ap"]
+
+
+def test_motor_analitico_decomposicao_ap_terminologia_4966() -> None:
+    """Verifica se a decomposição do AP adota a terminologia estrita da Res. 4.966."""
+    gen = SyntheticDataGenerator(seed=42)
+    base = gen.gerar_base_completa()
+
+    motor = MotorAnaliticoDuckDB()
+    motor.carregar_dados(
+        calendario=base["d_Calendario"],
+        associados=base["d_Associado"],
+        linhas=base["d_LinhaCredito"],
+        carteira=base["f_Carteira_Mensal"],
+        dre=base["f_DRE_Gerencial"],
+    )
+
+    data_base = base["d_Calendario"][-1].data
+    dec = motor.calcular_decomposicao_ap(data_base)
+
+    assert "saldo_over90" in dec
+    assert "saldo_renegociacao" in dec
+    assert "saldo_deterioracao_insolvencia" in dec
+    assert "percentual_deterioracao_insolvencia" in dec
+    assert "saldo_outros_preventivos" in dec  # retrocompatibilidade
+    soma_fatias = (
+        dec["saldo_over90"]
+        + dec["saldo_renegociacao"]
+        + dec["saldo_deterioracao_insolvencia"]
+    )
+    assert soma_fatias == dec["total_ativo_problematico"]
 
 
 def test_exportar_dashboard_data(tmp_path: Path) -> None:
