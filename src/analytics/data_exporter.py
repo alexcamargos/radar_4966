@@ -10,6 +10,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
+import src.config as cfg
 from src.analytics.metrics import MotorAnaliticoDuckDB
 from src.ingestion.ifdata_client import IFDataClient
 from src.ingestion.ref_client import REFClient
@@ -136,7 +137,17 @@ def exportar_dashboard_data(
         "ativo_problematico_atual": kpis_fechamento["saldo_ativo_problematico"],
     }
 
-    # 10. Consolidação final
+    # 10. Perfil Institucional e Calibração Regional
+    perfil_inst: dict[str, Any] = {}
+    perfil_path = cfg.REFERENCES_DIR / "credijequitinhonha_calibration_profile.json"
+    if perfil_path.exists():
+        try:
+            with open(perfil_path, encoding="utf-8") as pf:
+                perfil_inst = json.load(pf)
+        except Exception:
+            perfil_inst = {}
+
+    # 11. Consolidação final
     dataset_final: dict[str, Any] = {
         "metadata": {
             "projeto": "Radar 4966 - Inteligência de Risco e Capital",
@@ -157,6 +168,7 @@ def exportar_dashboard_data(
                 "5 anos pré-vigência (2020 a 2024) até a última data-base disponível (06/2026)"
             ),
         },
+        "perfil_institucional": perfil_inst,
         "kpis_topo": kpis_fechamento,
         "serie_temporal_mensal": serie_mensal,
         "benchmarking_ifdata": [d.model_dump() for d in dados_ifdata],
