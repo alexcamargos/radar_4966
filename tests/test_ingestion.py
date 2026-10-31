@@ -1,13 +1,13 @@
-"""Testes unitários e de integração para o pipeline de ingestão e geração sintética.
+"""Testes unitários automatizados para o módulo de ingestão e geração sintética.
 
-Verifica a determinística do gerador (seed=42), conciliação matemática estrita com DRE,
-presença de cenários limítrofes da Resolução CMN 4.966 e robustez dos clientes Bacen.
+Valida os conectores do Banco Central (IF.data e REF), o gerador determinístico,
+a integridade das dimensões, a presença dos casos limítrofes normativos da Res. 4.966
+e a conciliação contábil exata centavo a centavo com a DRE.
 """
 
 from datetime import date
 from decimal import Decimal
 
-import pytest
 from pytest_mock import MockerFixture
 
 from src.ingestion.ifdata_client import IFDataClient
@@ -16,124 +16,188 @@ from src.ingestion.synthetic_generator import SyntheticDataGenerator
 from src.schemas.facts import SegmentoIFDataEnum, SegmentoREFEnum
 
 
-def test_synthetic_generator_calendario_24_meses() -> None:
-    """Verifica geração correta de 24 competências mensais entre 2024 e 2025."""
-    generator = SyntheticDataGenerator(seed=42)
-    cal = generator.gerar_dim_calendario(ano_inicio=2024, anos_duracao=2)
-    assert len(cal) == 24
-    assert cal[0].mes_ano == "Jan/2024"
-    assert cal[-1].mes_ano == "Dez/2025"
-    assert cal[0].trimestre == "1T"
-    assert cal[-1].trimestre == "4T"
-
-
-def test_synthetic_generator_reprodutibilidade_deterministica() -> None:
-    """Garante que a mesma semente gere exatamente os mesmos saldos e dados."""
-    gen1 = SyntheticDataGenerator(seed=42)
-    base1 = gen1.gerar_base_completa()
-
-    gen2 = SyntheticDataGenerator(seed=42)
-    base2 = gen2.gerar_base_completa()
-
-    assert len(base1["f_Carteira_Mensal"]) == len(base2["f_Carteira_Mensal"])
-    contrato1 = base1["f_Carteira_Mensal"][0]
-    contrato2 = base2["f_Carteira_Mensal"][0]
-    assert contrato1.saldo_devedor_contabil == contrato2.saldo_devedor_contabil
-    assert contrato1.saldo_provisao_constituida == contrato2.saldo_provisao_constituida
-
-
-def test_synthetic_generator_conciliacao_estrita_carteira_dre() -> None:
-    """Certifica a conciliação exata ao centavo entre a carteira e o balancete DRE."""
-    generator = SyntheticDataGenerator(seed=42)
-    base = generator.gerar_base_completa()
-
-    carteira = base["f_Carteira_Mensal"]
-    dre_lista = base["f_DRE_Gerencial"]
-
-    mapa_dre = {d.data_fechamento: d.saldo_carteira_total for d in dre_lista}
-
-    saldos_por_data: dict[date, Decimal] = {}
-    for c in carteira:
-        saldos_por_data[c.data_fechamento] = (
-            saldos_por_data.get(c.data_fechamento, Decimal("0.00")) + c.saldo_devedor_contabil
-        )
-
-    for data_fechamento, soma_saldo in saldos_por_data.items():
-        assert data_fechamento in mapa_dre
-        # Conciliação estrita auditável ao centavo
-        assert soma_saldo == mapa_dre[data_fechamento]
-
-
-def test_synthetic_generator_casos_limitrofes_presentes() -> None:
-    """Assegura a presença mandatória de casos limítrofes regulatórios na carteira."""
-    generator = SyntheticDataGenerator(seed=42)
-    base = generator.gerar_base_completa()
-    carteira = base["f_Carteira_Mensal"]
-
-    # Caso 1: Atraso de 35 dias (Estágio 2 / SICR)
-    c_35 = [c for c in carteira if c.dias_atraso == 35 and c.estagio_contabil == 2]
-    assert len(c_35) >= 24
-
-    # Caso 2: Renegociação com 0 dias de atraso (Estágio 3 / AP)
-    c_reneg = [
-        c
-        for c in carteira
-        if c.indicador_renegociacao == 1 and c.dias_atraso == 0 and c.estagio_contabil == 3
-    ]
-    assert len(c_reneg) >= 24
-    assert all(c.indicador_ativo_problematico == 1 for c in c_reneg)
-
-    # Caso 3: Atraso de 95 dias (Estágio 3 e Over90)
-    c_over90 = [
-        c for c in carteira if c.dias_atraso == 95 and c.saldo_vencido_over90 > Decimal("0.00")
-    ]
-    assert len(c_over90) >= 24
-    assert all(c.estagio_contabil == 3 for c in c_over90)
-    assert all(c.indicador_ativo_problematico == 1 for c in c_over90)
-
-
-def test_ifdata_client_fallback_padrao() -> None:
-    """Testa consulta ao IF.data via contingência offline segura."""
-    client = IFDataClient(timeout=2.0)
-    dados = client.obter_dados_ifdata(use_fallback=True)
+def test_ifdata_client_obter_dados_trimestrais_fallback() -> None:
+    """Verifica que o IFDataClient retorna a série histórica de fallback completa."""
+    cliente = IFDataClient()
+    dados = cliente.obter_dados_trimestrais()
 
     assert len(dados) == 24  # 8 trimestres x 3 segmentos
-    segmentos = {d.segmento_analise for d in dados}
+    segmentos = {item.segmento_analise for item in dados}
     assert SegmentoIFDataEnum.COOPERATIVAS_SINGULARES in segmentos
     assert SegmentoIFDataEnum.SNCC_CONSOLIDADO in segmentos
     assert SegmentoIFDataEnum.SFN_TOTAL in segmentos
 
-
-def test_ifdata_client_filtro_trimestre() -> None:
-    """Verifica filtro por trimestre específico no cliente IF.data."""
-    client = IFDataClient()
-    alvo = date(2025, 9, 30)
-    dados = client.obter_dados_ifdata(data_trimestre=alvo)
-
-    assert len(dados) == 3
-    assert all(d.data_trimestre == alvo for d in dados)
+    # Validação de tipos decimais
+    for item in dados:
+        assert isinstance(item.carteira_total_bacen, Decimal)
+        assert item.carteira_total_bacen > Decimal("0.00")
+        assert item.percentual_ap_ifdata > Decimal("0.00")
 
 
-def test_ref_client_fallback_padrao() -> None:
-    """Testa consulta ao REF Bacen via contingência offline segura."""
-    client = REFClient(timeout=2.0)
-    dados = client.obter_dados_ref(use_fallback=True)
+def test_ifdata_client_filtro_data() -> None:
+    """Verifica que o filtro por data_trimestre restringe a consulta ao trimestre informado."""
+    cliente = IFDataClient()
+    data_filtro = date(2025, 9, 30)
+    dados = cliente.obter_dados_trimestrais(data_trimestre=data_filtro)
 
-    assert len(dados) == 8  # 4 semestres x 2 segmentos
-    segmentos = {d.segmento for d in dados}
+    assert len(dados) == 3  # 3 segmentos do mesmo trimestre
+    for item in dados:
+        assert item.data_trimestre == data_filtro
+
+
+def test_ifdata_client_com_mock_http(mocker: MockerFixture) -> None:
+    """Verifica que falhas de rede no IFDataClient acionam o fallback sem lançar exceção.
+
+    Args:
+        mocker: Fixture nativa do pytest-mock.
+    """
+    mocker.patch(
+        "src.ingestion.ifdata_client.IFDataClient._requisitar_api_remota",
+        side_effect=ConnectionError("Bacen timeout simulado"),
+    )
+    cliente = IFDataClient()
+    dados = cliente.obter_dados_trimestrais()
+    assert len(dados) == 24
+
+
+def test_ref_client_obter_dados_semestrais_fallback() -> None:
+    """Verifica que o REFClient retorna indicadores macroprudenciais de referência."""
+    cliente = REFClient()
+    dados = cliente.obter_dados_semestrais()
+
+    assert len(dados) == 8  # 4 semestres x 2 segmentos (SNCC e SFN)
+    segmentos = {item.segmento for item in dados}
     assert SegmentoREFEnum.SNCC in segmentos
     assert SegmentoREFEnum.SFN in segmentos
 
+    for item in dados:
+        assert item.indice_cobertura_perda_esperada > Decimal("0.90")
+        assert item.taxa_perda_esperada_estimada > Decimal("0.00")
 
-def test_ifdata_client_erro_sem_fallback(mocker: MockerFixture) -> None:
-    """Verifica levantamento de erro quando fallback é desligado e API falha.
+
+def test_ref_client_filtro_data() -> None:
+    """Verifica filtro por data_semestre no cliente REF."""
+    cliente = REFClient()
+    data_filtro = date(2025, 6, 30)
+    dados = cliente.obter_dados_semestrais(data_semestre=data_filtro)
+
+    assert len(dados) == 2  # SNCC e SFN
+    for item in dados:
+        assert item.data_semestre == data_filtro
+
+
+def test_ref_client_com_mock_http(mocker: MockerFixture) -> None:
+    """Verifica resiliência do REFClient com simulação de erro de transporte HTTP.
 
     Args:
-        mocker: Fixture do pytest-mock para interceptação de requisições.
+        mocker: Fixture nativa do pytest-mock.
     """
-    client = IFDataClient()
-    mocker.patch.object(client, "_consultar_api_online", side_effect=Exception("Timeout no Bacen"))
+    mocker.patch(
+        "src.ingestion.ref_client.REFClient._requisitar_api_remota",
+        side_effect=TimeoutError("Erro de comunicação com o Bacen"),
+    )
+    cliente = REFClient()
+    dados = cliente.obter_dados_semestrais()
+    assert len(dados) == 8
 
-    with pytest.raises(RuntimeError) as exc_info:
-        client.obter_dados_ifdata(use_fallback=False)
-    assert "Erro ao consultar IF.data" in str(exc_info.value)
+
+def test_synthetic_generator_calendario_24m() -> None:
+    """Valida a geração de 24 competências na dimensão calendário."""
+    gerador = SyntheticDataGenerator(seed=42)
+    cal = gerador.gerar_calendario_24m()
+
+    assert len(cal) == 24
+    assert cal[0].data == date(2024, 1, 31)
+    assert cal[-1].data == date(2025, 12, 31)
+    assert cal[0].mes_ano == "Jan/2024"
+    assert cal[-1].mes_ano == "Dez/2025"
+
+
+def test_synthetic_generator_dimensoes() -> None:
+    """Valida a consistência das dimensões de associados e linhas de crédito."""
+    gerador = SyntheticDataGenerator(seed=42)
+    linhas = gerador.gerar_linhas_credito()
+    associados = gerador.gerar_associados(quantidade=50)
+
+    assert len(linhas) >= 7
+    assert len(associados) == 50
+    for assoc in associados:
+        assert 1 <= assoc.rating_interno_comportamental <= 10
+
+
+def test_synthetic_generator_dataset_completo_conciliacao() -> None:
+    """Audita a conciliação matemática estrita centavo a centavo entre Carteira e DRE."""
+    gerador = SyntheticDataGenerator(seed=42)
+    dataset = gerador.gerar_dataset_completo()
+
+    assert len(dataset.calendario) == 24
+    assert len(dataset.dre_gerencial) == 24
+    assert len(dataset.carteira_mensal) > 0
+
+    # Agrupa por competência e audita a igualdade contábil
+    competencias = {cal.data for cal in dataset.calendario}
+    assert len(competencias) == 24
+
+    for comp in competencias:
+        contratos_mes = [c for c in dataset.carteira_mensal if c.data_fechamento == comp]
+        dre_mes = next((d for d in dataset.dre_gerencial if d.data_fechamento == comp), None)
+
+        assert dre_mes is not None, f"DRE não encontrada para a competência {comp}"
+
+        soma_saldo_carteira = sum(
+            (c.saldo_devedor_contabil for c in contratos_mes), Decimal("0.00")
+        )
+        msg_erro = (
+            f"Divergência contábil em {comp}: {soma_saldo_carteira} != "
+            f"{dre_mes.saldo_carteira_total}"
+        )
+        assert soma_saldo_carteira == dre_mes.saldo_carteira_total, msg_erro
+
+
+def test_synthetic_generator_casos_limitrofes_obrigatorios() -> None:
+    """Assegura a presença dos 3 casos limítrofes normativos da Resolução CMN 4.966."""
+    gerador = SyntheticDataGenerator(seed=42)
+    dataset = gerador.gerar_dataset_completo()
+
+    # Competência para validação
+    comp_teste = date(2025, 12, 31)
+    contratos_mes = [c for c in dataset.carteira_mensal if c.data_fechamento == comp_teste]
+
+    # Caso 1: Atraso de 35 dias com rebaixamento de rating -> Estágio 2 (SICR)
+    c1 = next((c for c in contratos_mes if c.id_contrato == 1), None)
+    assert c1 is not None
+    assert c1.dias_atraso == 35
+    assert c1.estagio_contabil == 2
+    assert c1.indicador_ativo_problematico == 0
+
+    # Caso 2: Operação renegociada com 0 dias de atraso -> Estágio 3 / AP (forbearance)
+    c2 = next((c for c in contratos_mes if c.id_contrato == 2), None)
+    assert c2 is not None
+    assert c2.dias_atraso == 0
+    assert c2.indicador_renegociacao == 1
+    assert c2.estagio_contabil == 3
+    assert c2.indicador_ativo_problematico == 1
+
+    # Caso 3: Operação com 95 dias de atraso -> Estágio 3 e Over90
+    c3 = next((c for c in contratos_mes if c.id_contrato == 3), None)
+    assert c3 is not None
+    assert c3.dias_atraso == 95
+    assert c3.saldo_vencido_over90 > Decimal("0.00")
+    assert c3.estagio_contabil == 3
+    assert c3.indicador_ativo_problematico == 1
+
+
+def test_synthetic_generator_reprodutibilidade() -> None:
+    """Verifica que o gerador é estritamente determinístico quando utiliza a mesma semente."""
+    gen1 = SyntheticDataGenerator(seed=42)
+    gen2 = SyntheticDataGenerator(seed=42)
+
+    ds1 = gen1.gerar_dataset_completo()
+    ds2 = gen2.gerar_dataset_completo()
+
+    assert len(ds1.carteira_mensal) == len(ds2.carteira_mensal)
+    assert ds1.dre_gerencial[0].saldo_carteira_total == ds2.dre_gerencial[0].saldo_carteira_total
+    assert (
+        ds1.carteira_mensal[0].saldo_devedor_contabil
+        == ds2.carteira_mensal[0].saldo_devedor_contabil
+    )
