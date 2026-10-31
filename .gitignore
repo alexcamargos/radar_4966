@@ -14,11 +14,18 @@ wheels/
 .coverage
 htmlcov/
 
-# Dados brutos, processados e bancos locais
-/data/
+# Dados brutos, processados e bancos locais (CCDS v2)
+data/*
+!data/**/.gitkeep
+!data/external/
+!data/external/**
 *.duckdb
 *.duckdb.wal
 *.parquet
+
+# Ambiente volátil de exploração e scratch
+scratch/
+!scratch/.gitkeep
 
 # Variáveis de ambiente e credenciais
 .env
