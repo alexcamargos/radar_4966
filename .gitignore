@@ -19,14 +19,9 @@ data/**
 !data/
 !data/**/
 !data/**/.gitkeep
-!data/external/**
 *.duckdb
 *.duckdb.wal
 *.parquet
-
-# Ambiente volátil de exploração e scratch
-scratch/
-!scratch/.gitkeep
 
 # Variáveis de ambiente e credenciais
 .env

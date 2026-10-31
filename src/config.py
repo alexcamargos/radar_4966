@@ -1,8 +1,8 @@
 """Configuração centralizada de caminhos, governança e parâmetros do projeto.
 
-Define a topologia de diretórios conforme o padrão Cookiecutter Data Science (CCDS v2)
-e estabelece referências absolutas para os diretórios das camadas de dados (Medallion:
-Raw, Interim, Processed e External), modelos, notebooks, relatórios e referências.
+Define a organização física dos dados em camadas (Medallion: Raw, Interim e Processed)
+conforme os princípios do Cookiecutter Data Science (CCDS v2), mantendo estritamente
+os diretórios ativos e necessários para o ciclo de vida analítico do projeto.
 """
 
 from datetime import date
@@ -27,16 +27,9 @@ PROCESSED_MARTS_DIR: Path = PROCESSED_DATA_DIR / "marts"
 PROCESSED_DUCKDB_PATH: Path = PROCESSED_DATA_DIR / "radar_4966.duckdb"
 PROCESSED_DASHBOARD_DATA_PATH: Path = PROCESSED_DATA_DIR / "dashboard_data.json"
 
-EXTERNAL_DATA_DIR: Path = DATA_DIR / "external"
-
-# Diretórios canônicos complementares do CCDS
-MODELS_DIR: Path = PROJECT_ROOT / "models"
-NOTEBOOKS_DIR: Path = PROJECT_ROOT / "notebooks"
+# Referências normativas e documentação
 REFERENCES_DIR: Path = PROJECT_ROOT / "references"
-REPORTS_DIR: Path = PROJECT_ROOT / "reports"
-REPORTS_FIGURES_DIR: Path = REPORTS_DIR / "figures"
 DOCS_DIR: Path = PROJECT_ROOT / "docs"
-SCRATCH_DIR: Path = PROJECT_ROOT / "scratch"
 
 # Diretório do dashboard nativo web
 DASHBOARD_DIR: Path = PROJECT_ROOT / "src" / "dashboard"
@@ -49,11 +42,11 @@ DATA_MARCO_4966: date = date(2025, 1, 1)
 
 
 def garantir_diretorios() -> list[Path]:
-    """Cria fisicamente toda a topologia canônica de diretórios do projeto caso não existam.
+    """Cria fisicamente os diretórios ativos necessários para o ciclo de dados do projeto.
 
-    Garante que os diretórios das três camadas de dados (raw, interim, processed, external),
-    bem como as pastas de modelos, notebooks, referências, relatórios e scratch estejam
-    disponíveis no sistema de arquivos.
+    Assegura que as pastas das três camadas de dados (raw, interim, processed),
+    o diretório de referências normativas e o destino dos dados do dashboard
+    estejam criados no sistema de arquivos.
 
     Returns:
         Lista com todos os objetos Path dos diretórios assegurados no sistema.
@@ -71,14 +64,8 @@ def garantir_diretorios() -> list[Path]:
         INTERIM_DATA_DIR,
         PROCESSED_DATA_DIR,
         PROCESSED_MARTS_DIR,
-        EXTERNAL_DATA_DIR,
-        MODELS_DIR,
-        NOTEBOOKS_DIR,
         REFERENCES_DIR,
-        REPORTS_DIR,
-        REPORTS_FIGURES_DIR,
         DOCS_DIR,
-        SCRATCH_DIR,
         DASHBOARD_DATA_DIR,
     ]
 
