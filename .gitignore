@@ -15,7 +15,7 @@ wheels/
 htmlcov/
 
 # Dados brutos, processados e bancos locais
-data/
+/data/
 *.duckdb
 *.duckdb.wal
 *.parquet
