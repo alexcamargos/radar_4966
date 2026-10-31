@@ -82,67 +82,51 @@ class SyntheticDataGenerator:
         self.seed = seed
         self.rng = random.Random(seed)
 
-    def gerar_calendario_24m(self) -> list[DimCalendarioSchema]:
-        """Gera a dimensão de calendário contendo 24 competências mensais (2024 e 2025).
+    def gerar_calendario(
+        self,
+        ano_inicio: int = 2020,
+        ano_fim: int = 2026,
+        mes_fim: int = 6,
+    ) -> list[DimCalendarioSchema]:
+        """Gera a dimensão de calendário mensal para o período histórico solicitado.
+
+        Abrange por padrão desde 5 anos antes da vigência da Resolução CMN 4.966 (2020)
+        até a última data-base disponível (junho de 2026 - 78 meses).
+
+        Args:
+            ano_inicio: Primeiro ano civil da série temporal (padrão 2020).
+            ano_fim: Último ano civil da série temporal (padrão 2026).
+            mes_fim: Último mês civil do ano_fim (padrão 6, correspondente a 06/2026).
 
         Returns:
-            Lista com 24 objetos DimCalendarioSchema validados.
+            Lista de objetos DimCalendarioSchema validados.
 
         Raises:
             ValueError: Se os atributos de data ou padrão regex falharem.
         """
         meses_nomes = [
-            "Jan",
-            "Fev",
-            "Mar",
-            "Abr",
-            "Mai",
-            "Jun",
-            "Jul",
-            "Ago",
-            "Set",
-            "Out",
-            "Nov",
-            "Dez",
+            "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+            "Jul", "Ago", "Set", "Out", "Nov", "Dez",
         ]
         trimestres = [
-            "1T",
-            "1T",
-            "1T",
-            "2T",
-            "2T",
-            "2T",
-            "3T",
-            "3T",
-            "3T",
-            "4T",
-            "4T",
-            "4T",
+            "1T", "1T", "1T", "2T", "2T", "2T",
+            "3T", "3T", "3T", "4T", "4T", "4T",
         ]
 
         dias_fim_mes = {
-            1: 31,
-            2: 29,
-            3: 31,
-            4: 30,
-            5: 31,
-            6: 30,
-            7: 31,
-            8: 31,
-            9: 30,
-            10: 31,
-            11: 30,
-            12: 31,
+            1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
+            7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31,
         }
 
         registros: list[DimCalendarioSchema] = []
 
-        for ano in (2024, 2025):
-            for mes in range(1, 13):
+        for ano in range(ano_inicio, ano_fim + 1):
+            limite_mes = mes_fim if ano == ano_fim else 12
+            for mes in range(1, limite_mes + 1):
                 ultimo_dia = dias_fim_mes[mes]
-                # Ajuste para ano não bissexto em 2025
-                if ano == 2025 and mes == 2:
-                    ultimo_dia = 28
+                # Tratamento de ano bissexto (2020, 2024)
+                if mes == 2 and ((ano % 4 == 0 and ano % 100 != 0) or (ano % 400 == 0)):
+                    ultimo_dia = 29
 
                 data_fim = date(ano, mes, ultimo_dia)
                 mes_ano_str = f"{meses_nomes[mes - 1]}/{ano}"
@@ -158,6 +142,14 @@ class SyntheticDataGenerator:
                 )
 
         return registros
+
+    def gerar_calendario_24m(self) -> list[DimCalendarioSchema]:
+        """Gera a dimensão de calendário para 24 competências mensais (2024 e 2025).
+
+        Returns:
+            Lista com 24 objetos DimCalendarioSchema validados.
+        """
+        return self.gerar_calendario(ano_inicio=2024, ano_fim=2025, mes_fim=12)
 
     def gerar_linhas_credito(self) -> list[DimLinhaCreditoSchema]:
         """Gera a dimensão de produtos de crédito da cooperativa.
@@ -265,13 +257,26 @@ class SyntheticDataGenerator:
 
         return associados
 
-    def gerar_dataset_completo(self) -> DatasetSintetico:
+    def gerar_dataset_completo(
+        self,
+        ano_inicio: int = 2020,
+        ano_fim: int = 2026,
+        mes_fim: int = 6,
+    ) -> DatasetSintetico:
         """Gera o ecossistema sintético completo com conciliação contábil estrita.
+
+        Abrange desde 5 anos anteriores à vigência da Resolução 4.966 (2020 a 2024)
+        até a última data-base disponível (junho de 2026 - 78 competências mensais).
 
         Inclui os 3 casos de teste limítrofes regulatórios:
         1. Contrato 1001: 35 dias de atraso com rebaixamento (Estágio 2 / SICR);
         2. Contrato 1002: Renegociado por estresse com 0 dias de atraso (Estágio 3 / AP);
         3. Contrato 1003: 95 dias de atraso (Estágio 3 e Over90).
+
+        Args:
+            ano_inicio: Primeiro ano da série histórica (padrão 2020).
+            ano_fim: Último ano da série histórica (padrão 2026).
+            mes_fim: Mês final de encerramento (padrão 6 para 06/2026).
 
         Returns:
             Objeto DatasetSintetico contendo todas as dimensões e tabelas fato.
@@ -279,7 +284,11 @@ class SyntheticDataGenerator:
         Raises:
             ValueError: Se houver divergência de centavos na conciliação contábil.
         """
-        calendario = self.gerar_calendario_24m()
+        calendario = self.gerar_calendario(
+            ano_inicio=ano_inicio,
+            ano_fim=ano_fim,
+            mes_fim=mes_fim,
+        )
         linhas_credito = self.gerar_linhas_credito()
         associados = self.gerar_associados(quantidade=120)
 
@@ -294,30 +303,40 @@ class SyntheticDataGenerator:
             assoc = associados[(cid - 1) % len(associados)]
             linha = linhas_credito[(cid - 1) % len(linhas_credito)]
             saldo_inicial = Decimal(str(self.rng.randint(25000, 350000))) + Decimal("0.00")
+            ano_conc = 2019 + (cid % 6)
+            mes_conc = ((cid % 12) + 1)
             contratos_base.append(
                 {
                     "id_contrato": cid,
                     "id_associado": assoc.id_associado,
                     "id_linha": linha.id_linha,
-                    "data_concessao": date(2023, ((cid % 12) + 1), 10),
+                    "data_concessao": date(ano_conc, mes_conc, 10),
                     "saldo_base": saldo_inicial,
                     "rating_origem": assoc.rating_interno_comportamental,
                 }
             )
 
+        # Garante concessão prévia para os casos de testes regulatórios
+        contratos_base[0]["data_concessao"] = date(2019, 1, 10)
+        contratos_base[1]["data_concessao"] = date(2019, 2, 10)
+        contratos_base[2]["data_concessao"] = date(2019, 3, 10)
+
         # Processa cada competência temporal mensal
+        total_meses = len(calendario)
         for idx_mes, cal in enumerate(calendario):
             competencia = cal.data
             registros_mes: list[FatoCarteiraMensalSchema] = []
 
             for base in contratos_base:
                 cid = base["id_contrato"]
-                # Amortização gradual do saldo devedor
-                fator_amortizacao = Decimal("1.00") - (Decimal(str(idx_mes)) * Decimal("0.015"))
-                if fator_amortizacao < Decimal("0.30"):
-                    fator_amortizacao = Decimal("0.30")
-
-                saldo_atual = (base["saldo_base"] * fator_amortizacao).quantize(Decimal("0.01"))
+                # Amortização e rotação contínua da carteira com crescimento orgânico da cooperativa
+                fator_mes = (idx_mes % 24) * Decimal("0.012")
+                fator_crescimento = Decimal("0.75") + (
+                    Decimal(str(idx_mes)) / Decimal(str(max(1, total_meses)))
+                ) * Decimal("0.45")
+                saldo_atual = (
+                    (base["saldo_base"] * (Decimal("1.00") - fator_mes)) * fator_crescimento
+                ).quantize(Decimal("0.01"))
 
                 # Injeção determinística dos casos limítrofes obrigatórios
                 if cid == 1:
@@ -350,7 +369,7 @@ class SyntheticDataGenerator:
                 else:
                     # Contratos normais com variabilidade realista
                     sorteio = (cid + idx_mes) % 100
-                    if sorteio < 80:
+                    if sorteio < 78:
                         # Estágio 1 regular
                         dias_atraso = self.rng.choice([0, 0, 0, 5, 12, 18])
                         over90 = Decimal("0.00")
@@ -359,7 +378,7 @@ class SyntheticDataGenerator:
                         estagio = 1
                         pd = Decimal("0.0120")
                         lgd = Decimal("0.4000")
-                    elif sorteio < 93:
+                    elif sorteio < 91:
                         # Estágio 2 por atraso moderado ou rating
                         dias_atraso = 40 + (cid % 35)
                         over90 = Decimal("0.00")
@@ -445,14 +464,28 @@ class SyntheticDataGenerator:
             dre_gerencial=dre_total,
         )
 
-    def gerar_base_completa(self) -> dict[str, Any]:
+    def gerar_base_completa(
+        self,
+        ano_inicio: int = 2020,
+        ano_fim: int = 2026,
+        mes_fim: int = 6,
+    ) -> dict[str, Any]:
         """Gera a base sintética completa no formato de dicionário por tabela canônica.
+
+        Args:
+            ano_inicio: Primeiro ano civil (padrão 2020).
+            ano_fim: Último ano civil (padrão 2026).
+            mes_fim: Último mês civil (padrão 6 para 06/2026).
 
         Returns:
             Dicionário com as tabelas 'd_Calendario', 'd_Associado', 'd_LinhaCredito',
             'f_Carteira_Mensal' e 'f_DRE_Gerencial'.
         """
-        ds = self.gerar_dataset_completo()
+        ds = self.gerar_dataset_completo(
+            ano_inicio=ano_inicio,
+            ano_fim=ano_fim,
+            mes_fim=mes_fim,
+        )
         return {
             "d_Calendario": ds.calendario,
             "d_Associado": ds.associados,

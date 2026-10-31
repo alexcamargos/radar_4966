@@ -74,10 +74,19 @@ def exportar_dashboard_data(
     serie_mensal = motor.calcular_serie_historica_mensal()
     cor_12m = motor.calcular_custo_credito_movel_12m()
 
-    # Mapear CoR 12M na série temporal mensal
+    # Mapear CoR 12M e metadados regulatórios na série temporal mensal
     mapa_cor = {c["data_fechamento"]: c["percentual_cor_12m"] for c in cor_12m}
+    data_marco_4966 = date(2025, 1, 1)
     for item in serie_mensal:
-        item["percentual_cor_12m"] = mapa_cor.get(item["data_fechamento"], Decimal("0.00"))
+        dt = item["data_fechamento"]
+        item["percentual_cor_12m"] = mapa_cor.get(dt, Decimal("0.00"))
+        item["vigencia_4966"] = dt >= data_marco_4966
+        item["marco_transicao_4966"] = (dt.year == 2025 and dt.month == 1)
+        item["regime_normativo"] = (
+            "Resolução CMN nº 4.966 (Vigência Plena)"
+            if dt >= data_marco_4966
+            else "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+        )
 
     # 6. Dados de Benchmarking Bacen
     ifdata_cli = IFDataClient()
@@ -133,8 +142,13 @@ def exportar_dashboard_data(
             "projeto": "Radar 4966 - Inteligência de Risco e Capital",
             "regulacao": "Resolução CMN nº 4.966 / IFRS 9 e Resolução BCB nº 352",
             "data_geracao": date.today().isoformat(),
+            "data_inicio": calendario[0].data.isoformat(),
             "competencia_mais_recente": data_base_recente.isoformat(),
+            "marco_vigencia_4966": "2025-01-01",
             "total_competencias": len(calendario),
+            "descricao_periodo": (
+                "5 anos pré-vigência (2020 a 2024) até a última data-base disponível (06/2026)"
+            ),
         },
         "kpis_topo": kpis_fechamento,
         "serie_temporal_mensal": serie_mensal,
