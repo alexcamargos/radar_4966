@@ -14,26 +14,35 @@
     <div class="header-branding">
       <span class="brand-badge">Resolução CMN nº 4.966 / IFRS 9</span>
       <h1 class="header-title">Radar 4966 — Gestão Estratégica de Risco e Provisão</h1>
-      <p class="header-subtitle">Cooperativa de Crédito Singular | Benchmarking Oficial Bacen (IF.data &amp; REF)</p>
+      <p class="header-subtitle">Cooperativa de Crédito Singular | Série Histórica Contínua: 2020 a 06/2026 (5 Anos Pré-4.966 até Última Data-Base Bacen)</p>
     </div>
     <div class="header-meta">
-      <p>Data-Base: <strong id="meta-competencia">--/----</strong></p>
-      <p>Status: <strong style="color: var(--color-success)">Auditoria Conciliada</strong></p>
+      <p>Data-Base Mais Recente: <strong id="meta-competencia">--/----</strong></p>
+      <p>Marco 4.966: <strong style="color: var(--color-warning)">01/01/2025</strong> | Status: <strong style="color: var(--color-success)">Conciliação Auditada</strong></p>
     </div>
   </header>
 
-  <!-- Navegação por Abas Executivas -->
-  <nav class="nav-tabs" aria-label="Navegação do Dashboard">
-    <button class="tab-btn active" data-target="pane-post-executivo">
-      1. Posicionamento &amp; Benchmarking
-    </button>
-    <button class="tab-btn" data-target="pane-anatomia-risco">
-      2. Anatomia do Risco 4.966
-    </button>
-    <button class="tab-btn" data-target="pane-safras-capital">
-      3. Safras &amp; Simulador de Capital
-    </button>
-  </nav>
+  <!-- Navegação por Abas Executivas e Filtro Temporal -->
+  <div class="nav-bar-container">
+    <nav class="nav-tabs" aria-label="Navegação do Dashboard">
+      <button class="tab-btn active" data-target="pane-post-executivo">
+        1. Posicionamento &amp; Benchmarking
+      </button>
+      <button class="tab-btn" data-target="pane-anatomia-risco">
+        2. Anatomia do Risco 4.966
+      </button>
+      <button class="tab-btn" data-target="pane-safras-capital">
+        3. Safras &amp; Simulador de Capital
+      </button>
+    </nav>
+    <div class="period-filter-group" aria-label="Filtro de Período Temporal">
+      <span class="filter-label">Janela Temporal:</span>
+      <button class="filter-chip active" data-period="all">Série Completa (2020 - 2026)</button>
+      <button class="filter-chip" data-period="pre">5 Anos Pré-4.966 (2020 - 2024)</button>
+      <button class="filter-chip" data-period="post">Vigência 4.966 (2025 - 2026)</button>
+      <button class="filter-chip" data-period="12m">Últimos 12M</button>
+    </div>
+  </div>
 
   <main class="content-wrapper">
     <!-- TELA 1: Posicionamento Estratégico e Benchmarking (O Post Executivo) -->
