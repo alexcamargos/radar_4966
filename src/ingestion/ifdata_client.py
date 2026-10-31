@@ -15,6 +15,11 @@ from src.schemas.facts import FatoIFDataSNCCSchema, SegmentoIFDataEnum
 
 logger = logging.getLogger(__name__)
 
+CNPJ_CREDIJEQUITINHONHA: str = "71243034"
+NOME_INSTITUICAO_CREDIJEQUITINHONHA: str = (
+    "Cooperativa de Crédito Credijequitinhonha Ltda. - Sicoob Credijequitinhonha"
+)
+
 
 class IFDataClient:
     """Cliente para extração e consolidação de dados do IF.data do Bacen.
@@ -85,6 +90,25 @@ class IFDataClient:
             Lista de objetos FatoIFDataSNCCSchema validados.
         """
         return self.obter_dados_trimestrais(data_trimestre=data_trimestre)
+
+    def obter_dados_credijequitinhonha(
+        self,
+        data_trimestre: date | None = None,
+    ) -> list[FatoIFDataSNCCSchema]:
+        """Obtém séries históricas trimestrais específicas do Sicoob Credijequitinhonha.
+
+        Args:
+            data_trimestre: Data opcional para filtrar trimestre específico.
+
+        Returns:
+            Lista de schemas FatoIFDataSNCCSchema da cooperativa Credijequitinhonha.
+        """
+        todos = self.obter_dados_trimestrais(data_trimestre=data_trimestre)
+        return [
+            item
+            for item in todos
+            if item.segmento_analise == SegmentoIFDataEnum.SICOOB_CREDIJEQUITINHONHA
+        ]
 
     def _requisitar_api_remota(
         self,
@@ -211,6 +235,34 @@ class IFDataClient:
                     ap_over90_bacen=over90_sfn.quantize(Decimal("0.01")),
                     percentual_ap_ifdata=ap_pct_sfn.quantize(Decimal("0.0001")),
                     percentual_provisao_ifdata=prov_pct_sfn.quantize(Decimal("0.0001")),
+                )
+            )
+
+            # 4. Sicoob Credijequitinhonha (CNPJ 71.243.034/0001-55 - Capelinha/MG)
+            carteira_credi = Decimal("215000000.00") + (
+                Decimal("280000000.00") * (Decimal(str(idx)) / Decimal(str(total_trimestres)))
+            )
+            ap_pct_credi = Decimal("0.0370") + Decimal(str(min(idx, 16))) * Decimal("0.0005")
+            ap_credi = carteira_credi * ap_pct_credi
+            over90_credi = ap_credi * Decimal("0.5200")
+            vigencia_4966 = tri >= date(2025, 1, 1)
+            prov_pct_credi = (
+                Decimal("0.0415")
+                if vigencia_4966
+                else Decimal("0.0340") + Decimal(str(min(idx, 16))) * Decimal("0.00025")
+            )
+            prov_credi = carteira_credi * prov_pct_credi
+
+            registros.append(
+                FatoIFDataSNCCSchema(
+                    data_trimestre=tri,
+                    segmento_analise=SegmentoIFDataEnum.SICOOB_CREDIJEQUITINHONHA,
+                    carteira_total_bacen=carteira_credi.quantize(Decimal("0.01")),
+                    provisao_total_bacen=prov_credi.quantize(Decimal("0.01")),
+                    ativo_problematico_bacen=ap_credi.quantize(Decimal("0.01")),
+                    ap_over90_bacen=over90_credi.quantize(Decimal("0.01")),
+                    percentual_ap_ifdata=ap_pct_credi.quantize(Decimal("0.0001")),
+                    percentual_provisao_ifdata=prov_pct_credi.quantize(Decimal("0.0001")),
                 )
             )
 
