@@ -96,6 +96,12 @@ body {
   border-color: rgba(139, 92, 246, 0.25);
 }
 
+.brand-badge.highlight {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
 .header-title {
   font-size: 1.45rem;
   font-weight: 700;
@@ -155,6 +161,29 @@ body {
   background: var(--bg-card-hover);
   color: var(--text-primary);
   border-color: var(--color-primary);
+}
+
+.action-btn.accent {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+
+.action-btn.accent:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  transform: translateY(-1px);
+}
+
+.action-btn.outline {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-accent);
+}
+
+.action-btn.outline:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: #60a5fa;
 }
 
 .header-meta {
@@ -1093,12 +1122,341 @@ input[type="range"] {
 }
 
 /* ==========================================================================
+   Componentes Executivos Avançados (Benchmarking, Regional & Gauge)
+   ========================================================================== */
+
+/* Seletor de Comparadores do IF.data (Benchmarking Quádruplo) */
+.benchmark-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-card-alt);
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.benchmark-selector-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.benchmark-chips-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.benchmark-toggle-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.benchmark-toggle-chip input {
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.benchmark-toggle-chip:hover {
+  border-color: var(--color-primary);
+  color: var(--text-primary);
+}
+
+.benchmark-toggle-chip.active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--color-primary);
+  color: #93c5fd;
+}
+
+/* Painel de Concentração Econômica Regional (Capelinha / Vale do Jequitinhonha) */
+.regional-profile-card {
+  background: linear-gradient(180deg, #101c38 0%, var(--bg-card) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.regional-card-header {
+  margin-bottom: 1.25rem;
+}
+
+.inner-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-subtle);
+}
+
+.chart-title-sm {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 0.2rem;
+}
+
+.mini-stat-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.mini-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+}
+
+.mini-stat-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+}
+
+.mini-stat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.mini-stat-val {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Régua Visual de Solvência de Capital (Basileia Gauge) */
+.basileia-gauge-container {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.basileia-gauge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.gauge-status-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.gauge-status-badge.alert {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.gauge-status-badge.critical {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.basileia-gauge-track {
+  height: 22px;
+  border-radius: 11px;
+  background: #020617;
+  display: flex;
+  position: relative;
+  overflow: visible;
+  border: 1px solid var(--border-accent);
+}
+
+.gauge-zone {
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-zone.zone-critical {
+  background: linear-gradient(90deg, #7f1d1d 0%, #b91c1c 100%);
+  border-radius: 11px 0 0 11px;
+}
+
+.gauge-zone.zone-alert {
+  background: linear-gradient(90deg, #b45309 0%, #d97706 100%);
+}
+
+.gauge-zone.zone-comfortable {
+  background: linear-gradient(90deg, #047857 0%, #10b981 100%);
+  border-radius: 0 11px 11px 0;
+}
+
+.gauge-marker-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.gauge-pointer {
+  position: absolute;
+  top: -6px;
+  width: 14px;
+  height: 34px;
+  background: #ffffff;
+  border: 2px solid #0f172a;
+  border-radius: 4px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  transition: left 0.25s ease-out;
+  z-index: 5;
+}
+
+.gauge-scale-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  padding: 0 0.2rem;
+}
+
+/* Modal Amplo e Matriz C-Level */
+.modal-card.wide {
+  max-width: 1120px;
+}
+
+.role-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.role-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.role-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.role-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.role-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.role-card-header.ceo .role-badge {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.role-card-header.cro .role-badge {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.role-card-header.cfo .role-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.role-card-header.cco .role-badge {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.role-icon {
+  font-size: 1.25rem;
+}
+
+.role-headline {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+.role-actions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.role-actions-list li {
+  position: relative;
+  padding-left: 1.15rem;
+}
+
+.role-actions-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+/* ==========================================================================
    Responsividade e Impressão
    ========================================================================== */
 @media (max-width: 1024px) {
   .chart-grid-main,
   .chart-grid-dual,
-  .glossary-grid {
+  .glossary-grid,
+  .role-matrix-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -1127,30 +1485,59 @@ input[type="range"] {
 
 @media print {
   body {
-    background: #fff;
-    color: #000;
+    background: #ffffff !important;
+    color: #111827 !important;
   }
-  .header-container,
+  .header-quick-actions,
   .nav-bar-container,
-  .simulator-panel,
+  .period-filter-group,
+  .benchmark-selector-container,
+  .view-toggle-group,
+  .simulator-controls,
+  .modal-overlay,
+  .modal-close-btn,
   .modal-footer {
-    display: none;
+    display: none !important;
   }
-  .modal-overlay.active {
+  .header-container {
     position: static;
-    background: none;
+    background: none !important;
+    border-bottom: 2px solid #000;
+    padding: 1rem 0;
+  }
+  .header-title {
+    color: #000 !important;
+  }
+  .header-subtitle {
+    color: #4b5563 !important;
+  }
+  .content-wrapper {
+    max-width: 100%;
     padding: 0;
   }
-  .modal-card {
-    border: none;
-    box-shadow: none;
-    max-width: 100%;
-    color: #000;
+  .tab-pane {
+    display: block !important;
+    page-break-after: always;
   }
-  .modal-title, .briefing-item-header h4 {
-    color: #000;
+  .kpi-card, .chart-card, .regional-profile-card, .simulator-panel {
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+    color: #111827 !important;
+    page-break-inside: avoid;
   }
-  .briefing-item p, .briefing-list li {
-    color: #333;
+  .kpi-label, .chart-desc, .kpi-subtext {
+    color: #4b5563 !important;
+  }
+  .kpi-value, .chart-title, .chart-title-sm {
+    color: #111827 !important;
+  }
+  .executive-insight-box {
+    background: #f3f4f6 !important;
+    border-left: 4px solid #2563eb !important;
+    color: #111827 !important;
+  }
+  .insight-content p {
+    color: #374151 !important;
   }
 }
