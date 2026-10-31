@@ -112,9 +112,10 @@ class REFClient:
         self,
         data_semestre: date | None = None,
     ) -> list[FatoREFMacroBCBSchema]:
-        """Gera base de indicadores macroprudenciais semestrais de referência.
+        """Gera base de indicadores macroprudenciais semestrais de referência de 2020 a 06/2026.
 
-        Valores calibrados com os relatórios publicados pelo Bacen para 2024 e 2025.
+        Abrange os 5 anos anteriores à vigência da Res. 4.966 até a última data-base disponível
+        do Relatório de Estabilidade Financeira (REF) do Banco Central (13 semestres).
 
         Args:
             data_semestre: Semestre civil para filtragem específica.
@@ -125,12 +126,11 @@ class REFClient:
         Raises:
             ValueError: Se houver inconsistência na montagem dos modelos Pydantic.
         """
-        semestres = [
-            date(2024, 6, 30),
-            date(2024, 12, 31),
-            date(2025, 6, 30),
-            date(2025, 12, 31),
-        ]
+        semestres: list[date] = []
+        for ano in range(2020, 2027):
+            semestres.append(date(ano, 6, 30))
+            if ano < 2026:
+                semestres.append(date(ano, 12, 31))
 
         if data_semestre is not None:
             semestres = [s for s in semestres if s == data_semestre]
