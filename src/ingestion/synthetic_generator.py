@@ -41,6 +41,29 @@ class DatasetSintetico:
     carteira_mensal: list[FatoCarteiraMensalSchema]
     dre_gerencial: list[FatoDREGerencialSchema]
 
+    def __getitem__(self, key: str) -> Any:
+        """Permite acesso indexado por nome canônico da tabela.
+
+        Args:
+            key: Nome canônico da tabela (ex.: 'd_Calendario', 'f_Carteira_Mensal').
+
+        Returns:
+            Lista de schemas correspondentes à tabela consultada.
+
+        Raises:
+            KeyError: Se a tabela informada não existir no dataset.
+        """
+        mapa = {
+            "d_Calendario": self.calendario,
+            "d_Associado": self.associados,
+            "d_LinhaCredito": self.linhas_credito,
+            "f_Carteira_Mensal": self.carteira_mensal,
+            "f_DRE_Gerencial": self.dre_gerencial,
+        }
+        if key not in mapa:
+            raise KeyError(f"Tabela '{key}' não encontrada no DatasetSintetico.")
+        return mapa[key]
+
 
 class SyntheticDataGenerator:
     """Gerador determinístico de dados com garantia de conciliação estrita.
@@ -283,8 +306,6 @@ class SyntheticDataGenerator:
             )
 
         # Processa cada competência temporal mensal
-        saldo_pdd_acumulado_anterior = Decimal("0.00")
-
         for idx_mes, cal in enumerate(calendario):
             competencia = cal.data
             registros_mes: list[FatoCarteiraMensalSchema] = []
@@ -382,20 +403,11 @@ class SyntheticDataGenerator:
             total_carteira_mes = sum(
                 (c.saldo_devedor_contabil for c in registros_mes), Decimal("0.00")
             )
-            total_provisao_mes = sum(
-                (c.saldo_provisao_constituida for c in registros_mes), Decimal("0.00")
-            )
 
-            # Fluxo da DRE do mês
-            recuperacao = Decimal("15000.00") + Decimal(str(idx_mes * 500))
-            if idx_mes == 0:
-                despesa_pdd = total_provisao_mes
-            else:
-                var_provisao = total_provisao_mes - saldo_pdd_acumulado_anterior
-                despesa_pdd = max(Decimal("0.00"), var_provisao + recuperacao)
-
+            # Fluxo da DRE do mês aderente ao Custo de Risco (CoR anual ~3.5%)
+            despesa_pdd = (total_carteira_mes * Decimal("0.0035")).quantize(Decimal("0.01"))
+            recuperacao = (total_carteira_mes * Decimal("0.0006")).quantize(Decimal("0.01"))
             despesa_liquida = despesa_pdd - recuperacao
-            saldo_pdd_acumulado_anterior = total_provisao_mes
 
             # RWA e Patrimônio de Referência aderentes às regras de capital de cooperativas
             rwa = (total_carteira_mes * Decimal("0.75")).quantize(Decimal("0.01"))
@@ -432,3 +444,19 @@ class SyntheticDataGenerator:
             carteira_mensal=carteira_total,
             dre_gerencial=dre_total,
         )
+
+    def gerar_base_completa(self) -> dict[str, Any]:
+        """Gera a base sintética completa no formato de dicionário por tabela canônica.
+
+        Returns:
+            Dicionário com as tabelas 'd_Calendario', 'd_Associado', 'd_LinhaCredito',
+            'f_Carteira_Mensal' e 'f_DRE_Gerencial'.
+        """
+        ds = self.gerar_dataset_completo()
+        return {
+            "d_Calendario": ds.calendario,
+            "d_Associado": ds.associados,
+            "d_LinhaCredito": ds.linhas_credito,
+            "f_Carteira_Mensal": ds.carteira_mensal,
+            "f_DRE_Gerencial": ds.dre_gerencial,
+        }
