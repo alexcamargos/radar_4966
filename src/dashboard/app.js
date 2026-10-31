@@ -515,26 +515,54 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
   // Mapeamento das 4 séries do Bacen IF.data
   const ifdata = dados.benchmarking_ifdata || [];
 
-  // 1. SNCC Consolidado
+  // Função para interpolar séries trimestrais do IF.data ao longo dos 78 meses
+  const interpolarSerieTrimestral = (itemsTrimestrais, fallbackPadrao = 5.0) => {
+    if (!itemsTrimestrais || itemsTrimestrais.length === 0) {
+      return labels.map(() => fallbackPadrao);
+    }
+
+    const ordenados = [...itemsTrimestrais].sort(
+      (a, b) => new Date(a.data_trimestre).getTime() - new Date(b.data_trimestre).getTime()
+    );
+
+    return serieMensal.map((s) => {
+      const tMes = new Date(s.data_fechamento + 'T00:00:00').getTime();
+      const tPrim = new Date(ordenados[0].data_trimestre + 'T00:00:00').getTime();
+      if (tMes <= tPrim) {
+        return Number((Number(ordenados[0].percentual_ap_ifdata) * 100).toFixed(2));
+      }
+
+      const tUlt = new Date(ordenados[ordenados.length - 1].data_trimestre + 'T00:00:00').getTime();
+      if (tMes >= tUlt) {
+        return Number((Number(ordenados[ordenados.length - 1].percentual_ap_ifdata) * 100).toFixed(2));
+      }
+
+      for (let i = 0; i < ordenados.length - 1; i++) {
+        const t1 = new Date(ordenados[i].data_trimestre + 'T00:00:00').getTime();
+        const t2 = new Date(ordenados[i + 1].data_trimestre + 'T00:00:00').getTime();
+        if (tMes >= t1 && tMes <= t2) {
+          const v1 = Number(ordenados[i].percentual_ap_ifdata) * 100;
+          const v2 = Number(ordenados[i + 1].percentual_ap_ifdata) * 100;
+          const fracao = (tMes - t1) / (t2 - t1);
+          return Number((v1 + fracao * (v2 - v1)).toFixed(2));
+        }
+      }
+
+      return Number((Number(ordenados[ordenados.length - 1].percentual_ap_ifdata) * 100).toFixed(2));
+    });
+  };
+
+  // 1. SNCC Consolidado (curva histórica interpolada mês a mês)
   const ifdataSNCC = ifdata.filter((b) => b.segmento_analise === 'SNCC Consolidado');
-  const taxaMediaSNCC = ifdataSNCC.length > 0
-    ? Number(ifdataSNCC[ifdataSNCC.length - 1].percentual_ap_ifdata) * 100
-    : 5.3;
-  const serieSNCC = labels.map(() => taxaMediaSNCC);
+  const serieSNCC = interpolarSerieTrimestral(ifdataSNCC, 5.3);
 
-  // 2. Cooperativas Singulares Brasil
+  // 2. Cooperativas Singulares Brasil (curva histórica interpolada mês a mês)
   const ifdataSingulares = ifdata.filter((b) => b.segmento_analise === 'Cooperativas Singulares');
-  const taxaMediaSingulares = ifdataSingulares.length > 0
-    ? Number(ifdataSingulares[ifdataSingulares.length - 1].percentual_ap_ifdata) * 100
-    : 5.1;
-  const serieSingulares = labels.map(() => taxaMediaSingulares);
+  const serieSingulares = interpolarSerieTrimestral(ifdataSingulares, 5.1);
 
-  // 3. Sistema Financeiro Nacional (SFN Total)
+  // 3. Sistema Financeiro Nacional (SFN Total - curva histórica interpolada mês a mês)
   const ifdataSFN = ifdata.filter((b) => b.segmento_analise === 'SFN Total');
-  const taxaMediaSFN = ifdataSFN.length > 0
-    ? Number(ifdataSFN[ifdataSFN.length - 1].percentual_ap_ifdata) * 100
-    : 4.8;
-  const serieSFN = labels.map(() => taxaMediaSFN);
+  const serieSFN = interpolarSerieTrimestral(ifdataSFN, 4.8);
 
   // 4. Sicoob Credijequitinhonha Trimestral (Bacen IF.data oficial)
   const ifdataCredi = ifdata.filter((b) => b.segmento_analise === 'Sicoob Credijequitinhonha');
@@ -911,7 +939,12 @@ function renderizarDecomposicaoAP(dados) {
   }
 
   const dec = dados.decomposicao_ap;
-  const totalAP = Number(dec.saldo_over90) + Number(dec.saldo_renegociacao) + Number(dec.saldo_outros_preventivos);
+  const saldoDeterioracao = Number(
+    dec.saldo_deterioracao_insolvencia !== undefined
+      ? dec.saldo_deterioracao_insolvencia
+      : dec.saldo_outros_preventivos
+  );
+  const totalAP = Number(dec.saldo_over90) + Number(dec.saldo_renegociacao) + saldoDeterioracao;
 
   chartDecomposicao = new Chart(ctx, {
     type: 'doughnut',
@@ -919,11 +952,11 @@ function renderizarDecomposicaoAP(dados) {
       labels: [
         'Atraso Prolongado (>90d)',
         'Renegociação por Estresse (Forbearance)',
-        'Deterioração Rating / Preventivos',
+        'Deterioração de Rating (10) / Perda Objetiva',
       ],
       datasets: [
         {
-          data: [dec.saldo_over90, dec.saldo_renegociacao, dec.saldo_outros_preventivos],
+          data: [dec.saldo_over90, dec.saldo_renegociacao, saldoDeterioracao],
           backgroundColor: [CORES.vermelho, CORES.amarelo, CORES.roxo],
           borderWidth: 2,
           borderColor: '#0f172a',
