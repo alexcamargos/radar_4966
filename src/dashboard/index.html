@@ -67,67 +67,122 @@
   <main class="content-wrapper">
     <!-- TELA 1: Posicionamento Estratégico e Benchmarking (O Post Executivo) -->
     <section id="pane-post-executivo" class="tab-pane active">
-      <!-- KPI Header Cards com Contexto Executivo -->
+      <!-- KPI Header Cards com Contexto Executivo Completo (6 Cards) -->
       <div class="kpi-grid">
+        <!-- CARD 1: Carteira Classificada Total -->
+        <div class="kpi-card" title="Volume total da carteira de crédito classificada e ativa na data-base de fechamento contábil.">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Carteira Classificada</span>
+            <span class="kpi-badge info" id="kpi-carteira-tag">Ativo: R$ 881,8M</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="kpi-carteira-valor">R$ --</div>
+          </div>
+          <div class="kpi-subtext" id="kpi-carteira-sub">Saldo Contábil DRE (Fechamento)</div>
+          <div class="kpi-metrics-row">
+            <span>Ativo Total: <strong id="kpi-carteira-ativo">R$ 881,78M</strong></span>
+            <span>Média 12M: <strong id="kpi-carteira-media">R$ --</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator success"></span>
+            <span class="status-text">100% Conciliado com Balancete</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: Ativo Problemático (AP) -->
         <div class="kpi-card" title="Proporção da carteira de crédito em situação de atraso superior a 90 dias, renegociação por estresse ou Estágio 3.">
           <div class="kpi-card-header">
-            <span class="kpi-label">% Ativo Problemático (AP)</span>
-            <span class="kpi-badge warning" id="kpi-ap-tag">SNCC: 5,30%</span>
+            <span class="kpi-label">Ativo Problemático (AP)</span>
+            <span class="kpi-badge warning" id="kpi-ap-tag">SNCC: 5,68% (+8,02 p.p.)</span>
           </div>
-          <div class="kpi-value" id="kpi-ap-valor">--%</div>
-          <div class="kpi-subtext" id="kpi-ap-sub">Saldo: R$ --</div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="kpi-ap-valor">--%</div>
+          </div>
+          <div class="kpi-subtext" id="kpi-ap-sub">Saldo em Risco: R$ --</div>
+          <div class="kpi-metrics-row">
+            <span>Singulares: <strong id="kpi-ap-singulares">5,10%</strong></span>
+            <span>SFN Total: <strong id="kpi-ap-sfn">4,80%</strong></span>
+          </div>
           <div class="kpi-footer-status">
             <span class="status-indicator alert" id="kpi-ap-indicator"></span>
             <span class="status-text" id="kpi-ap-status-text">Exposição elevada vs. média setorial</span>
           </div>
         </div>
 
-        <div class="kpi-card" title="Volume total de Provisão para Perdas Esperadas (PDD) constituído no balanço patrimonial.">
+        <!-- CARD 3: Provisão Constituída (PDD) -->
+        <div class="kpi-card" title="Volume total de Provisão para Perdas Esperadas (PDD) constituído no balanço patrimonial frente à ECL calculada.">
           <div class="kpi-card-header">
-            <span class="kpi-label">% Provisão Constituída</span>
+            <span class="kpi-label">Provisão Constituída</span>
             <span class="kpi-badge danger" id="kpi-prov-tag">Gap: --%</span>
           </div>
-          <div class="kpi-value" id="kpi-prov-valor">--%</div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="kpi-prov-valor">--%</div>
+          </div>
           <div class="kpi-subtext" id="kpi-prov-sub">Estoque PDD: R$ --</div>
+          <div class="kpi-metrics-row">
+            <span>Cobertura ECL: <strong id="kpi-prov-cobertura">1,000x (Integral)</strong></span>
+            <span>Gap vs. AP: <strong id="kpi-prov-gap">-9,80 p.p.</strong></span>
+          </div>
           <div class="kpi-footer-status">
-            <span class="status-indicator danger" id="kpi-prov-indicator"></span>
-            <span class="status-text" id="kpi-prov-status-text">Descompasso frente aos ativos em risco</span>
+            <span class="status-indicator success" id="kpi-prov-indicator"></span>
+            <span class="status-text" id="kpi-prov-status-text">Conforme com a Resolução CMN 4.966</span>
           </div>
         </div>
 
+        <!-- CARD 4: Custo do Crédito (CoR 12M) -->
         <div class="kpi-card" title="Despesa líquida de provisão acumulada nos últimos 12 meses dividida pela carteira de crédito classificada média.">
           <div class="kpi-card-header">
-            <span class="kpi-label">Custo do Crédito (CoR 12M)</span>
+            <span class="kpi-label">Custo do Crédito (CoR)</span>
             <span class="kpi-badge info" id="kpi-cor-tag">Móvel 12M</span>
           </div>
-          <div class="kpi-value" id="kpi-cor-valor">--%</div>
-          <div class="kpi-subtext" id="kpi-cor-sub">Despesa Líquida 12M / Carteira</div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="kpi-cor-valor">--%</div>
+          </div>
+          <div class="kpi-subtext" id="kpi-cor-sub">Despesa PDD 12M: R$ --</div>
+          <div class="kpi-metrics-row">
+            <span>Carteira Média: <strong id="kpi-cor-media">R$ --</strong></span>
+            <span>Média SNCC: <strong>~1,80%</strong></span>
+          </div>
           <div class="kpi-footer-status">
             <span class="status-indicator info"></span>
-            <span class="status-text">Impacto direto no resultado (DRE)</span>
+            <span class="status-text">Débito acumulado na DRE do exercício</span>
           </div>
         </div>
 
-        <div class="kpi-card" title="Fração do Ativo Problemático que já atingiu estágio de inadimplência crônica superior a 90 dias.">
+        <!-- CARD 5: Inadimplência Crônica (Over90) -->
+        <div class="kpi-card" title="Créditos com atraso superior a 90 dias na carteira e sua representatividade no Ativo Problemático.">
           <div class="kpi-card-header">
-            <span class="kpi-label">% Over90 no AP</span>
-            <span class="kpi-badge warning" id="kpi-over90-tag">Maturidade</span>
+            <span class="kpi-label">Inadimplência Over90</span>
+            <span class="kpi-badge warning" id="kpi-over90-tag">91,27% do AP</span>
           </div>
-          <div class="kpi-value" id="kpi-over90-valor">--%</div>
-          <div class="kpi-subtext" id="kpi-over90-sub">Inadimplência Efetiva no AP</div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="kpi-over90-valor">--%</div>
+          </div>
+          <div class="kpi-subtext" id="kpi-over90-sub">Volume Over90: R$ --</div>
+          <div class="kpi-metrics-row">
+            <span>No AP: <strong id="kpi-over90-no-ap">91,27%</strong></span>
+            <span>Na Carteira: <strong id="kpi-over90-na-carteira">12,50%</strong></span>
+          </div>
           <div class="kpi-footer-status">
             <span class="status-indicator warning"></span>
             <span class="status-text">Prevalência de default consolidado</span>
           </div>
         </div>
 
+        <!-- CARD 6: Índice de Basileia & Solvência -->
         <div class="kpi-card" title="Relação entre o Patrimônio de Referência (PR) e os Ativos Ponderados pelo Risco (RWA). Piso Bacen: 10,50%.">
           <div class="kpi-card-header">
-            <span class="kpi-label">Índice de Basileia Atual</span>
+            <span class="kpi-label">Índice de Basileia</span>
             <span class="kpi-badge success" id="kpi-basileia-tag">Piso Bacen: 10,5%</span>
           </div>
-          <div class="kpi-value" id="kpi-basileia-valor">17,18%</div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="kpi-basileia-valor">17,18%</div>
+          </div>
           <div class="kpi-subtext" id="kpi-basileia-sub">Folga Prudencial: +6,68 p.p.</div>
+          <div class="kpi-metrics-row">
+            <span>PR: <strong id="kpi-basileia-pr">R$ 114,85M</strong></span>
+            <span>RWA: <strong id="kpi-basileia-rwa">R$ 668,40M</strong></span>
+          </div>
           <div class="kpi-footer-status">
             <span class="status-indicator success"></span>
             <span class="status-text">Solvência regulatória confortável</span>
