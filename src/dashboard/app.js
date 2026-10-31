@@ -37,6 +37,10 @@ if (window.Chart) {
   Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 }
 
+// Instâncias globais dos gráficos temporais para filtragem dinâmica
+let chartHistorico = null;
+let chartEvolucaoEstagios = null;
+
 /**
  * Ponto de entrada da aplicação frontend.
  */
@@ -92,13 +96,49 @@ function configurarNavegacaoAbas() {
  */
 function inicializarDashboard(dados) {
   preencherMetadadosEKpis(dados);
-  renderizarGraficoHistoricoAPProv(dados);
+  renderizarGraficoHistoricoAPProv(dados.serie_temporal_mensal, dados);
   renderizarReguaCobertura(dados);
-  renderizarEvolucaoEstagios(dados);
+  renderizarEvolucaoEstagios(dados.evolucao_estagios_mensal);
   renderizarDecomposicaoAP(dados);
   renderizarDispersaoLinhas(dados);
   renderizarMatrizSafras(dados);
   inicializarSimuladorCapital(dados.simulador_capital_base);
+  configurarFiltroPeriodos(dados);
+}
+
+/**
+ * Configura os botões seletores da janela temporal (Série completa, Pré-4966, Vigência, 12M).
+ * @param {Object} dados - Objeto JSON consolidado.
+ */
+function configurarFiltroPeriodos(dados) {
+  const chips = document.querySelectorAll('.filter-chip');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+
+      const periodo = chip.getAttribute('data-period');
+      let serieFiltrada = dados.serie_temporal_mensal;
+      let estagiosFiltrados = dados.evolucao_estagios_mensal;
+
+      if (periodo === 'pre') {
+        // 5 Anos Anteriores à Res. 4.966 (2020 a 2024)
+        serieFiltrada = dados.serie_temporal_mensal.filter((s) => s.data_fechamento < '2025-01-01');
+        estagiosFiltrados = dados.evolucao_estagios_mensal.filter((e) => e.data_fechamento < '2025-01-01');
+      } else if (periodo === 'post') {
+        // Vigência Plena da Res. 4.966 (2025 a 2026)
+        serieFiltrada = dados.serie_temporal_mensal.filter((s) => s.data_fechamento >= '2025-01-01');
+        estagiosFiltrados = dados.evolucao_estagios_mensal.filter((e) => e.data_fechamento >= '2025-01-01');
+      } else if (periodo === '12m') {
+        // Últimos 12 Meses
+        serieFiltrada = dados.serie_temporal_mensal.slice(-12);
+        estagiosFiltrados = dados.evolucao_estagios_mensal.slice(-12);
+      }
+
+      renderizarGraficoHistoricoAPProv(serieFiltrada, dados);
+      renderizarEvolucaoEstagios(estagiosFiltrados);
+    });
+  });
 }
 
 /**
@@ -149,28 +189,46 @@ function preencherMetadadosEKpis(dados) {
 
 /**
  * Gráfico 1: Evolução Histórica da Taxa de AP vs. Provisão vs. SNCC Bacen.
+ * @param {Array} serieMensal - Array com os meses a exibir (filtrados ou completos).
  * @param {Object} dados - Objeto JSON consolidado.
  */
-function renderizarGraficoHistoricoAPProv(dados) {
+function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
   const ctx = document.getElementById('chart-historico-ap-prov');
   if (!ctx) return;
 
-  const labels = dados.serie_temporal_mensal.map((s) => {
+  if (chartHistorico) {
+    chartHistorico.destroy();
+  }
+
+  const labels = serieMensal.map((s) => {
     const d = new Date(s.data_fechamento + 'T00:00:00');
     return d.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
   });
 
-  const serieAP = dados.serie_temporal_mensal.map((s) => s.taxa_ap);
-  const serieProv = dados.serie_temporal_mensal.map((s) => s.taxa_provisao);
+  const serieAP = serieMensal.map((s) => s.taxa_ap);
+  const serieProv = serieMensal.map((s) => s.taxa_provisao);
+
+  // Destaque de pontos: Marco de transição da 4.966 (01/2025) e Ponto de Cruzamento
+  const pointRadii = serieMensal.map((s) => {
+    if (s.marco_transicao_4966) return 6;
+    if (s.cruzamento_alerta) return 5;
+    return 2.5;
+  });
+
+  const pointColors = serieMensal.map((s) => {
+    if (s.marco_transicao_4966) return CORES.amarelo;
+    if (s.cruzamento_alerta) return CORES.vermelho;
+    return CORES.azul;
+  });
 
   // Média de AP do SNCC via IF.data
   const ifdataSNCC = dados.benchmarking_ifdata.filter(
     (b) => b.segmento_analise === 'SNCC Consolidado'
   );
-  const taxaMediaSNCC = ifdataSNCC.length > 0 ? Number(ifdataSNCC[0].percentual_ap_ifdata) * 100 : 5.3;
+  const taxaMediaSNCC = ifdataSNCC.length > 0 ? Number(ifdataSNCC[ifdataSNCC.length - 1].percentual_ap_ifdata) * 100 : 5.3;
   const serieSNCC = labels.map(() => taxaMediaSNCC);
 
-  new Chart(ctx, {
+  chartHistorico = new Chart(ctx, {
     type: 'line',
     data: {
       labels,
@@ -182,7 +240,7 @@ function renderizarGraficoHistoricoAPProv(dados) {
           backgroundColor: 'rgba(239, 68, 68, 0.1)',
           borderWidth: 2.5,
           tension: 0.25,
-          pointRadius: 3,
+          pointRadius: pointRadii,
         },
         {
           label: 'Taxa de Provisão Constituída (Singular)',
@@ -191,7 +249,8 @@ function renderizarGraficoHistoricoAPProv(dados) {
           backgroundColor: 'rgba(59, 130, 246, 0.1)',
           borderWidth: 2.5,
           tension: 0.25,
-          pointRadius: 3,
+          pointRadius: pointRadii,
+          pointBackgroundColor: pointColors,
         },
         {
           label: 'Média de AP do SNCC (IF.data Bacen)',
@@ -210,7 +269,30 @@ function renderizarGraficoHistoricoAPProv(dados) {
         legend: { position: 'top' },
         tooltip: {
           callbacks: {
+            title: (items) => {
+              const idx = items[0].dataIndex;
+              const item = serieMensal[idx];
+              const dt = new Date(item.data_fechamento + 'T00:00:00');
+              const nomeMes = dt.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+              const regime = item.regime_normativo || (item.vigencia_4966 ? 'Res. 4.966' : 'Pré-4.966');
+              return `${nomeMes} [${regime}]`;
+            },
             label: (item) => `${item.dataset.label}: ${item.parsed.y.toFixed(2)}%`,
+            afterBody: (items) => {
+              const idx = items[0].dataIndex;
+              const item = serieMensal[idx];
+              const linhas = [];
+              if (item.marco_transicao_4966) {
+                linhas.push('⭐ MARCO: Início da Vigência Plena da Resolução CMN nº 4.966 / IFRS 9');
+              }
+              if (item.cruzamento_alerta) {
+                linhas.push('⚠️ ALERTA: Provisão cruzou abaixo do Ativo Problemático');
+              }
+              if (item.percentual_cor_12m) {
+                linhas.push(`• Cost of Risk 12M: ${item.percentual_cor_12m.toFixed(2)}%`);
+              }
+              return linhas;
+            },
           },
         },
       },
@@ -278,22 +360,26 @@ function renderizarReguaCobertura(dados) {
 
 /**
  * Gráfico 3: Evolução dos Estágios 1, 2 e 3 (Resolução 4.966).
- * @param {Object} dados - Objeto JSON consolidado.
+ * @param {Array} estagiosMensal - Array com os meses a exibir (filtrados ou completos).
  */
-function renderizarEvolucaoEstagios(dados) {
+function renderizarEvolucaoEstagios(estagiosMensal) {
   const ctx = document.getElementById('chart-evolucao-estagios');
   if (!ctx) return;
 
-  const labels = dados.evolucao_estagios_mensal.map((e) => {
+  if (chartEvolucaoEstagios) {
+    chartEvolucaoEstagios.destroy();
+  }
+
+  const labels = estagiosMensal.map((e) => {
     const d = new Date(e.data_fechamento + 'T00:00:00');
     return d.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
   });
 
-  const est1 = dados.evolucao_estagios_mensal.map((e) => e.estagio_1_saldo);
-  const est2 = dados.evolucao_estagios_mensal.map((e) => e.estagio_2_saldo);
-  const est3 = dados.evolucao_estagios_mensal.map((e) => e.estagio_3_saldo);
+  const est1 = estagiosMensal.map((e) => e.estagio_1_saldo);
+  const est2 = estagiosMensal.map((e) => e.estagio_2_saldo);
+  const est3 = estagiosMensal.map((e) => e.estagio_3_saldo);
 
-  new Chart(ctx, {
+  chartEvolucaoEstagios = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
