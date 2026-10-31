@@ -70,6 +70,20 @@ class REFClient:
 
         return dados
 
+    def obter_dados_ref(
+        self,
+        data_semestre: date | None = None,
+    ) -> list[FatoREFMacroBCBSchema]:
+        """Obtém dados semestrais do REF (método de conveniência).
+
+        Args:
+            data_semestre: Filtro opcional por semestre civil.
+
+        Returns:
+            Lista de objetos FatoREFMacroBCBSchema validados.
+        """
+        return self.obter_dados_semestrais(data_semestre=data_semestre)
+
     def _requisitar_api_remota(
         self,
         data_semestre: date | None = None,

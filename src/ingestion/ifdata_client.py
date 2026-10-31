@@ -72,6 +72,20 @@ class IFDataClient:
 
         return dados
 
+    def obter_dados_ifdata(
+        self,
+        data_trimestre: date | None = None,
+    ) -> list[FatoIFDataSNCCSchema]:
+        """Obtém dados trimestrais do IF.data (método de conveniência).
+
+        Args:
+            data_trimestre: Data opcional para filtrar trimestre específico.
+
+        Returns:
+            Lista de objetos FatoIFDataSNCCSchema validados.
+        """
+        return self.obter_dados_trimestrais(data_trimestre=data_trimestre)
+
     def _requisitar_api_remota(
         self,
         data_trimestre: date | None = None,
