@@ -1,0 +1,87 @@
+[project]
+name = "radar-4966"
+version = "0.1.0"
+description = "Plataforma Executiva de Inteligência de Risco de Crédito e Dinâmica de Provisão (Resolução CMN nº 4.966 / IFRS 9 e Resolução BCB nº 352)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb>=1.0.0",
+    "httpx>=0.27.0",
+    "pandas>=2.2.0",
+    "polars>=1.0.0",
+    "pyarrow>=15.0.0",
+    "pydantic>=2.7.0",
+    "scipy>=1.12.0",
+    "statsmodels>=0.14.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.10.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+    "pytest-mock>=3.12.0",
+    "ruff>=0.4.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-ra -q --strict-markers"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # isort (agrupamento e ordenação de imports)
+    "D",    # pydocstyle (docstrings)
+    "UP",   # pyupgrade (modernização de sintaxe Python 3.12)
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "RUF",  # regras específicas do Ruff
+]
+ignore = [
+    "D100",  # docstring de módulo não obrigatória em arquivos __init__ se não houver código
+    "D104",  # docstring em pacote não obrigatória para __init__ vazio
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "analytics",
+    "dashboard",
+    "ingestion",
+    "schemas",
+    "src",
+    "staging",
+]
+
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+plugins = ["pydantic.mypy"]
+disallow_untyped_defs = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_configs = true
+no_implicit_optional = true
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["src/dashboard/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
