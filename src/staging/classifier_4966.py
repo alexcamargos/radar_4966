@@ -128,6 +128,7 @@ class MotorClassificador4966:
         carteira: list[FatoCarteiraMensalSchema],
         rating_origem_map: dict[int, int] | None = None,
         pd_origem_map: dict[int, Decimal] | None = None,
+        rating_atual_map: dict[int, int] | None = None,
     ) -> list[FatoCarteiraMensalSchema]:
         """Aplica o enquadramento em massa para uma lista de operações de carteira.
 
@@ -135,6 +136,7 @@ class MotorClassificador4966:
             carteira: Lista de contratos conforme FatoCarteiraMensalSchema.
             rating_origem_map: Dicionário mapeando id_contrato para rating de concessão.
             pd_origem_map: Dicionário mapeando id_contrato para PD de concessão.
+            rating_atual_map: Dicionário mapeando id_contrato para rating comportamental atual.
 
         Returns:
             Lista de contratos com estágio, AP e saldo de provisão reclassificados.
@@ -142,25 +144,34 @@ class MotorClassificador4966:
         resultado: list[FatoCarteiraMensalSchema] = []
         rating_map = rating_origem_map or {}
         pd_map = pd_origem_map or {}
+        r_atual_map = rating_atual_map or {}
 
         for c in carteira:
             r_origem = rating_map.get(c.id_contrato)
             p_origem = pd_map.get(c.id_contrato)
+            r_atual = r_atual_map.get(
+                c.id_contrato, 10 if c.estagio_contabil == 3 else 3
+            )
 
             estagio, ap = cls.classificar_operacao(
                 dias_atraso=c.dias_atraso,
                 indicador_renegociacao=c.indicador_renegociacao,
-                rating_comportamental_atual=10 if c.estagio_contabil == 3 else 3,
+                rating_comportamental_atual=r_atual,
                 rating_origem=r_origem,
                 pd_atual=c.probabilidade_default_pd,
                 pd_origem=p_origem,
+            )
+
+            # Para Estágio 3 (default), a probabilidade de default é 1.0000 (100%)
+            pd_calculo = (
+                Decimal("1.0000") if estagio == 3 else c.probabilidade_default_pd
             )
 
             # Provisão esperada calculada
             prov = cls.calcular_perda_esperada(
                 saldo_devedor_contabil=c.saldo_devedor_contabil,
                 estagio_contabil=estagio,
-                probabilidade_default_pd=c.probabilidade_default_pd,
+                probabilidade_default_pd=pd_calculo,
                 loss_given_default_lgd=c.loss_given_default_lgd,
             )
 
@@ -170,6 +181,7 @@ class MotorClassificador4966:
             dados_dict = c.model_dump()
             dados_dict["estagio_contabil"] = estagio
             dados_dict["indicador_ativo_problematico"] = ap
+            dados_dict["probabilidade_default_pd"] = pd_calculo
             dados_dict["saldo_provisao_constituida"] = prov
             dados_dict["saldo_vencido_over90"] = over90
 
@@ -186,6 +198,7 @@ class MotorClassificador4966:
 
         Mensura o volume concedido e a evolução da taxa de Ativo Problemático ao longo dos
         meses decorridos desde a concessão (Months on Book - MOB: 1, 3, 6, 12, 24).
+        Descarta registros inconsistentes onde a data de fechamento anteceda a concessão.
 
         Args:
             carteira: Lista de contratos da carteira ao longo do tempo.
@@ -205,13 +218,17 @@ class MotorClassificador4966:
         )
 
         for c in carteira:
+            # Salvaguarda cronológica estrita
+            if c.data_fechamento < c.data_concessao:
+                continue
+
             safra_str = f"{c.data_concessao.year:04d}-{c.data_concessao.month:02d}"
             # Cálculo de MOB: diferença em meses entre data_fechamento e data_concessao
             mob = (c.data_fechamento.year - c.data_concessao.year) * 12 + (
                 c.data_fechamento.month - c.data_concessao.month
             )
 
-            if mob in mobs:
+            if mob in mobs and mob >= 0:
                 chave = (safra_str, mob)
                 agrupado[chave]["saldo_total"] += c.saldo_devedor_contabil
                 if c.indicador_ativo_problematico == 1:
