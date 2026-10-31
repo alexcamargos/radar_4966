@@ -1,0 +1,31 @@
+# Ambientes virtuais e pacotes
+.venv/
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Caches de testes e linters
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Dados brutos, processados e bancos locais
+data/
+*.duckdb
+*.duckdb.wal
+*.parquet
+
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+*.secret
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
