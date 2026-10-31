@@ -32,3 +32,6 @@ data/**
 .vscode/
 .idea/
 *.swp
+
+# Ambiente volátil de testes e scratch
+scratch/
