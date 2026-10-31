@@ -270,6 +270,7 @@ function inicializarDashboard(dados) {
   inicializarSimuladorCapital(dados.simulador_capital_base, dados.perfil_institucional);
   configurarFiltroPeriodos(dados);
   configurarAlternadorEstagios();
+  configurarAlternadorVintages(dados);
   preencherModalBriefing(dados);
 }
 
@@ -1234,9 +1235,33 @@ function renderizarDispersaoLinhas(dados) {
 }
 
 // ============================================================================
+// ============================================================================
 // Gráfico 6: Matriz de Safras (Vintage por MOB)
 // ============================================================================
-function renderizarMatrizSafras(dados) {
+let modoVisualizacaoVintages = 'anuais';
+
+function configurarAlternadorVintages(dados) {
+  const btnAnuais = document.getElementById('btn-toggle-vintages-anuais');
+  const btnMaduras = document.getElementById('btn-toggle-vintages-maduras');
+  const btnRecentes = document.getElementById('btn-toggle-vintages-recentes');
+
+  const btns = [btnAnuais, btnMaduras, btnRecentes].filter(Boolean);
+
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetMode = btn.getAttribute('data-mode');
+      if (modoVisualizacaoVintages === targetMode) return;
+      modoVisualizacaoVintages = targetMode;
+
+      btns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      renderizarMatrizSafras(dados, modoVisualizacaoVintages);
+    });
+  });
+}
+
+function renderizarMatrizSafras(dados, modo = modoVisualizacaoVintages) {
   const ctx = document.getElementById('chart-vintages');
   if (!ctx) return;
 
@@ -1244,32 +1269,117 @@ function renderizarMatrizSafras(dados) {
     chartVintages.destroy();
   }
 
-  const vintages = dados.matriz_safras_vintages;
-  const safras = [...new Set(vintages.map((v) => v.safra))].sort();
   const mobs = [1, 3, 6, 12, 24];
+  const coresPaleta = [CORES.azul, CORES.verde, CORES.amarelo, CORES.vermelho, CORES.roxo, CORES.ciano, CORES.laranja];
 
-  const coresPaleta = [CORES.azul, CORES.verde, CORES.amarelo, CORES.vermelho, CORES.roxo];
+  let datasets = [];
 
-  const datasets = safras.slice(-5).map((safra, idx) => {
-    const dadosSafra = vintages.filter((v) => v.safra === safra);
-    const dataPoints = mobs.map((m) => {
-      const ponto = dadosSafra.find((d) => d.mob === m);
-      return ponto ? Number(ponto.taxa_ativo_problematico) * 100 : null;
+  if (modo === 'anuais') {
+    // 1. Safras Anuais Consolidadas (2021 a 2025) - Padrão Executivo C-Level
+    let vintagesAnuais = dados.matriz_safras_anuais;
+    if (!vintagesAnuais || vintagesAnuais.length === 0) {
+      const mapaAno = {};
+      (dados.matriz_safras_vintages || []).forEach((v) => {
+        const ano = v.safra.substring(0, 4);
+        if (Number(ano) >= 2020) {
+          const sNome = `Safra ${ano}`;
+          const k = `${sNome}_${v.mob}`;
+          if (!mapaAno[k]) {
+            mapaAno[k] = { safra: sNome, mob: v.mob, saldo_total: 0, saldo_ap: 0 };
+          }
+          mapaAno[k].saldo_total += Number(v.saldo_total);
+          mapaAno[k].saldo_ap += Number(v.saldo_ativo_problematico);
+        }
+      });
+      vintagesAnuais = Object.values(mapaAno).map((item) => ({
+        ...item,
+        taxa_ativo_problematico: item.saldo_total > 0 ? item.saldo_ap / item.saldo_total : 0,
+      }));
+    }
+
+    const safrasAnuais = ['Safra 2021', 'Safra 2022', 'Safra 2023', 'Safra 2024', 'Safra 2025'];
+
+    datasets = safrasAnuais.map((safra, idx) => {
+      const dadosSafra = vintagesAnuais.filter((v) => v.safra === safra);
+      const dataPoints = mobs.map((m) => {
+        const ponto = dadosSafra.find((d) => d.mob === m);
+        return ponto && ponto.taxa_ativo_problematico !== undefined && ponto.taxa_ativo_problematico !== null
+          ? Number((Number(ponto.taxa_ativo_problematico) * 100).toFixed(2))
+          : null;
+      });
+
+      const cor = coresPaleta[idx % coresPaleta.length];
+      return {
+        label: safra,
+        data: dataPoints,
+        borderColor: cor,
+        backgroundColor: cor,
+        borderWidth: 2.8,
+        tension: 0.25,
+        spanGaps: true,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+      };
     });
+  } else if (modo === 'maduras') {
+    // 2. Safras Mensais Maduras com Ciclo Completo (MOB 24)
+    const vintages = dados.matriz_safras_vintages || [];
+    const safrasMob24 = [...new Set(vintages.filter((v) => v.mob === 24 && Number(v.saldo_total) > 0).map((v) => v.safra))].sort();
+    const semestrais = safrasMob24.filter((s) => s.endsWith('-06') || s.endsWith('-12'));
+    const selecionadas = semestrais.length >= 5 ? semestrais.slice(-5) : safrasMob24.slice(-5);
 
-    const cor = coresPaleta[idx % coresPaleta.length];
-    return {
-      label: `Safra ${safra}`,
-      data: dataPoints,
-      borderColor: cor,
-      backgroundColor: cor,
-      borderWidth: 2.2,
-      tension: 0.2,
-      spanGaps: true,
-      pointRadius: 4,
-      pointHoverRadius: 7,
-    };
-  });
+    datasets = selecionadas.map((safra, idx) => {
+      const dadosSafra = vintages.filter((v) => v.safra === safra);
+      const dataPoints = mobs.map((m) => {
+        const ponto = dadosSafra.find((d) => d.mob === m);
+        return ponto && ponto.taxa_ativo_problematico !== undefined && ponto.taxa_ativo_problematico !== null
+          ? Number((Number(ponto.taxa_ativo_problematico) * 100).toFixed(2))
+          : null;
+      });
+
+      const cor = coresPaleta[idx % coresPaleta.length];
+      return {
+        label: `Safra ${safra}`,
+        data: dataPoints,
+        borderColor: cor,
+        backgroundColor: cor,
+        borderWidth: 2.2,
+        tension: 0.2,
+        spanGaps: true,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+      };
+    });
+  } else {
+    // 3. Safras Recentes com Maturação Mínima de 12 Meses (MOB 12)
+    const vintages = dados.matriz_safras_vintages || [];
+    const safrasMob12 = [...new Set(vintages.filter((v) => v.mob === 12 && Number(v.saldo_total) > 0).map((v) => v.safra))].sort();
+    const semestrais = safrasMob12.filter((s) => s.endsWith('-06') || s.endsWith('-12') || s.endsWith('-03') || s.endsWith('-09'));
+    const selecionadas = semestrais.length >= 5 ? semestrais.slice(-5) : safrasMob12.slice(-5);
+
+    datasets = selecionadas.map((safra, idx) => {
+      const dadosSafra = vintages.filter((v) => v.safra === safra);
+      const dataPoints = mobs.map((m) => {
+        const ponto = dadosSafra.find((d) => d.mob === m);
+        return ponto && ponto.taxa_ativo_problematico !== undefined && ponto.taxa_ativo_problematico !== null
+          ? Number((Number(ponto.taxa_ativo_problematico) * 100).toFixed(2))
+          : null;
+      });
+
+      const cor = coresPaleta[idx % coresPaleta.length];
+      return {
+        label: `Safra ${safra}`,
+        data: dataPoints,
+        borderColor: cor,
+        backgroundColor: cor,
+        borderWidth: 2.2,
+        tension: 0.2,
+        spanGaps: true,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+      };
+    });
+  }
 
   chartVintages = new Chart(ctx, {
     type: 'line',
@@ -1295,7 +1405,7 @@ function renderizarMatrizSafras(dados) {
             title: (items) => `Maturidade: ${items[0].label}`,
             label: (item) => {
               const val = item.parsed.y;
-              return `  ${item.dataset.label}: ${val !== null ? val.toFixed(2) + '%' : 'Sem dados suficientes'}`;
+              return `  ${item.dataset.label}: ${val !== null && val !== undefined ? val.toFixed(2) + '%' : 'Sem dados suficientes / Maturidade futura'}`;
             },
           },
         },

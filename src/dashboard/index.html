@@ -434,6 +434,11 @@
             <h3 class="chart-title">Curvas de Safra: Maturação do Ativo Problemático por MOB</h3>
             <p class="chart-desc">Evolução percentual de Ativo Problemático ao longo dos meses de vida do contrato (MOB: 1, 3, 6, 12 e 24 meses pós-originação)</p>
           </div>
+          <div class="view-toggle-group" aria-label="Alternar visão de safras">
+            <button type="button" class="toggle-btn active" id="btn-toggle-vintages-anuais" data-mode="anuais">Safras Anuais (2021-2025)</button>
+            <button type="button" class="toggle-btn" id="btn-toggle-vintages-maduras" data-mode="maduras">Safras Maduras (MOB 24)</button>
+            <button type="button" class="toggle-btn" id="btn-toggle-vintages-recentes" data-mode="recentes">Safras Recentes (MOB 12)</button>
+          </div>
         </div>
         <div class="chart-body" style="min-height: 320px;">
           <canvas id="chart-vintages"></canvas>
