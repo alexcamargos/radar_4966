@@ -362,7 +362,7 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
       labels,
       datasets: [
         {
-          label: 'Taxa de Ativo Problemático (Singular)',
+          label: 'Taxa de AP (Sicoob Credijequitinhonha)',
           data: serieAP,
           borderColor: CORES.vermelho,
           backgroundColor: 'rgba(239, 68, 68, 0.08)',
@@ -374,7 +374,7 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
           pointBackgroundColor: CORES.vermelho,
         },
         {
-          label: 'Taxa de Provisão Constituída (Singular)',
+          label: 'Taxa de Provisão (Sicoob Credijequitinhonha)',
           data: serieProv,
           borderColor: CORES.azul,
           backgroundColor: 'rgba(59, 130, 246, 0.08)',
@@ -479,7 +479,7 @@ function renderizarReguaCobertura(dados) {
   chartRegua = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Cooperativa Singular', 'SNCC (REF Bacen)', 'SFN Total (REF)'],
+      labels: ['Sicoob Credijequitinhonha', 'SNCC (REF Bacen)', 'SFN Total (REF)'],
       datasets: [
         {
           label: 'Índice de Cobertura (Provisão / ECL)',

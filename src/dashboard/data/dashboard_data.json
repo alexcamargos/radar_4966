@@ -2,6 +2,13 @@
   "metadata": {
     "projeto": "Radar 4966 - Inteligência de Risco e Capital",
     "regulacao": "Resolução CMN nº 4.966 / IFRS 9 e Resolução BCB nº 352",
+    "instituicao_singular": {
+      "razao_social": "Cooperativa de Crédito Credijequitinhonha Ltda.",
+      "nome_fantasia": "Sicoob Credijequitinhonha",
+      "cnpj": "71.243.034/0001-55",
+      "codigo_bcb": 71243034,
+      "sede": "Capelinha - MG"
+    },
     "data_geracao": "2026-10-31",
     "data_inicio": "2020-01-31",
     "competencia_mais_recente": "2026-06-30",
@@ -11,24 +18,24 @@
   },
   "kpis_topo": {
     "data_base": "2026-06-30",
-    "carteira_ativa": 30587936.69,
-    "saldo_ativo_problematico": 4329618.66,
-    "saldo_provisao_constituida": 1205918.63,
-    "saldo_over90": 3984101.83,
-    "taxa_ativo_problematico_pct": 14.15,
-    "taxa_provisao_pct": 3.94,
-    "gap_cobertura_pct": -10.21,
-    "taxa_inadimplencia_over90_pct": 13.03,
-    "percentual_over90_no_ap_pct": 92.02,
+    "carteira_ativa": 282422789.95,
+    "saldo_ativo_problematico": 38689256.64,
+    "saldo_provisao_constituida": 11015276.42,
+    "saldo_over90": 35313418.62,
+    "taxa_ativo_problematico_pct": 13.7,
+    "taxa_provisao_pct": 3.9,
+    "gap_cobertura_pct": -9.8,
+    "taxa_inadimplencia_over90_pct": 12.5,
+    "percentual_over90_no_ap_pct": 91.27,
     "indice_cobertura_ecl": 1.0
   },
   "serie_temporal_mensal": [
     {
       "data_fechamento": "2020-01-31",
-      "taxa_ap": 8.38,
-      "taxa_provisao": 2.51,
-      "saldo_carteira": 20435973.75,
-      "gap_cobertura": -5.87,
+      "taxa_ap": 8.04,
+      "taxa_provisao": 2.44,
+      "saldo_carteira": 188688265.5,
+      "gap_cobertura": -5.6,
       "cruzamento_alerta": true,
       "percentual_cor_12m": 0.29,
       "vigencia_4966": false,
@@ -37,10 +44,10 @@
     },
     {
       "data_fechamento": "2020-02-29",
-      "taxa_ap": 8.47,
-      "taxa_provisao": 2.54,
-      "saldo_carteira": 20346055.5,
-      "gap_cobertura": -5.93,
+      "taxa_ap": 7.49,
+      "taxa_provisao": 2.35,
+      "saldo_carteira": 187858037.11,
+      "gap_cobertura": -5.14,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 0.58,
       "vigencia_4966": false,
@@ -49,10 +56,10 @@
     },
     {
       "data_fechamento": "2020-03-31",
-      "taxa_ap": 8.27,
-      "taxa_provisao": 2.49,
-      "saldo_carteira": 20252364.35,
-      "gap_cobertura": -5.78,
+      "taxa_ap": 7.89,
+      "taxa_provisao": 2.42,
+      "saldo_carteira": 186992973.98,
+      "gap_cobertura": -5.47,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 0.87,
       "vigencia_4966": false,
@@ -61,10 +68,10 @@
     },
     {
       "data_fechamento": "2020-04-30",
-      "taxa_ap": 8.45,
-      "taxa_provisao": 2.53,
-      "saldo_carteira": 20154900.53,
-      "gap_cobertura": -5.92,
+      "taxa_ap": 8.06,
+      "taxa_provisao": 2.46,
+      "saldo_carteira": 186093076.13,
+      "gap_cobertura": -5.6,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 1.16,
       "vigencia_4966": false,
@@ -73,10 +80,10 @@
     },
     {
       "data_fechamento": "2020-05-31",
-      "taxa_ap": 8.67,
-      "taxa_provisao": 2.59,
-      "saldo_carteira": 20053663.85,
-      "gap_cobertura": -6.08,
+      "taxa_ap": 9.0,
+      "taxa_provisao": 2.65,
+      "saldo_carteira": 185158343.51,
+      "gap_cobertura": -6.35,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 1.45,
       "vigencia_4966": false,
@@ -85,10 +92,10 @@
     },
     {
       "data_fechamento": "2020-06-30",
-      "taxa_ap": 8.56,
-      "taxa_provisao": 2.56,
-      "saldo_carteira": 19948654.35,
-      "gap_cobertura": -6.0,
+      "taxa_ap": 8.41,
+      "taxa_provisao": 2.51,
+      "saldo_carteira": 184188776.07,
+      "gap_cobertura": -5.9,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 1.74,
       "vigencia_4966": false,
@@ -97,10 +104,10 @@
     },
     {
       "data_fechamento": "2020-07-31",
-      "taxa_ap": 8.15,
-      "taxa_provisao": 2.46,
-      "saldo_carteira": 19839872.13,
-      "gap_cobertura": -5.69,
+      "taxa_ap": 8.35,
+      "taxa_provisao": 2.51,
+      "saldo_carteira": 183184373.97,
+      "gap_cobertura": -5.84,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.03,
       "vigencia_4966": false,
@@ -109,10 +116,10 @@
     },
     {
       "data_fechamento": "2020-08-31",
-      "taxa_ap": 7.82,
-      "taxa_provisao": 2.39,
-      "saldo_carteira": 19727317.11,
-      "gap_cobertura": -5.43,
+      "taxa_ap": 7.45,
+      "taxa_provisao": 2.32,
+      "saldo_carteira": 182145137.06,
+      "gap_cobertura": -5.13,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.32,
       "vigencia_4966": false,
@@ -121,10 +128,10 @@
     },
     {
       "data_fechamento": "2020-09-30",
-      "taxa_ap": 8.12,
-      "taxa_provisao": 2.46,
-      "saldo_carteira": 19610989.23,
-      "gap_cobertura": -5.66,
+      "taxa_ap": 7.41,
+      "taxa_provisao": 2.32,
+      "saldo_carteira": 181071065.32,
+      "gap_cobertura": -5.09,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.61,
       "vigencia_4966": false,
@@ -133,10 +140,10 @@
     },
     {
       "data_fechamento": "2020-10-31",
-      "taxa_ap": 8.08,
-      "taxa_provisao": 2.45,
-      "saldo_carteira": 19490888.52,
-      "gap_cobertura": -5.63,
+      "taxa_ap": 7.51,
+      "taxa_provisao": 2.32,
+      "saldo_carteira": 179962158.92,
+      "gap_cobertura": -5.19,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.9,
       "vigencia_4966": false,
@@ -145,10 +152,10 @@
     },
     {
       "data_fechamento": "2020-11-30",
-      "taxa_ap": 7.93,
-      "taxa_provisao": 2.43,
-      "saldo_carteira": 19367015.11,
-      "gap_cobertura": -5.5,
+      "taxa_ap": 8.37,
+      "taxa_provisao": 2.5,
+      "saldo_carteira": 178818417.78,
+      "gap_cobertura": -5.87,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.19,
       "vigencia_4966": false,
@@ -157,153 +164,9 @@
     },
     {
       "data_fechamento": "2020-12-31",
-      "taxa_ap": 7.26,
-      "taxa_provisao": 2.29,
-      "saldo_carteira": 19239368.86,
-      "gap_cobertura": -4.97,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-01-31",
-      "taxa_ap": 6.33,
-      "taxa_provisao": 2.11,
-      "saldo_carteira": 19107949.88,
-      "gap_cobertura": -4.22,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-02-28",
-      "taxa_ap": 6.86,
-      "taxa_provisao": 2.23,
-      "saldo_carteira": 18972758.05,
-      "gap_cobertura": -4.63,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-03-31",
-      "taxa_ap": 7.28,
-      "taxa_provisao": 2.32,
-      "saldo_carteira": 18833793.39,
-      "gap_cobertura": -4.96,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-04-30",
-      "taxa_ap": 7.62,
-      "taxa_provisao": 2.4,
-      "saldo_carteira": 18691055.94,
-      "gap_cobertura": -5.22,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-05-31",
-      "taxa_ap": 8.09,
-      "taxa_provisao": 2.5,
-      "saldo_carteira": 18544545.74,
-      "gap_cobertura": -5.59,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-06-30",
-      "taxa_ap": 8.27,
-      "taxa_provisao": 2.54,
-      "saldo_carteira": 18394262.78,
-      "gap_cobertura": -5.73,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-07-31",
-      "taxa_ap": 7.68,
-      "taxa_provisao": 2.41,
-      "saldo_carteira": 18240207.01,
-      "gap_cobertura": -5.27,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-08-31",
-      "taxa_ap": 7.74,
-      "taxa_provisao": 2.43,
-      "saldo_carteira": 18082378.39,
-      "gap_cobertura": -5.31,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-09-30",
-      "taxa_ap": 7.92,
-      "taxa_provisao": 2.49,
-      "saldo_carteira": 17920777.0,
-      "gap_cobertura": -5.43,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-10-31",
-      "taxa_ap": 8.6,
-      "taxa_provisao": 2.62,
-      "saldo_carteira": 17755402.79,
-      "gap_cobertura": -5.98,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-11-30",
-      "taxa_ap": 8.61,
-      "taxa_provisao": 2.62,
-      "saldo_carteira": 17586255.81,
-      "gap_cobertura": -5.99,
-      "cruzamento_alerta": false,
-      "percentual_cor_12m": 3.48,
-      "vigencia_4966": false,
-      "marco_transicao_4966": false,
-      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
-    },
-    {
-      "data_fechamento": "2021-12-31",
-      "taxa_ap": 8.29,
-      "taxa_provisao": 2.54,
-      "saldo_carteira": 17413336.05,
+      "taxa_ap": 8.2,
+      "taxa_provisao": 2.45,
+      "saldo_carteira": 177639841.8,
       "gap_cobertura": -5.75,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
@@ -312,11 +175,155 @@
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
     },
     {
-      "data_fechamento": "2022-01-31",
-      "taxa_ap": 8.38,
+      "data_fechamento": "2021-01-31",
+      "taxa_ap": 8.22,
+      "taxa_provisao": 2.47,
+      "saldo_carteira": 176426431.18,
+      "gap_cobertura": -5.75,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-02-28",
+      "taxa_ap": 7.5,
+      "taxa_provisao": 2.32,
+      "saldo_carteira": 175178185.68,
+      "gap_cobertura": -5.18,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-03-31",
+      "taxa_ap": 8.44,
+      "taxa_provisao": 2.51,
+      "saldo_carteira": 173895105.54,
+      "gap_cobertura": -5.93,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-04-30",
+      "taxa_ap": 8.47,
       "taxa_provisao": 2.54,
-      "saldo_carteira": 24208768.92,
-      "gap_cobertura": -5.84,
+      "saldo_carteira": 172577190.58,
+      "gap_cobertura": -5.93,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-05-31",
+      "taxa_ap": 9.01,
+      "taxa_provisao": 2.67,
+      "saldo_carteira": 171224440.78,
+      "gap_cobertura": -6.34,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-06-30",
+      "taxa_ap": 8.08,
+      "taxa_provisao": 2.47,
+      "saldo_carteira": 169836856.31,
+      "gap_cobertura": -5.61,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-07-31",
+      "taxa_ap": 7.44,
+      "taxa_provisao": 2.34,
+      "saldo_carteira": 168414437.12,
+      "gap_cobertura": -5.1,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-08-31",
+      "taxa_ap": 6.98,
+      "taxa_provisao": 2.24,
+      "saldo_carteira": 166957183.13,
+      "gap_cobertura": -4.74,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-09-30",
+      "taxa_ap": 6.95,
+      "taxa_provisao": 2.24,
+      "saldo_carteira": 165465094.37,
+      "gap_cobertura": -4.71,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-10-31",
+      "taxa_ap": 7.74,
+      "taxa_provisao": 2.4,
+      "saldo_carteira": 163938170.94,
+      "gap_cobertura": -5.34,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-11-30",
+      "taxa_ap": 7.46,
+      "taxa_provisao": 2.34,
+      "saldo_carteira": 162376412.58,
+      "gap_cobertura": -5.12,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2021-12-31",
+      "taxa_ap": 6.48,
+      "taxa_provisao": 2.13,
+      "saldo_carteira": 160779819.58,
+      "gap_cobertura": -4.35,
+      "cruzamento_alerta": false,
+      "percentual_cor_12m": 3.48,
+      "vigencia_4966": false,
+      "marco_transicao_4966": false,
+      "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
+    },
+    {
+      "data_fechamento": "2022-01-31",
+      "taxa_ap": 6.68,
+      "taxa_provisao": 2.19,
+      "saldo_carteira": 223523022.18,
+      "gap_cobertura": -4.49,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -325,10 +332,10 @@
     },
     {
       "data_fechamento": "2022-02-28",
-      "taxa_ap": 8.81,
-      "taxa_provisao": 2.62,
-      "saldo_carteira": 24073577.11,
-      "gap_cobertura": -6.19,
+      "taxa_ap": 6.94,
+      "taxa_provisao": 2.23,
+      "saldo_carteira": 222274776.79,
+      "gap_cobertura": -4.71,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -337,10 +344,10 @@
     },
     {
       "data_fechamento": "2022-03-31",
-      "taxa_ap": 9.08,
-      "taxa_provisao": 2.66,
-      "saldo_carteira": 23934612.47,
-      "gap_cobertura": -6.42,
+      "taxa_ap": 7.77,
+      "taxa_provisao": 2.4,
+      "saldo_carteira": 220991696.56,
+      "gap_cobertura": -5.37,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -349,10 +356,10 @@
     },
     {
       "data_fechamento": "2022-04-30",
-      "taxa_ap": 9.15,
-      "taxa_provisao": 2.67,
-      "saldo_carteira": 23791875.05,
-      "gap_cobertura": -6.48,
+      "taxa_ap": 8.14,
+      "taxa_provisao": 2.48,
+      "saldo_carteira": 219673781.58,
+      "gap_cobertura": -5.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -361,10 +368,10 @@
     },
     {
       "data_fechamento": "2022-05-31",
-      "taxa_ap": 10.0,
-      "taxa_provisao": 2.87,
-      "saldo_carteira": 23645364.85,
-      "gap_cobertura": -7.13,
+      "taxa_ap": 8.74,
+      "taxa_provisao": 2.61,
+      "saldo_carteira": 218321031.94,
+      "gap_cobertura": -6.13,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -373,10 +380,10 @@
     },
     {
       "data_fechamento": "2022-06-30",
-      "taxa_ap": 10.05,
-      "taxa_provisao": 2.89,
-      "saldo_carteira": 23495081.86,
-      "gap_cobertura": -7.16,
+      "taxa_ap": 9.18,
+      "taxa_provisao": 2.71,
+      "saldo_carteira": 216933447.38,
+      "gap_cobertura": -6.47,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -385,10 +392,10 @@
     },
     {
       "data_fechamento": "2022-07-31",
-      "taxa_ap": 10.2,
-      "taxa_provisao": 2.96,
-      "saldo_carteira": 23341026.01,
-      "gap_cobertura": -7.24,
+      "taxa_ap": 8.46,
+      "taxa_provisao": 2.6,
+      "saldo_carteira": 215511028.2,
+      "gap_cobertura": -5.86,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -397,10 +404,10 @@
     },
     {
       "data_fechamento": "2022-08-31",
-      "taxa_ap": 9.83,
-      "taxa_provisao": 2.88,
-      "saldo_carteira": 23183197.44,
-      "gap_cobertura": -6.95,
+      "taxa_ap": 8.88,
+      "taxa_provisao": 2.7,
+      "saldo_carteira": 214053774.16,
+      "gap_cobertura": -6.18,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -409,10 +416,10 @@
     },
     {
       "data_fechamento": "2022-09-30",
-      "taxa_ap": 9.82,
-      "taxa_provisao": 2.91,
-      "saldo_carteira": 23021596.05,
-      "gap_cobertura": -6.91,
+      "taxa_ap": 9.14,
+      "taxa_provisao": 2.8,
+      "saldo_carteira": 212561685.38,
+      "gap_cobertura": -6.34,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -421,10 +428,10 @@
     },
     {
       "data_fechamento": "2022-10-31",
-      "taxa_ap": 9.9,
-      "taxa_provisao": 2.94,
-      "saldo_carteira": 22856221.83,
-      "gap_cobertura": -6.96,
+      "taxa_ap": 9.73,
+      "taxa_provisao": 2.96,
+      "saldo_carteira": 211034761.91,
+      "gap_cobertura": -6.77,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -433,10 +440,10 @@
     },
     {
       "data_fechamento": "2022-11-30",
-      "taxa_ap": 8.92,
-      "taxa_provisao": 2.73,
-      "saldo_carteira": 22687074.85,
-      "gap_cobertura": -6.19,
+      "taxa_ap": 9.39,
+      "taxa_provisao": 2.89,
+      "saldo_carteira": 209473003.64,
+      "gap_cobertura": -6.5,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -445,10 +452,10 @@
     },
     {
       "data_fechamento": "2022-12-31",
-      "taxa_ap": 8.46,
-      "taxa_provisao": 2.66,
-      "saldo_carteira": 22514155.09,
-      "gap_cobertura": -5.8,
+      "taxa_ap": 9.0,
+      "taxa_provisao": 2.82,
+      "saldo_carteira": 207876410.64,
+      "gap_cobertura": -6.18,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -457,10 +464,10 @@
     },
     {
       "data_fechamento": "2023-01-31",
-      "taxa_ap": 8.27,
-      "taxa_provisao": 2.62,
-      "saldo_carteira": 22337462.53,
-      "gap_cobertura": -5.65,
+      "taxa_ap": 8.82,
+      "taxa_provisao": 2.81,
+      "saldo_carteira": 206244982.86,
+      "gap_cobertura": -6.01,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -469,10 +476,10 @@
     },
     {
       "data_fechamento": "2023-02-28",
-      "taxa_ap": 7.36,
-      "taxa_provisao": 2.43,
-      "saldo_carteira": 22156997.15,
-      "gap_cobertura": -4.93,
+      "taxa_ap": 8.68,
+      "taxa_provisao": 2.79,
+      "saldo_carteira": 204578720.34,
+      "gap_cobertura": -5.89,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -481,10 +488,10 @@
     },
     {
       "data_fechamento": "2023-03-31",
-      "taxa_ap": 7.39,
-      "taxa_provisao": 2.45,
-      "saldo_carteira": 21972758.95,
-      "gap_cobertura": -4.94,
+      "taxa_ap": 7.72,
+      "taxa_provisao": 2.6,
+      "saldo_carteira": 202877623.04,
+      "gap_cobertura": -5.12,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -493,10 +500,10 @@
     },
     {
       "data_fechamento": "2023-04-30",
-      "taxa_ap": 6.57,
-      "taxa_provisao": 2.29,
-      "saldo_carteira": 21784748.05,
-      "gap_cobertura": -4.28,
+      "taxa_ap": 7.57,
+      "taxa_provisao": 2.6,
+      "saldo_carteira": 201141691.02,
+      "gap_cobertura": -4.97,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -505,10 +512,10 @@
     },
     {
       "data_fechamento": "2023-05-31",
-      "taxa_ap": 6.17,
-      "taxa_provisao": 2.22,
-      "saldo_carteira": 21592964.23,
-      "gap_cobertura": -3.95,
+      "taxa_ap": 7.44,
+      "taxa_provisao": 2.59,
+      "saldo_carteira": 199370924.19,
+      "gap_cobertura": -4.85,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -517,10 +524,10 @@
     },
     {
       "data_fechamento": "2023-06-30",
-      "taxa_ap": 6.93,
-      "taxa_provisao": 2.4,
-      "saldo_carteira": 21397407.72,
-      "gap_cobertura": -4.53,
+      "taxa_ap": 7.96,
+      "taxa_provisao": 2.72,
+      "saldo_carteira": 197565322.69,
+      "gap_cobertura": -5.24,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -529,10 +536,10 @@
     },
     {
       "data_fechamento": "2023-07-31",
-      "taxa_ap": 6.93,
-      "taxa_provisao": 2.42,
-      "saldo_carteira": 21198078.36,
-      "gap_cobertura": -4.51,
+      "taxa_ap": 8.12,
+      "taxa_provisao": 2.74,
+      "saldo_carteira": 195724886.33,
+      "gap_cobertura": -5.38,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -541,10 +548,10 @@
     },
     {
       "data_fechamento": "2023-08-31",
-      "taxa_ap": 9.11,
-      "taxa_provisao": 2.89,
-      "saldo_carteira": 20994976.25,
-      "gap_cobertura": -6.22,
+      "taxa_ap": 9.99,
+      "taxa_provisao": 3.13,
+      "saldo_carteira": 193849615.3,
+      "gap_cobertura": -6.86,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -553,10 +560,10 @@
     },
     {
       "data_fechamento": "2023-09-30",
-      "taxa_ap": 9.24,
-      "taxa_provisao": 2.95,
-      "saldo_carteira": 20788101.31,
-      "gap_cobertura": -6.29,
+      "taxa_ap": 10.8,
+      "taxa_provisao": 3.3,
+      "saldo_carteira": 191939509.39,
+      "gap_cobertura": -7.5,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -565,10 +572,10 @@
     },
     {
       "data_fechamento": "2023-10-31",
-      "taxa_ap": 11.12,
-      "taxa_provisao": 3.36,
-      "saldo_carteira": 20577453.63,
-      "gap_cobertura": -7.76,
+      "taxa_ap": 12.41,
+      "taxa_provisao": 3.63,
+      "saldo_carteira": 189994568.89,
+      "gap_cobertura": -8.78,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -577,10 +584,10 @@
     },
     {
       "data_fechamento": "2023-11-30",
-      "taxa_ap": 12.66,
-      "taxa_provisao": 3.68,
-      "saldo_carteira": 20363033.08,
-      "gap_cobertura": -8.98,
+      "taxa_ap": 13.77,
+      "taxa_provisao": 3.91,
+      "saldo_carteira": 188014793.55,
+      "gap_cobertura": -9.86,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -589,10 +596,10 @@
     },
     {
       "data_fechamento": "2023-12-31",
-      "taxa_ap": 12.49,
-      "taxa_provisao": 3.66,
-      "saldo_carteira": 20144839.7,
-      "gap_cobertura": -8.83,
+      "taxa_ap": 14.29,
+      "taxa_provisao": 4.04,
+      "saldo_carteira": 186000183.47,
+      "gap_cobertura": -10.25,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -601,10 +608,10 @@
     },
     {
       "data_fechamento": "2024-01-31",
-      "taxa_ap": 14.26,
-      "taxa_provisao": 4.04,
-      "saldo_carteira": 27981564.05,
-      "gap_cobertura": -10.22,
+      "taxa_ap": 15.55,
+      "taxa_provisao": 4.3,
+      "saldo_carteira": 258357778.93,
+      "gap_cobertura": -11.25,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -613,10 +620,10 @@
     },
     {
       "data_fechamento": "2024-02-29",
-      "taxa_ap": 14.47,
-      "taxa_provisao": 4.1,
-      "saldo_carteira": 27801098.76,
-      "gap_cobertura": -10.37,
+      "taxa_ap": 16.41,
+      "taxa_provisao": 4.5,
+      "saldo_carteira": 256691516.38,
+      "gap_cobertura": -11.91,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -625,10 +632,10 @@
     },
     {
       "data_fechamento": "2024-03-31",
-      "taxa_ap": 14.13,
-      "taxa_provisao": 4.06,
-      "saldo_carteira": 27616860.52,
-      "gap_cobertura": -10.07,
+      "taxa_ap": 17.12,
+      "taxa_provisao": 4.65,
+      "saldo_carteira": 254990419.09,
+      "gap_cobertura": -12.47,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -637,10 +644,10 @@
     },
     {
       "data_fechamento": "2024-04-30",
-      "taxa_ap": 13.87,
-      "taxa_provisao": 4.03,
-      "saldo_carteira": 27428849.53,
-      "gap_cobertura": -9.84,
+      "taxa_ap": 17.1,
+      "taxa_provisao": 4.64,
+      "saldo_carteira": 253254487.05,
+      "gap_cobertura": -12.46,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -649,10 +656,10 @@
     },
     {
       "data_fechamento": "2024-05-31",
-      "taxa_ap": 12.85,
-      "taxa_provisao": 3.79,
-      "saldo_carteira": 27237065.78,
-      "gap_cobertura": -9.06,
+      "taxa_ap": 16.44,
+      "taxa_provisao": 4.47,
+      "saldo_carteira": 251483720.23,
+      "gap_cobertura": -11.97,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -661,10 +668,10 @@
     },
     {
       "data_fechamento": "2024-06-30",
-      "taxa_ap": 13.15,
-      "taxa_provisao": 3.86,
-      "saldo_carteira": 27041509.26,
-      "gap_cobertura": -9.29,
+      "taxa_ap": 16.32,
+      "taxa_provisao": 4.43,
+      "saldo_carteira": 249678118.69,
+      "gap_cobertura": -11.89,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -673,10 +680,10 @@
     },
     {
       "data_fechamento": "2024-07-31",
-      "taxa_ap": 12.61,
-      "taxa_provisao": 3.74,
-      "saldo_carteira": 26842179.9,
-      "gap_cobertura": -8.87,
+      "taxa_ap": 15.91,
+      "taxa_provisao": 4.36,
+      "saldo_carteira": 247837682.44,
+      "gap_cobertura": -11.55,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -685,10 +692,10 @@
     },
     {
       "data_fechamento": "2024-08-31",
-      "taxa_ap": 12.89,
-      "taxa_provisao": 3.79,
-      "saldo_carteira": 26639077.76,
-      "gap_cobertura": -9.1,
+      "taxa_ap": 14.24,
+      "taxa_provisao": 4.0,
+      "saldo_carteira": 245962411.37,
+      "gap_cobertura": -10.24,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -697,10 +704,10 @@
     },
     {
       "data_fechamento": "2024-09-30",
-      "taxa_ap": 14.4,
+      "taxa_ap": 14.63,
       "taxa_provisao": 4.1,
-      "saldo_carteira": 26432202.87,
-      "gap_cobertura": -10.3,
+      "saldo_carteira": 244052305.57,
+      "gap_cobertura": -10.53,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -709,10 +716,10 @@
     },
     {
       "data_fechamento": "2024-10-31",
-      "taxa_ap": 14.29,
-      "taxa_provisao": 4.07,
-      "saldo_carteira": 26221555.1,
-      "gap_cobertura": -10.22,
+      "taxa_ap": 14.07,
+      "taxa_provisao": 3.96,
+      "saldo_carteira": 242107364.92,
+      "gap_cobertura": -10.11,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -721,10 +728,10 @@
     },
     {
       "data_fechamento": "2024-11-30",
-      "taxa_ap": 15.76,
-      "taxa_provisao": 4.4,
-      "saldo_carteira": 26007134.59,
-      "gap_cobertura": -11.36,
+      "taxa_ap": 13.49,
+      "taxa_provisao": 3.85,
+      "saldo_carteira": 240127589.54,
+      "gap_cobertura": -9.64,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -733,10 +740,10 @@
     },
     {
       "data_fechamento": "2024-12-31",
-      "taxa_ap": 15.45,
-      "taxa_provisao": 4.34,
-      "saldo_carteira": 25788941.26,
-      "gap_cobertura": -11.11,
+      "taxa_ap": 13.17,
+      "taxa_provisao": 3.78,
+      "saldo_carteira": 238112979.49,
+      "gap_cobertura": -9.39,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": false,
@@ -745,10 +752,10 @@
     },
     {
       "data_fechamento": "2025-01-31",
-      "taxa_ap": 15.97,
-      "taxa_provisao": 4.47,
-      "saldo_carteira": 25566975.13,
-      "gap_cobertura": -11.5,
+      "taxa_ap": 13.11,
+      "taxa_provisao": 3.77,
+      "saldo_carteira": 236063534.67,
+      "gap_cobertura": -9.34,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -757,10 +764,10 @@
     },
     {
       "data_fechamento": "2025-02-28",
-      "taxa_ap": 15.77,
-      "taxa_provisao": 4.42,
-      "saldo_carteira": 25341236.26,
-      "gap_cobertura": -11.35,
+      "taxa_ap": 12.31,
+      "taxa_provisao": 3.59,
+      "saldo_carteira": 233979255.07,
+      "gap_cobertura": -8.72,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -769,10 +776,10 @@
     },
     {
       "data_fechamento": "2025-03-31",
-      "taxa_ap": 15.73,
-      "taxa_provisao": 4.41,
-      "saldo_carteira": 25111724.53,
-      "gap_cobertura": -11.32,
+      "taxa_ap": 12.47,
+      "taxa_provisao": 3.63,
+      "saldo_carteira": 231860140.64,
+      "gap_cobertura": -8.84,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -781,10 +788,10 @@
     },
     {
       "data_fechamento": "2025-04-30",
-      "taxa_ap": 16.64,
-      "taxa_provisao": 4.6,
-      "saldo_carteira": 24878440.04,
-      "gap_cobertura": -12.04,
+      "taxa_ap": 12.25,
+      "taxa_provisao": 3.59,
+      "saldo_carteira": 229706191.59,
+      "gap_cobertura": -8.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -793,10 +800,10 @@
     },
     {
       "data_fechamento": "2025-05-31",
-      "taxa_ap": 16.9,
-      "taxa_provisao": 4.62,
-      "saldo_carteira": 24641382.75,
-      "gap_cobertura": -12.28,
+      "taxa_ap": 12.7,
+      "taxa_provisao": 3.68,
+      "saldo_carteira": 227517407.63,
+      "gap_cobertura": -9.02,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -805,10 +812,10 @@
     },
     {
       "data_fechamento": "2025-06-30",
-      "taxa_ap": 15.84,
-      "taxa_provisao": 4.39,
-      "saldo_carteira": 24400552.65,
-      "gap_cobertura": -11.45,
+      "taxa_ap": 12.47,
+      "taxa_provisao": 3.64,
+      "saldo_carteira": 225293789.0,
+      "gap_cobertura": -8.83,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -817,10 +824,10 @@
     },
     {
       "data_fechamento": "2025-07-31",
-      "taxa_ap": 14.89,
-      "taxa_provisao": 4.18,
-      "saldo_carteira": 24155949.79,
-      "gap_cobertura": -10.71,
+      "taxa_ap": 12.03,
+      "taxa_provisao": 3.55,
+      "saldo_carteira": 223035335.52,
+      "gap_cobertura": -8.48,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -829,10 +836,10 @@
     },
     {
       "data_fechamento": "2025-08-31",
-      "taxa_ap": 14.8,
-      "taxa_provisao": 4.14,
-      "saldo_carteira": 23907574.07,
-      "gap_cobertura": -10.66,
+      "taxa_ap": 13.51,
+      "taxa_provisao": 3.85,
+      "saldo_carteira": 220742047.5,
+      "gap_cobertura": -9.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -841,10 +848,10 @@
     },
     {
       "data_fechamento": "2025-09-30",
-      "taxa_ap": 15.59,
-      "taxa_provisao": 4.32,
-      "saldo_carteira": 23655425.58,
-      "gap_cobertura": -11.27,
+      "taxa_ap": 13.65,
+      "taxa_provisao": 3.88,
+      "saldo_carteira": 218413924.63,
+      "gap_cobertura": -9.77,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -853,10 +860,10 @@
     },
     {
       "data_fechamento": "2025-10-31",
-      "taxa_ap": 14.99,
-      "taxa_provisao": 4.19,
-      "saldo_carteira": 23399504.3,
-      "gap_cobertura": -10.8,
+      "taxa_ap": 13.87,
+      "taxa_provisao": 3.95,
+      "saldo_carteira": 216050966.85,
+      "gap_cobertura": -9.92,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -865,10 +872,10 @@
     },
     {
       "data_fechamento": "2025-11-30",
-      "taxa_ap": 15.16,
-      "taxa_provisao": 4.22,
-      "saldo_carteira": 23139810.29,
-      "gap_cobertura": -10.94,
+      "taxa_ap": 13.53,
+      "taxa_provisao": 3.89,
+      "saldo_carteira": 213653174.46,
+      "gap_cobertura": -9.64,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -877,10 +884,10 @@
     },
     {
       "data_fechamento": "2025-12-31",
-      "taxa_ap": 16.32,
-      "taxa_provisao": 4.47,
-      "saldo_carteira": 22876343.43,
-      "gap_cobertura": -11.85,
+      "taxa_ap": 13.55,
+      "taxa_provisao": 3.89,
+      "saldo_carteira": 211220547.34,
+      "gap_cobertura": -9.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -889,10 +896,10 @@
     },
     {
       "data_fechamento": "2026-01-31",
-      "taxa_ap": 15.06,
-      "taxa_provisao": 4.2,
-      "saldo_carteira": 31754359.26,
-      "gap_cobertura": -10.86,
+      "taxa_ap": 13.62,
+      "taxa_provisao": 3.89,
+      "saldo_carteira": 293192535.58,
+      "gap_cobertura": -9.73,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -901,10 +908,10 @@
     },
     {
       "data_fechamento": "2026-02-28",
-      "taxa_ap": 14.41,
-      "taxa_provisao": 4.06,
-      "saldo_carteira": 31528620.33,
-      "gap_cobertura": -10.35,
+      "taxa_ap": 13.98,
+      "taxa_provisao": 3.99,
+      "saldo_carteira": 291108255.96,
+      "gap_cobertura": -9.99,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -913,10 +920,10 @@
     },
     {
       "data_fechamento": "2026-03-31",
-      "taxa_ap": 14.83,
-      "taxa_provisao": 4.14,
-      "saldo_carteira": 31299108.57,
-      "gap_cobertura": -10.69,
+      "taxa_ap": 14.02,
+      "taxa_provisao": 4.01,
+      "saldo_carteira": 288989141.68,
+      "gap_cobertura": -10.01,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -925,10 +932,10 @@
     },
     {
       "data_fechamento": "2026-04-30",
-      "taxa_ap": 14.75,
-      "taxa_provisao": 4.11,
-      "saldo_carteira": 31065824.07,
-      "gap_cobertura": -10.64,
+      "taxa_ap": 14.79,
+      "taxa_provisao": 4.18,
+      "saldo_carteira": 286835192.49,
+      "gap_cobertura": -10.61,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -937,10 +944,10 @@
     },
     {
       "data_fechamento": "2026-05-31",
-      "taxa_ap": 14.97,
-      "taxa_provisao": 4.11,
-      "saldo_carteira": 30828766.74,
-      "gap_cobertura": -10.86,
+      "taxa_ap": 14.49,
+      "taxa_provisao": 4.08,
+      "saldo_carteira": 284646408.63,
+      "gap_cobertura": -10.41,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -949,10 +956,10 @@
     },
     {
       "data_fechamento": "2026-06-30",
-      "taxa_ap": 14.15,
-      "taxa_provisao": 3.94,
-      "saldo_carteira": 30587936.69,
-      "gap_cobertura": -10.21,
+      "taxa_ap": 13.7,
+      "taxa_provisao": 3.9,
+      "saldo_carteira": 282422789.95,
+      "gap_cobertura": -9.8,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
       "vigencia_4966": true,
@@ -992,6 +999,16 @@
       "percentual_provisao_ifdata": 0.051
     },
     {
+      "data_trimestre": "2020-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 215000000.0,
+      "provisao_total_bacen": 7310000.0,
+      "ativo_problematico_bacen": 7955000.0,
+      "ap_over90_bacen": 4136600.0,
+      "percentual_ap_ifdata": 0.037,
+      "percentual_provisao_ifdata": 0.034
+    },
+    {
       "data_trimestre": "2020-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 314134615384.62,
@@ -1020,6 +1037,16 @@
       "ap_over90_bacen": 119164167692.31,
       "percentual_ap_ifdata": 0.0529,
       "percentual_provisao_ifdata": 0.0515
+    },
+    {
+      "data_trimestre": "2020-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 225769230.77,
+      "provisao_total_bacen": 7732596.15,
+      "ativo_problematico_bacen": 8466346.15,
+      "ap_over90_bacen": 4402500.0,
+      "percentual_ap_ifdata": 0.0375,
+      "percentual_provisao_ifdata": 0.0342
     },
     {
       "data_trimestre": "2020-09-30",
@@ -1052,6 +1079,16 @@
       "percentual_provisao_ifdata": 0.052
     },
     {
+      "data_trimestre": "2020-09-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 236538461.54,
+      "provisao_total_bacen": 8160576.92,
+      "ativo_problematico_bacen": 8988461.54,
+      "ap_over90_bacen": 4674000.0,
+      "percentual_ap_ifdata": 0.038,
+      "percentual_provisao_ifdata": 0.0345
+    },
+    {
       "data_trimestre": "2020-12-31",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 337403846153.85,
@@ -1080,6 +1117,16 @@
       "ap_over90_bacen": 132346229230.77,
       "percentual_ap_ifdata": 0.0547,
       "percentual_provisao_ifdata": 0.0525
+    },
+    {
+      "data_trimestre": "2020-12-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 247307692.31,
+      "provisao_total_bacen": 8593942.31,
+      "ativo_problematico_bacen": 9521346.15,
+      "ap_over90_bacen": 4951100.0,
+      "percentual_ap_ifdata": 0.0385,
+      "percentual_provisao_ifdata": 0.0348
     },
     {
       "data_trimestre": "2021-03-31",
@@ -1112,6 +1159,16 @@
       "percentual_provisao_ifdata": 0.053
     },
     {
+      "data_trimestre": "2021-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 258076923.08,
+      "provisao_total_bacen": 9032692.31,
+      "ativo_problematico_bacen": 10065000.0,
+      "ap_over90_bacen": 5233800.0,
+      "percentual_ap_ifdata": 0.039,
+      "percentual_provisao_ifdata": 0.035
+    },
+    {
       "data_trimestre": "2021-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 360673076923.08,
@@ -1140,6 +1197,16 @@
       "ap_over90_bacen": 146128992307.69,
       "percentual_ap_ifdata": 0.0565,
       "percentual_provisao_ifdata": 0.0535
+    },
+    {
+      "data_trimestre": "2021-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 268846153.85,
+      "provisao_total_bacen": 9476826.92,
+      "ativo_problematico_bacen": 10619423.08,
+      "ap_over90_bacen": 5522100.0,
+      "percentual_ap_ifdata": 0.0395,
+      "percentual_provisao_ifdata": 0.0352
     },
     {
       "data_trimestre": "2021-09-30",
@@ -1172,6 +1239,16 @@
       "percentual_provisao_ifdata": 0.054
     },
     {
+      "data_trimestre": "2021-09-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 279615384.62,
+      "provisao_total_bacen": 9926346.15,
+      "ativo_problematico_bacen": 11184615.38,
+      "ap_over90_bacen": 5816000.0,
+      "percentual_ap_ifdata": 0.04,
+      "percentual_provisao_ifdata": 0.0355
+    },
+    {
       "data_trimestre": "2021-12-31",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 383942307692.31,
@@ -1200,6 +1277,16 @@
       "ap_over90_bacen": 160512456923.08,
       "percentual_ap_ifdata": 0.0583,
       "percentual_provisao_ifdata": 0.0545
+    },
+    {
+      "data_trimestre": "2021-12-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 290384615.38,
+      "provisao_total_bacen": 10381250.0,
+      "ativo_problematico_bacen": 11760576.92,
+      "ap_over90_bacen": 6115500.0,
+      "percentual_ap_ifdata": 0.0405,
+      "percentual_provisao_ifdata": 0.0358
     },
     {
       "data_trimestre": "2022-03-31",
@@ -1232,6 +1319,16 @@
       "percentual_provisao_ifdata": 0.055
     },
     {
+      "data_trimestre": "2022-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 301153846.15,
+      "provisao_total_bacen": 10841538.46,
+      "ativo_problematico_bacen": 12347307.69,
+      "ap_over90_bacen": 6420600.0,
+      "percentual_ap_ifdata": 0.041,
+      "percentual_provisao_ifdata": 0.036
+    },
+    {
       "data_trimestre": "2022-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 407211538461.54,
@@ -1260,6 +1357,16 @@
       "ap_over90_bacen": 175496623076.92,
       "percentual_ap_ifdata": 0.0601,
       "percentual_provisao_ifdata": 0.0555
+    },
+    {
+      "data_trimestre": "2022-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 311923076.92,
+      "provisao_total_bacen": 11307211.54,
+      "ativo_problematico_bacen": 12944807.69,
+      "ap_over90_bacen": 6731300.0,
+      "percentual_ap_ifdata": 0.0415,
+      "percentual_provisao_ifdata": 0.0362
     },
     {
       "data_trimestre": "2022-09-30",
@@ -1292,6 +1399,16 @@
       "percentual_provisao_ifdata": 0.056
     },
     {
+      "data_trimestre": "2022-09-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 322692307.69,
+      "provisao_total_bacen": 11778269.23,
+      "ativo_problematico_bacen": 13553076.92,
+      "ap_over90_bacen": 7047600.0,
+      "percentual_ap_ifdata": 0.042,
+      "percentual_provisao_ifdata": 0.0365
+    },
+    {
       "data_trimestre": "2022-12-31",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 430480769230.77,
@@ -1320,6 +1437,16 @@
       "ap_over90_bacen": 191081490769.23,
       "percentual_ap_ifdata": 0.0619,
       "percentual_provisao_ifdata": 0.0565
+    },
+    {
+      "data_trimestre": "2022-12-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 333461538.46,
+      "provisao_total_bacen": 12254711.54,
+      "ativo_problematico_bacen": 14172115.38,
+      "ap_over90_bacen": 7369500.0,
+      "percentual_ap_ifdata": 0.0425,
+      "percentual_provisao_ifdata": 0.0368
     },
     {
       "data_trimestre": "2023-03-31",
@@ -1352,6 +1479,16 @@
       "percentual_provisao_ifdata": 0.057
     },
     {
+      "data_trimestre": "2023-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 344230769.23,
+      "provisao_total_bacen": 12736538.46,
+      "ativo_problematico_bacen": 14801923.08,
+      "ap_over90_bacen": 7697000.0,
+      "percentual_ap_ifdata": 0.043,
+      "percentual_provisao_ifdata": 0.037
+    },
+    {
       "data_trimestre": "2023-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 453750000000.0,
@@ -1380,6 +1517,16 @@
       "ap_over90_bacen": 207267060000.0,
       "percentual_ap_ifdata": 0.0637,
       "percentual_provisao_ifdata": 0.0575
+    },
+    {
+      "data_trimestre": "2023-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 355000000.0,
+      "provisao_total_bacen": 13223750.0,
+      "ativo_problematico_bacen": 15442500.0,
+      "ap_over90_bacen": 8030100.0,
+      "percentual_ap_ifdata": 0.0435,
+      "percentual_provisao_ifdata": 0.0372
     },
     {
       "data_trimestre": "2023-09-30",
@@ -1412,6 +1559,16 @@
       "percentual_provisao_ifdata": 0.058
     },
     {
+      "data_trimestre": "2023-09-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 365769230.77,
+      "provisao_total_bacen": 13716346.15,
+      "ativo_problematico_bacen": 16093846.15,
+      "ap_over90_bacen": 8368800.0,
+      "percentual_ap_ifdata": 0.044,
+      "percentual_provisao_ifdata": 0.0375
+    },
+    {
       "data_trimestre": "2023-12-31",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 477019230769.23,
@@ -1440,6 +1597,16 @@
       "ap_over90_bacen": 224053330769.23,
       "percentual_ap_ifdata": 0.0655,
       "percentual_provisao_ifdata": 0.0585
+    },
+    {
+      "data_trimestre": "2023-12-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 376538461.54,
+      "provisao_total_bacen": 14214326.92,
+      "ativo_problematico_bacen": 16755961.54,
+      "ap_over90_bacen": 8713100.0,
+      "percentual_ap_ifdata": 0.0445,
+      "percentual_provisao_ifdata": 0.0378
     },
     {
       "data_trimestre": "2024-03-31",
@@ -1472,6 +1639,16 @@
       "percentual_provisao_ifdata": 0.059
     },
     {
+      "data_trimestre": "2024-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 387307692.31,
+      "provisao_total_bacen": 14717692.31,
+      "ativo_problematico_bacen": 17428846.15,
+      "ap_over90_bacen": 9063000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.038
+    },
+    {
       "data_trimestre": "2024-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 500288461538.46,
@@ -1500,6 +1677,16 @@
       "ap_over90_bacen": 238211532307.69,
       "percentual_ap_ifdata": 0.0664,
       "percentual_provisao_ifdata": 0.059
+    },
+    {
+      "data_trimestre": "2024-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 398076923.08,
+      "provisao_total_bacen": 15126923.08,
+      "ativo_problematico_bacen": 17913461.54,
+      "ap_over90_bacen": 9315000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.038
     },
     {
       "data_trimestre": "2024-09-30",
@@ -1532,6 +1719,16 @@
       "percentual_provisao_ifdata": 0.059
     },
     {
+      "data_trimestre": "2024-09-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 408846153.85,
+      "provisao_total_bacen": 15536153.85,
+      "ativo_problematico_bacen": 18398076.92,
+      "ap_over90_bacen": 9567000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.038
+    },
+    {
       "data_trimestre": "2024-12-31",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 523557692307.69,
@@ -1560,6 +1757,16 @@
       "ap_over90_bacen": 249291138461.54,
       "percentual_ap_ifdata": 0.0664,
       "percentual_provisao_ifdata": 0.059
+    },
+    {
+      "data_trimestre": "2024-12-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 419615384.62,
+      "provisao_total_bacen": 15945384.62,
+      "ativo_problematico_bacen": 18882692.31,
+      "ap_over90_bacen": 9819000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.038
     },
     {
       "data_trimestre": "2025-03-31",
@@ -1592,6 +1799,16 @@
       "percentual_provisao_ifdata": 0.059
     },
     {
+      "data_trimestre": "2025-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 430384615.38,
+      "provisao_total_bacen": 17860961.54,
+      "ativo_problematico_bacen": 19367307.69,
+      "ap_over90_bacen": 10071000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.0415
+    },
+    {
       "data_trimestre": "2025-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 546826923076.92,
@@ -1620,6 +1837,16 @@
       "ap_over90_bacen": 260370744615.38,
       "percentual_ap_ifdata": 0.0664,
       "percentual_provisao_ifdata": 0.059
+    },
+    {
+      "data_trimestre": "2025-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 441153846.15,
+      "provisao_total_bacen": 18307884.62,
+      "ativo_problematico_bacen": 19851923.08,
+      "ap_over90_bacen": 10323000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.0415
     },
     {
       "data_trimestre": "2025-09-30",
@@ -1652,6 +1879,16 @@
       "percentual_provisao_ifdata": 0.059
     },
     {
+      "data_trimestre": "2025-09-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 451923076.92,
+      "provisao_total_bacen": 18754807.69,
+      "ativo_problematico_bacen": 20336538.46,
+      "ap_over90_bacen": 10575000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.0415
+    },
+    {
       "data_trimestre": "2025-12-31",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 570096153846.15,
@@ -1680,6 +1917,16 @@
       "ap_over90_bacen": 271450350769.23,
       "percentual_ap_ifdata": 0.0664,
       "percentual_provisao_ifdata": 0.059
+    },
+    {
+      "data_trimestre": "2025-12-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 462692307.69,
+      "provisao_total_bacen": 19201730.77,
+      "ativo_problematico_bacen": 20821153.85,
+      "ap_over90_bacen": 10827000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.0415
     },
     {
       "data_trimestre": "2026-03-31",
@@ -1712,6 +1959,16 @@
       "percentual_provisao_ifdata": 0.059
     },
     {
+      "data_trimestre": "2026-03-31",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 473461538.46,
+      "provisao_total_bacen": 19648653.85,
+      "ativo_problematico_bacen": 21305769.23,
+      "ap_over90_bacen": 11079000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.0415
+    },
+    {
       "data_trimestre": "2026-06-30",
       "segmento_analise": "Cooperativas Singulares",
       "carteira_total_bacen": 593365384615.38,
@@ -1740,6 +1997,16 @@
       "ap_over90_bacen": 282529956923.08,
       "percentual_ap_ifdata": 0.0664,
       "percentual_provisao_ifdata": 0.059
+    },
+    {
+      "data_trimestre": "2026-06-30",
+      "segmento_analise": "Sicoob Credijequitinhonha",
+      "carteira_total_bacen": 484230769.23,
+      "provisao_total_bacen": 20095576.92,
+      "ativo_problematico_bacen": 21790384.62,
+      "ap_over90_bacen": 11331000.0,
+      "percentual_ap_ifdata": 0.045,
+      "percentual_provisao_ifdata": 0.0415
     }
   ],
   "benchmarking_ref": [
@@ -1929,1206 +2196,1206 @@
   "distribuicao_estagios_atual": [
     {
       "estagio": 1,
-      "saldo_estagio": 21868193.59,
-      "percentual_estagio": 71.49
+      "saldo_estagio": 194922489.97,
+      "percentual_estagio": 69.02
     },
     {
       "estagio": 2,
-      "saldo_estagio": 4390124.44,
-      "percentual_estagio": 14.35
+      "saldo_estagio": 48811043.34,
+      "percentual_estagio": 17.28
     },
     {
       "estagio": 3,
-      "saldo_estagio": 4329618.66,
-      "percentual_estagio": 14.15
+      "saldo_estagio": 38689256.64,
+      "percentual_estagio": 13.7
     }
   ],
   "evolucao_estagios_mensal": [
     {
       "data_fechamento": "2020-01-31",
-      "estagio_1_saldo": 17104094.25,
-      "estagio_2_saldo": 1618503.0,
-      "estagio_3_saldo": 1713376.5,
-      "estagio_1_pct": 83.7,
-      "estagio_2_pct": 7.92,
-      "estagio_3_pct": 8.38
+      "estagio_1_saldo": 156920106.75,
+      "estagio_2_saldo": 16602569.25,
+      "estagio_3_saldo": 15165589.5,
+      "estagio_1_pct": 83.16,
+      "estagio_2_pct": 8.8,
+      "estagio_3_pct": 8.04
     },
     {
       "data_fechamento": "2020-02-29",
-      "estagio_1_saldo": 16906225.88,
-      "estagio_2_saldo": 1717442.86,
-      "estagio_3_saldo": 1722386.76,
-      "estagio_1_pct": 83.09,
-      "estagio_2_pct": 8.44,
-      "estagio_3_pct": 8.47
+      "estagio_1_saldo": 155376338.46,
+      "estagio_2_saldo": 18412049.45,
+      "estagio_3_saldo": 14069649.2,
+      "estagio_1_pct": 82.71,
+      "estagio_2_pct": 9.8,
+      "estagio_3_pct": 7.49
     },
     {
       "data_fechamento": "2020-03-31",
-      "estagio_1_saldo": 16877765.21,
-      "estagio_2_saldo": 1699778.92,
-      "estagio_3_saldo": 1674820.22,
-      "estagio_1_pct": 83.34,
-      "estagio_2_pct": 8.39,
-      "estagio_3_pct": 8.27
+      "estagio_1_saldo": 155214008.58,
+      "estagio_2_saldo": 17034231.45,
+      "estagio_3_saldo": 14744733.95,
+      "estagio_1_pct": 83.01,
+      "estagio_2_pct": 9.11,
+      "estagio_3_pct": 7.89
     },
     {
       "data_fechamento": "2020-04-30",
-      "estagio_1_saldo": 16830992.33,
-      "estagio_2_saldo": 1621021.79,
-      "estagio_3_saldo": 1702886.41,
-      "estagio_1_pct": 83.51,
-      "estagio_2_pct": 8.04,
-      "estagio_3_pct": 8.45
+      "estagio_1_saldo": 153561971.61,
+      "estagio_2_saldo": 17524666.34,
+      "estagio_3_saldo": 15006438.18,
+      "estagio_1_pct": 82.52,
+      "estagio_2_pct": 9.42,
+      "estagio_3_pct": 8.06
     },
     {
       "data_fechamento": "2020-05-31",
-      "estagio_1_saldo": 16609214.5,
-      "estagio_2_saldo": 1705810.35,
-      "estagio_3_saldo": 1738639.0,
-      "estagio_1_pct": 82.82,
-      "estagio_2_pct": 8.51,
-      "estagio_3_pct": 8.67
+      "estagio_1_saldo": 153173104.54,
+      "estagio_2_saldo": 15314492.29,
+      "estagio_3_saldo": 16670746.68,
+      "estagio_1_pct": 82.73,
+      "estagio_2_pct": 8.27,
+      "estagio_3_pct": 9.0
     },
     {
       "data_fechamento": "2020-06-30",
-      "estagio_1_saldo": 16580921.41,
-      "estagio_2_saldo": 1660543.84,
-      "estagio_3_saldo": 1707189.1,
-      "estagio_1_pct": 83.12,
-      "estagio_2_pct": 8.32,
-      "estagio_3_pct": 8.56
+      "estagio_1_saldo": 153555399.88,
+      "estagio_2_saldo": 15138624.82,
+      "estagio_3_saldo": 15494751.37,
+      "estagio_1_pct": 83.37,
+      "estagio_2_pct": 8.22,
+      "estagio_3_pct": 8.41
     },
     {
       "data_fechamento": "2020-07-31",
-      "estagio_1_saldo": 16631102.18,
-      "estagio_2_saldo": 1592573.36,
-      "estagio_3_saldo": 1616196.59,
-      "estagio_1_pct": 83.83,
-      "estagio_2_pct": 8.03,
-      "estagio_3_pct": 8.15
+      "estagio_1_saldo": 152325346.4,
+      "estagio_2_saldo": 15559385.1,
+      "estagio_3_saldo": 15299642.47,
+      "estagio_1_pct": 83.15,
+      "estagio_2_pct": 8.49,
+      "estagio_3_pct": 8.35
     },
     {
       "data_fechamento": "2020-08-31",
-      "estagio_1_saldo": 16570205.28,
-      "estagio_2_saldo": 1614337.79,
-      "estagio_3_saldo": 1542774.04,
-      "estagio_1_pct": 84.0,
-      "estagio_2_pct": 8.18,
-      "estagio_3_pct": 7.82
+      "estagio_1_saldo": 151852751.55,
+      "estagio_2_saldo": 16727999.39,
+      "estagio_3_saldo": 13564386.12,
+      "estagio_1_pct": 83.37,
+      "estagio_2_pct": 9.18,
+      "estagio_3_pct": 7.45
     },
     {
       "data_fechamento": "2020-09-30",
-      "estagio_1_saldo": 16388131.19,
-      "estagio_2_saldo": 1630385.8,
-      "estagio_3_saldo": 1592472.24,
-      "estagio_1_pct": 83.57,
-      "estagio_2_pct": 8.31,
-      "estagio_3_pct": 8.12
+      "estagio_1_saldo": 150801013.33,
+      "estagio_2_saldo": 16850865.6,
+      "estagio_3_saldo": 13419186.39,
+      "estagio_1_pct": 83.28,
+      "estagio_2_pct": 9.31,
+      "estagio_3_pct": 7.41
     },
     {
       "data_fechamento": "2020-10-31",
-      "estagio_1_saldo": 16268606.59,
-      "estagio_2_saldo": 1646785.49,
-      "estagio_3_saldo": 1575496.44,
-      "estagio_1_pct": 83.47,
-      "estagio_2_pct": 8.45,
-      "estagio_3_pct": 8.08
+      "estagio_1_saldo": 150708307.66,
+      "estagio_2_saldo": 15741419.19,
+      "estagio_3_saldo": 13512432.07,
+      "estagio_1_pct": 83.74,
+      "estagio_2_pct": 8.75,
+      "estagio_3_pct": 7.51
     },
     {
       "data_fechamento": "2020-11-30",
-      "estagio_1_saldo": 16126898.23,
-      "estagio_2_saldo": 1704284.59,
-      "estagio_3_saldo": 1535832.29,
-      "estagio_1_pct": 83.27,
-      "estagio_2_pct": 8.8,
-      "estagio_3_pct": 7.93
+      "estagio_1_saldo": 149706453.02,
+      "estagio_2_saldo": 14148156.5,
+      "estagio_3_saldo": 14963808.26,
+      "estagio_1_pct": 83.72,
+      "estagio_2_pct": 7.91,
+      "estagio_3_pct": 8.37
     },
     {
       "data_fechamento": "2020-12-31",
-      "estagio_1_saldo": 16011701.46,
-      "estagio_2_saldo": 1831596.9,
-      "estagio_3_saldo": 1396070.5,
-      "estagio_1_pct": 83.22,
-      "estagio_2_pct": 9.52,
-      "estagio_3_pct": 7.26
+      "estagio_1_saldo": 149591831.5,
+      "estagio_2_saldo": 13490100.33,
+      "estagio_3_saldo": 14557909.97,
+      "estagio_1_pct": 84.21,
+      "estagio_2_pct": 7.59,
+      "estagio_3_pct": 8.2
     },
     {
       "data_fechamento": "2021-01-31",
-      "estagio_1_saldo": 15887650.98,
-      "estagio_2_saldo": 2011020.35,
-      "estagio_3_saldo": 1209278.55,
-      "estagio_1_pct": 83.15,
-      "estagio_2_pct": 10.52,
-      "estagio_3_pct": 6.33
+      "estagio_1_saldo": 147571502.02,
+      "estagio_2_saldo": 14359612.61,
+      "estagio_3_saldo": 14495316.55,
+      "estagio_1_pct": 83.64,
+      "estagio_2_pct": 8.14,
+      "estagio_3_pct": 8.22
     },
     {
       "data_fechamento": "2021-02-28",
-      "estagio_1_saldo": 15636215.19,
-      "estagio_2_saldo": 2034765.45,
-      "estagio_3_saldo": 1301777.41,
-      "estagio_1_pct": 82.41,
-      "estagio_2_pct": 10.72,
-      "estagio_3_pct": 6.86
+      "estagio_1_saldo": 147069484.25,
+      "estagio_2_saldo": 14969021.19,
+      "estagio_3_saldo": 13139680.24,
+      "estagio_1_pct": 83.95,
+      "estagio_2_pct": 8.55,
+      "estagio_3_pct": 7.5
     },
     {
       "data_fechamento": "2021-03-31",
-      "estagio_1_saldo": 15543170.6,
-      "estagio_2_saldo": 1918832.01,
-      "estagio_3_saldo": 1371790.78,
-      "estagio_1_pct": 82.53,
-      "estagio_2_pct": 10.19,
-      "estagio_3_pct": 7.28
+      "estagio_1_saldo": 145445107.53,
+      "estagio_2_saldo": 13777640.54,
+      "estagio_3_saldo": 14672357.47,
+      "estagio_1_pct": 83.64,
+      "estagio_2_pct": 7.92,
+      "estagio_3_pct": 8.44
     },
     {
       "data_fechamento": "2021-04-30",
-      "estagio_1_saldo": 15320868.61,
-      "estagio_2_saldo": 1945883.55,
-      "estagio_3_saldo": 1424303.78,
-      "estagio_1_pct": 81.97,
-      "estagio_2_pct": 10.41,
-      "estagio_3_pct": 7.62
+      "estagio_1_saldo": 142839899.72,
+      "estagio_2_saldo": 15121622.9,
+      "estagio_3_saldo": 14615667.96,
+      "estagio_1_pct": 82.77,
+      "estagio_2_pct": 8.76,
+      "estagio_3_pct": 8.47
     },
     {
       "data_fechamento": "2021-05-31",
-      "estagio_1_saldo": 15163321.08,
-      "estagio_2_saldo": 1880654.01,
-      "estagio_3_saldo": 1500570.65,
-      "estagio_1_pct": 81.77,
-      "estagio_2_pct": 10.14,
-      "estagio_3_pct": 8.09
+      "estagio_1_saldo": 139785334.71,
+      "estagio_2_saldo": 16013442.75,
+      "estagio_3_saldo": 15425663.32,
+      "estagio_1_pct": 81.64,
+      "estagio_2_pct": 9.35,
+      "estagio_3_pct": 9.01
     },
     {
       "data_fechamento": "2021-06-30",
-      "estagio_1_saldo": 14988726.17,
-      "estagio_2_saldo": 1884654.23,
-      "estagio_3_saldo": 1520882.38,
-      "estagio_1_pct": 81.49,
-      "estagio_2_pct": 10.25,
-      "estagio_3_pct": 8.27
+      "estagio_1_saldo": 139664231.34,
+      "estagio_2_saldo": 16450107.25,
+      "estagio_3_saldo": 13722517.72,
+      "estagio_1_pct": 82.23,
+      "estagio_2_pct": 9.69,
+      "estagio_3_pct": 8.08
     },
     {
       "data_fechamento": "2021-07-31",
-      "estagio_1_saldo": 14906762.72,
-      "estagio_2_saldo": 1932586.82,
-      "estagio_3_saldo": 1400857.47,
-      "estagio_1_pct": 81.72,
-      "estagio_2_pct": 10.6,
-      "estagio_3_pct": 7.68
+      "estagio_1_saldo": 138732627.91,
+      "estagio_2_saldo": 17151266.29,
+      "estagio_3_saldo": 12530542.92,
+      "estagio_1_pct": 82.38,
+      "estagio_2_pct": 10.18,
+      "estagio_3_pct": 7.44
     },
     {
       "data_fechamento": "2021-08-31",
-      "estagio_1_saldo": 14716058.08,
-      "estagio_2_saldo": 1965854.63,
-      "estagio_3_saldo": 1400465.68,
-      "estagio_1_pct": 81.38,
-      "estagio_2_pct": 10.87,
-      "estagio_3_pct": 7.74
+      "estagio_1_saldo": 138481497.8,
+      "estagio_2_saldo": 16819012.58,
+      "estagio_3_saldo": 11656672.75,
+      "estagio_1_pct": 82.94,
+      "estagio_2_pct": 10.07,
+      "estagio_3_pct": 6.98
     },
     {
       "data_fechamento": "2021-09-30",
-      "estagio_1_saldo": 14441186.77,
-      "estagio_2_saldo": 2059919.94,
-      "estagio_3_saldo": 1419670.29,
-      "estagio_1_pct": 80.58,
-      "estagio_2_pct": 11.49,
-      "estagio_3_pct": 7.92
+      "estagio_1_saldo": 136794264.91,
+      "estagio_2_saldo": 17168702.56,
+      "estagio_3_saldo": 11502126.9,
+      "estagio_1_pct": 82.67,
+      "estagio_2_pct": 10.38,
+      "estagio_3_pct": 6.95
     },
     {
       "data_fechamento": "2021-10-31",
-      "estagio_1_saldo": 14302222.07,
-      "estagio_2_saldo": 1926051.2,
-      "estagio_3_saldo": 1527129.52,
-      "estagio_1_pct": 80.55,
-      "estagio_2_pct": 10.85,
-      "estagio_3_pct": 8.6
+      "estagio_1_saldo": 135203468.59,
+      "estagio_2_saldo": 16046772.17,
+      "estagio_3_saldo": 12687930.18,
+      "estagio_1_pct": 82.47,
+      "estagio_2_pct": 9.79,
+      "estagio_3_pct": 7.74
     },
     {
       "data_fechamento": "2021-11-30",
-      "estagio_1_saldo": 14212193.92,
-      "estagio_2_saldo": 1859467.53,
-      "estagio_3_saldo": 1514594.36,
-      "estagio_1_pct": 80.81,
-      "estagio_2_pct": 10.57,
-      "estagio_3_pct": 8.61
+      "estagio_1_saldo": 133887317.32,
+      "estagio_2_saldo": 16381309.83,
+      "estagio_3_saldo": 12107785.43,
+      "estagio_1_pct": 82.45,
+      "estagio_2_pct": 10.09,
+      "estagio_3_pct": 7.46
     },
     {
       "data_fechamento": "2021-12-31",
-      "estagio_1_saldo": 14199667.14,
-      "estagio_2_saldo": 1770291.44,
-      "estagio_3_saldo": 1443377.47,
-      "estagio_1_pct": 81.54,
-      "estagio_2_pct": 10.17,
-      "estagio_3_pct": 8.29
+      "estagio_1_saldo": 133861928.95,
+      "estagio_2_saldo": 16500743.9,
+      "estagio_3_saldo": 10417146.73,
+      "estagio_1_pct": 83.26,
+      "estagio_2_pct": 10.26,
+      "estagio_3_pct": 6.48
     },
     {
       "data_fechamento": "2022-01-31",
-      "estagio_1_saldo": 19906899.42,
-      "estagio_2_saldo": 2272356.79,
-      "estagio_3_saldo": 2029512.71,
-      "estagio_1_pct": 82.23,
-      "estagio_2_pct": 9.39,
-      "estagio_3_pct": 8.38
+      "estagio_1_saldo": 184526533.28,
+      "estagio_2_saldo": 24065822.56,
+      "estagio_3_saldo": 14930666.34,
+      "estagio_1_pct": 82.55,
+      "estagio_2_pct": 10.77,
+      "estagio_3_pct": 6.68
     },
     {
       "data_fechamento": "2022-02-28",
-      "estagio_1_saldo": 19853796.44,
-      "estagio_2_saldo": 2098809.04,
-      "estagio_3_saldo": 2120971.63,
-      "estagio_1_pct": 82.47,
-      "estagio_2_pct": 8.72,
-      "estagio_3_pct": 8.81
+      "estagio_1_saldo": 184335470.31,
+      "estagio_2_saldo": 22517731.81,
+      "estagio_3_saldo": 15421574.67,
+      "estagio_1_pct": 82.93,
+      "estagio_2_pct": 10.13,
+      "estagio_3_pct": 6.94
     },
     {
       "data_fechamento": "2022-03-31",
-      "estagio_1_saldo": 19910590.91,
-      "estagio_2_saldo": 1850821.31,
-      "estagio_3_saldo": 2173200.25,
-      "estagio_1_pct": 83.19,
-      "estagio_2_pct": 7.73,
-      "estagio_3_pct": 9.08
+      "estagio_1_saldo": 182859186.92,
+      "estagio_2_saldo": 20950952.06,
+      "estagio_3_saldo": 17181557.58,
+      "estagio_1_pct": 82.74,
+      "estagio_2_pct": 9.48,
+      "estagio_3_pct": 7.77
     },
     {
       "data_fechamento": "2022-04-30",
-      "estagio_1_saldo": 19803725.42,
-      "estagio_2_saldo": 1811712.41,
-      "estagio_3_saldo": 2176437.22,
-      "estagio_1_pct": 83.24,
-      "estagio_2_pct": 7.61,
-      "estagio_3_pct": 9.15
+      "estagio_1_saldo": 180961585.0,
+      "estagio_2_saldo": 20827773.64,
+      "estagio_3_saldo": 17884422.94,
+      "estagio_1_pct": 82.38,
+      "estagio_2_pct": 9.48,
+      "estagio_3_pct": 8.14
     },
     {
       "data_fechamento": "2022-05-31",
-      "estagio_1_saldo": 19436332.61,
-      "estagio_2_saldo": 1843578.05,
-      "estagio_3_saldo": 2365454.19,
-      "estagio_1_pct": 82.2,
-      "estagio_2_pct": 7.8,
-      "estagio_3_pct": 10.0
+      "estagio_1_saldo": 178943236.19,
+      "estagio_2_saldo": 20302083.16,
+      "estagio_3_saldo": 19075712.59,
+      "estagio_1_pct": 81.96,
+      "estagio_2_pct": 9.3,
+      "estagio_3_pct": 8.74
     },
     {
       "data_fechamento": "2022-06-30",
-      "estagio_1_saldo": 19166461.0,
-      "estagio_2_saldo": 1967429.36,
-      "estagio_3_saldo": 2361191.5,
-      "estagio_1_pct": 81.58,
-      "estagio_2_pct": 8.37,
-      "estagio_3_pct": 10.05
+      "estagio_1_saldo": 176808349.73,
+      "estagio_2_saldo": 20216121.99,
+      "estagio_3_saldo": 19908975.66,
+      "estagio_1_pct": 81.5,
+      "estagio_2_pct": 9.32,
+      "estagio_3_pct": 9.18
     },
     {
       "data_fechamento": "2022-07-31",
-      "estagio_1_saldo": 18682063.69,
-      "estagio_2_saldo": 2278063.25,
-      "estagio_3_saldo": 2380899.07,
-      "estagio_1_pct": 80.04,
-      "estagio_2_pct": 9.76,
-      "estagio_3_pct": 10.2
-    },
-    {
-      "data_fechamento": "2022-08-31",
-      "estagio_1_saldo": 18589322.86,
-      "estagio_2_saldo": 2315834.92,
-      "estagio_3_saldo": 2278039.66,
-      "estagio_1_pct": 80.18,
-      "estagio_2_pct": 9.99,
-      "estagio_3_pct": 9.83
-    },
-    {
-      "data_fechamento": "2022-09-30",
-      "estagio_1_saldo": 18122033.46,
-      "estagio_2_saldo": 2639614.24,
-      "estagio_3_saldo": 2259948.35,
-      "estagio_1_pct": 78.72,
-      "estagio_2_pct": 11.47,
-      "estagio_3_pct": 9.82
-    },
-    {
-      "data_fechamento": "2022-10-31",
-      "estagio_1_saldo": 17816589.57,
-      "estagio_2_saldo": 2777673.7,
-      "estagio_3_saldo": 2261958.56,
-      "estagio_1_pct": 77.95,
-      "estagio_2_pct": 12.15,
-      "estagio_3_pct": 9.9
-    },
-    {
-      "data_fechamento": "2022-11-30",
-      "estagio_1_saldo": 17876606.99,
-      "estagio_2_saldo": 2785851.14,
-      "estagio_3_saldo": 2024616.72,
-      "estagio_1_pct": 78.8,
-      "estagio_2_pct": 12.28,
-      "estagio_3_pct": 8.92
-    },
-    {
-      "data_fechamento": "2022-12-31",
-      "estagio_1_saldo": 17562843.3,
-      "estagio_2_saldo": 3046362.12,
-      "estagio_3_saldo": 1904949.67,
-      "estagio_1_pct": 78.01,
-      "estagio_2_pct": 13.53,
+      "estagio_1_saldo": 172888861.93,
+      "estagio_2_saldo": 24391149.96,
+      "estagio_3_saldo": 18231016.31,
+      "estagio_1_pct": 80.22,
+      "estagio_2_pct": 11.32,
       "estagio_3_pct": 8.46
     },
     {
+      "data_fechamento": "2022-08-31",
+      "estagio_1_saldo": 169341821.82,
+      "estagio_2_saldo": 25709981.99,
+      "estagio_3_saldo": 19001970.35,
+      "estagio_1_pct": 79.11,
+      "estagio_2_pct": 12.01,
+      "estagio_3_pct": 8.88
+    },
+    {
+      "data_fechamento": "2022-09-30",
+      "estagio_1_saldo": 164359636.33,
+      "estagio_2_saldo": 28766137.1,
+      "estagio_3_saldo": 19435911.95,
+      "estagio_1_pct": 77.32,
+      "estagio_2_pct": 13.53,
+      "estagio_3_pct": 9.14
+    },
+    {
+      "data_fechamento": "2022-10-31",
+      "estagio_1_saldo": 159246137.18,
+      "estagio_2_saldo": 31247883.41,
+      "estagio_3_saldo": 20540741.32,
+      "estagio_1_pct": 75.46,
+      "estagio_2_pct": 14.81,
+      "estagio_3_pct": 9.73
+    },
+    {
+      "data_fechamento": "2022-11-30",
+      "estagio_1_saldo": 158311950.53,
+      "estagio_2_saldo": 31494433.77,
+      "estagio_3_saldo": 19666619.34,
+      "estagio_1_pct": 75.58,
+      "estagio_2_pct": 15.04,
+      "estagio_3_pct": 9.39
+    },
+    {
+      "data_fechamento": "2022-12-31",
+      "estagio_1_saldo": 155849843.01,
+      "estagio_2_saldo": 33317547.61,
+      "estagio_3_saldo": 18709020.02,
+      "estagio_1_pct": 74.97,
+      "estagio_2_pct": 16.03,
+      "estagio_3_pct": 9.0
+    },
+    {
       "data_fechamento": "2023-01-31",
-      "estagio_1_saldo": 17404413.52,
-      "estagio_2_saldo": 3086416.12,
-      "estagio_3_saldo": 1846632.89,
-      "estagio_1_pct": 77.92,
-      "estagio_2_pct": 13.82,
-      "estagio_3_pct": 8.27
+      "estagio_1_saldo": 152842119.26,
+      "estagio_2_saldo": 35213866.21,
+      "estagio_3_saldo": 18188997.39,
+      "estagio_1_pct": 74.11,
+      "estagio_2_pct": 17.07,
+      "estagio_3_pct": 8.82
     },
     {
       "data_fechamento": "2023-02-28",
-      "estagio_1_saldo": 17298347.2,
-      "estagio_2_saldo": 3228092.72,
-      "estagio_3_saldo": 1630557.23,
-      "estagio_1_pct": 78.07,
-      "estagio_2_pct": 14.57,
-      "estagio_3_pct": 7.36
+      "estagio_1_saldo": 150530739.28,
+      "estagio_2_saldo": 36282244.07,
+      "estagio_3_saldo": 17765736.99,
+      "estagio_1_pct": 73.58,
+      "estagio_2_pct": 17.74,
+      "estagio_3_pct": 8.68
     },
     {
       "data_fechamento": "2023-03-31",
-      "estagio_1_saldo": 17086245.08,
-      "estagio_2_saldo": 3263297.61,
-      "estagio_3_saldo": 1623216.26,
-      "estagio_1_pct": 77.76,
-      "estagio_2_pct": 14.85,
-      "estagio_3_pct": 7.39
+      "estagio_1_saldo": 149269294.54,
+      "estagio_2_saldo": 37953601.45,
+      "estagio_3_saldo": 15654727.05,
+      "estagio_1_pct": 73.58,
+      "estagio_2_pct": 18.71,
+      "estagio_3_pct": 7.72
     },
     {
       "data_fechamento": "2023-04-30",
-      "estagio_1_saldo": 16859941.56,
-      "estagio_2_saldo": 3494271.52,
-      "estagio_3_saldo": 1430534.97,
-      "estagio_1_pct": 77.39,
-      "estagio_2_pct": 16.04,
-      "estagio_3_pct": 6.57
+      "estagio_1_saldo": 145317130.4,
+      "estagio_2_saldo": 40599444.67,
+      "estagio_3_saldo": 15225115.95,
+      "estagio_1_pct": 72.25,
+      "estagio_2_pct": 20.18,
+      "estagio_3_pct": 7.57
     },
     {
       "data_fechamento": "2023-05-31",
-      "estagio_1_saldo": 16596189.16,
-      "estagio_2_saldo": 3665039.5,
-      "estagio_3_saldo": 1331735.57,
-      "estagio_1_pct": 76.86,
-      "estagio_2_pct": 16.97,
-      "estagio_3_pct": 6.17
+      "estagio_1_saldo": 142881000.02,
+      "estagio_2_saldo": 41659479.57,
+      "estagio_3_saldo": 14830444.6,
+      "estagio_1_pct": 71.67,
+      "estagio_2_pct": 20.9,
+      "estagio_3_pct": 7.44
     },
     {
       "data_fechamento": "2023-06-30",
-      "estagio_1_saldo": 16246332.52,
-      "estagio_2_saldo": 3668447.64,
-      "estagio_3_saldo": 1482627.56,
-      "estagio_1_pct": 75.93,
-      "estagio_2_pct": 17.14,
-      "estagio_3_pct": 6.93
+      "estagio_1_saldo": 139390893.4,
+      "estagio_2_saldo": 42442697.73,
+      "estagio_3_saldo": 15731731.56,
+      "estagio_1_pct": 70.55,
+      "estagio_2_pct": 21.48,
+      "estagio_3_pct": 7.96
     },
     {
       "data_fechamento": "2023-07-31",
-      "estagio_1_saldo": 15889925.06,
-      "estagio_2_saldo": 3839353.62,
-      "estagio_3_saldo": 1468799.68,
-      "estagio_1_pct": 74.96,
-      "estagio_2_pct": 18.11,
-      "estagio_3_pct": 6.93
+      "estagio_1_saldo": 138864335.15,
+      "estagio_2_saldo": 40966761.94,
+      "estagio_3_saldo": 15893789.24,
+      "estagio_1_pct": 70.95,
+      "estagio_2_pct": 20.93,
+      "estagio_3_pct": 8.12
     },
     {
       "data_fechamento": "2023-08-31",
-      "estagio_1_saldo": 15393054.32,
-      "estagio_2_saldo": 3688710.65,
-      "estagio_3_saldo": 1913211.28,
-      "estagio_1_pct": 73.32,
-      "estagio_2_pct": 17.57,
-      "estagio_3_pct": 9.11
+      "estagio_1_saldo": 136337131.1,
+      "estagio_2_saldo": 38148947.14,
+      "estagio_3_saldo": 19363537.06,
+      "estagio_1_pct": 70.33,
+      "estagio_2_pct": 19.68,
+      "estagio_3_pct": 9.99
     },
     {
       "data_fechamento": "2023-09-30",
-      "estagio_1_saldo": 15004169.36,
-      "estagio_2_saldo": 3862670.39,
-      "estagio_3_saldo": 1921261.56,
-      "estagio_1_pct": 72.18,
-      "estagio_2_pct": 18.58,
-      "estagio_3_pct": 9.24
+      "estagio_1_saldo": 134164509.02,
+      "estagio_2_saldo": 37046093.52,
+      "estagio_3_saldo": 20728906.85,
+      "estagio_1_pct": 69.9,
+      "estagio_2_pct": 19.3,
+      "estagio_3_pct": 10.8
     },
     {
       "data_fechamento": "2023-10-31",
-      "estagio_1_saldo": 14490969.86,
-      "estagio_2_saldo": 3799059.86,
-      "estagio_3_saldo": 2287423.91,
-      "estagio_1_pct": 70.42,
-      "estagio_2_pct": 18.46,
-      "estagio_3_pct": 11.12
+      "estagio_1_saldo": 131924001.25,
+      "estagio_2_saldo": 34485041.13,
+      "estagio_3_saldo": 23585526.51,
+      "estagio_1_pct": 69.44,
+      "estagio_2_pct": 18.15,
+      "estagio_3_pct": 12.41
     },
     {
       "data_fechamento": "2023-11-30",
-      "estagio_1_saldo": 14249236.8,
-      "estagio_2_saldo": 3535270.86,
-      "estagio_3_saldo": 2578525.42,
-      "estagio_1_pct": 69.98,
-      "estagio_2_pct": 17.36,
-      "estagio_3_pct": 12.66
+      "estagio_1_saldo": 129906607.73,
+      "estagio_2_saldo": 32211531.78,
+      "estagio_3_saldo": 25896654.04,
+      "estagio_1_pct": 69.09,
+      "estagio_2_pct": 17.13,
+      "estagio_3_pct": 13.77
     },
     {
       "data_fechamento": "2023-12-31",
-      "estagio_1_saldo": 13935615.19,
-      "estagio_2_saldo": 3694090.6,
-      "estagio_3_saldo": 2515133.91,
-      "estagio_1_pct": 69.18,
-      "estagio_2_pct": 18.34,
-      "estagio_3_pct": 12.49
-    },
-    {
-      "data_fechamento": "2024-01-31",
-      "estagio_1_saldo": 19079979.16,
-      "estagio_2_saldo": 4911645.75,
-      "estagio_3_saldo": 3989939.14,
-      "estagio_1_pct": 68.19,
-      "estagio_2_pct": 17.55,
-      "estagio_3_pct": 14.26
-    },
-    {
-      "data_fechamento": "2024-02-29",
-      "estagio_1_saldo": 18710434.92,
-      "estagio_2_saldo": 5068022.93,
-      "estagio_3_saldo": 4022640.91,
-      "estagio_1_pct": 67.3,
-      "estagio_2_pct": 18.23,
-      "estagio_3_pct": 14.47
-    },
-    {
-      "data_fechamento": "2024-03-31",
-      "estagio_1_saldo": 18287441.71,
-      "estagio_2_saldo": 5426741.34,
-      "estagio_3_saldo": 3902677.47,
-      "estagio_1_pct": 66.22,
-      "estagio_2_pct": 19.65,
-      "estagio_3_pct": 14.13
-    },
-    {
-      "data_fechamento": "2024-04-30",
-      "estagio_1_saldo": 17824948.85,
-      "estagio_2_saldo": 5800843.72,
-      "estagio_3_saldo": 3803056.96,
-      "estagio_1_pct": 64.99,
-      "estagio_2_pct": 21.15,
-      "estagio_3_pct": 13.87
-    },
-    {
-      "data_fechamento": "2024-05-31",
-      "estagio_1_saldo": 18137698.01,
-      "estagio_2_saldo": 5600286.98,
-      "estagio_3_saldo": 3499080.79,
-      "estagio_1_pct": 66.59,
-      "estagio_2_pct": 20.56,
-      "estagio_3_pct": 12.85
-    },
-    {
-      "data_fechamento": "2024-06-30",
-      "estagio_1_saldo": 17990393.44,
-      "estagio_2_saldo": 5494758.78,
-      "estagio_3_saldo": 3556357.04,
-      "estagio_1_pct": 66.53,
-      "estagio_2_pct": 20.32,
-      "estagio_3_pct": 13.15
-    },
-    {
-      "data_fechamento": "2024-07-31",
-      "estagio_1_saldo": 17915206.91,
-      "estagio_2_saldo": 5542833.53,
-      "estagio_3_saldo": 3384139.46,
-      "estagio_1_pct": 66.74,
-      "estagio_2_pct": 20.65,
-      "estagio_3_pct": 12.61
-    },
-    {
-      "data_fechamento": "2024-08-31",
-      "estagio_1_saldo": 17860807.96,
-      "estagio_2_saldo": 5345047.68,
-      "estagio_3_saldo": 3433222.12,
-      "estagio_1_pct": 67.05,
-      "estagio_2_pct": 20.06,
-      "estagio_3_pct": 12.89
-    },
-    {
-      "data_fechamento": "2024-09-30",
-      "estagio_1_saldo": 17623338.85,
-      "estagio_2_saldo": 5001903.11,
-      "estagio_3_saldo": 3806960.91,
-      "estagio_1_pct": 66.67,
-      "estagio_2_pct": 18.92,
-      "estagio_3_pct": 14.4
-    },
-    {
-      "data_fechamento": "2024-10-31",
-      "estagio_1_saldo": 17644692.65,
-      "estagio_2_saldo": 4829171.13,
-      "estagio_3_saldo": 3747691.32,
-      "estagio_1_pct": 67.29,
-      "estagio_2_pct": 18.42,
+      "estagio_1_saldo": 126823620.51,
+      "estagio_2_saldo": 32591344.34,
+      "estagio_3_saldo": 26585218.62,
+      "estagio_1_pct": 68.18,
+      "estagio_2_pct": 17.52,
       "estagio_3_pct": 14.29
     },
     {
-      "data_fechamento": "2024-11-30",
-      "estagio_1_saldo": 17022049.38,
-      "estagio_2_saldo": 4886050.89,
-      "estagio_3_saldo": 4099034.32,
-      "estagio_1_pct": 65.45,
-      "estagio_2_pct": 18.79,
-      "estagio_3_pct": 15.76
+      "data_fechamento": "2024-01-31",
+      "estagio_1_saldo": 174398973.75,
+      "estagio_2_saldo": 43791355.97,
+      "estagio_3_saldo": 40167449.21,
+      "estagio_1_pct": 67.5,
+      "estagio_2_pct": 16.95,
+      "estagio_3_pct": 15.55
     },
     {
-      "data_fechamento": "2024-12-31",
-      "estagio_1_saldo": 16838699.2,
-      "estagio_2_saldo": 4964608.51,
-      "estagio_3_saldo": 3985633.55,
-      "estagio_1_pct": 65.29,
-      "estagio_2_pct": 19.25,
-      "estagio_3_pct": 15.45
-    },
-    {
-      "data_fechamento": "2025-01-31",
-      "estagio_1_saldo": 16475727.83,
-      "estagio_2_saldo": 5007857.94,
-      "estagio_3_saldo": 4083389.36,
-      "estagio_1_pct": 64.44,
-      "estagio_2_pct": 19.59,
-      "estagio_3_pct": 15.97
-    },
-    {
-      "data_fechamento": "2025-02-28",
-      "estagio_1_saldo": 16373250.69,
-      "estagio_2_saldo": 4971082.14,
-      "estagio_3_saldo": 3996903.43,
-      "estagio_1_pct": 64.61,
-      "estagio_2_pct": 19.62,
-      "estagio_3_pct": 15.77
-    },
-    {
-      "data_fechamento": "2025-03-31",
-      "estagio_1_saldo": 16304398.84,
-      "estagio_2_saldo": 4858348.05,
-      "estagio_3_saldo": 3948977.64,
-      "estagio_1_pct": 64.93,
-      "estagio_2_pct": 19.35,
-      "estagio_3_pct": 15.73
-    },
-    {
-      "data_fechamento": "2025-04-30",
-      "estagio_1_saldo": 16017572.52,
-      "estagio_2_saldo": 4721779.3,
-      "estagio_3_saldo": 4139088.22,
-      "estagio_1_pct": 64.38,
-      "estagio_2_pct": 18.98,
-      "estagio_3_pct": 16.64
-    },
-    {
-      "data_fechamento": "2025-05-31",
-      "estagio_1_saldo": 16209262.24,
-      "estagio_2_saldo": 4267217.76,
-      "estagio_3_saldo": 4164902.75,
-      "estagio_1_pct": 65.78,
-      "estagio_2_pct": 17.32,
-      "estagio_3_pct": 16.9
-    },
-    {
-      "data_fechamento": "2025-06-30",
-      "estagio_1_saldo": 16257127.3,
-      "estagio_2_saldo": 4278733.93,
-      "estagio_3_saldo": 3864691.42,
+      "data_fechamento": "2024-02-29",
+      "estagio_1_saldo": 171034090.91,
+      "estagio_2_saldo": 43529987.37,
+      "estagio_3_saldo": 42127438.1,
       "estagio_1_pct": 66.63,
-      "estagio_2_pct": 17.54,
-      "estagio_3_pct": 15.84
+      "estagio_2_pct": 16.96,
+      "estagio_3_pct": 16.41
     },
     {
-      "data_fechamento": "2025-07-31",
-      "estagio_1_saldo": 16313396.95,
-      "estagio_2_saldo": 4245723.92,
-      "estagio_3_saldo": 3596828.92,
-      "estagio_1_pct": 67.53,
-      "estagio_2_pct": 17.58,
-      "estagio_3_pct": 14.89
+      "data_fechamento": "2024-03-31",
+      "estagio_1_saldo": 168972194.29,
+      "estagio_2_saldo": 42363934.36,
+      "estagio_3_saldo": 43654290.44,
+      "estagio_1_pct": 66.27,
+      "estagio_2_pct": 16.61,
+      "estagio_3_pct": 17.12
     },
     {
-      "data_fechamento": "2025-08-31",
-      "estagio_1_saldo": 16389350.97,
-      "estagio_2_saldo": 3981094.38,
-      "estagio_3_saldo": 3537128.72,
-      "estagio_1_pct": 68.55,
-      "estagio_2_pct": 16.65,
-      "estagio_3_pct": 14.8
+      "data_fechamento": "2024-04-30",
+      "estagio_1_saldo": 168089726.45,
+      "estagio_2_saldo": 41845758.51,
+      "estagio_3_saldo": 43319002.09,
+      "estagio_1_pct": 66.37,
+      "estagio_2_pct": 16.52,
+      "estagio_3_pct": 17.1
     },
     {
-      "data_fechamento": "2025-09-30",
-      "estagio_1_saldo": 15983122.09,
-      "estagio_2_saldo": 3984095.14,
-      "estagio_3_saldo": 3688208.35,
-      "estagio_1_pct": 67.57,
-      "estagio_2_pct": 16.84,
-      "estagio_3_pct": 15.59
+      "data_fechamento": "2024-05-31",
+      "estagio_1_saldo": 170633732.16,
+      "estagio_2_saldo": 39516051.26,
+      "estagio_3_saldo": 41333936.81,
+      "estagio_1_pct": 67.85,
+      "estagio_2_pct": 15.71,
+      "estagio_3_pct": 16.44
     },
     {
-      "data_fechamento": "2025-10-31",
-      "estagio_1_saldo": 15932151.08,
-      "estagio_2_saldo": 3960093.82,
-      "estagio_3_saldo": 3507259.4,
-      "estagio_1_pct": 68.09,
-      "estagio_2_pct": 16.92,
-      "estagio_3_pct": 14.99
-    },
-    {
-      "data_fechamento": "2025-11-30",
-      "estagio_1_saldo": 15766270.71,
-      "estagio_2_saldo": 3866456.84,
-      "estagio_3_saldo": 3507082.74,
-      "estagio_1_pct": 68.13,
-      "estagio_2_pct": 16.71,
-      "estagio_3_pct": 15.16
-    },
-    {
-      "data_fechamento": "2025-12-31",
-      "estagio_1_saldo": 15371007.52,
-      "estagio_2_saldo": 3772154.18,
-      "estagio_3_saldo": 3733181.73,
-      "estagio_1_pct": 67.19,
-      "estagio_2_pct": 16.49,
+      "data_fechamento": "2024-06-30",
+      "estagio_1_saldo": 171452334.63,
+      "estagio_2_saldo": 37470596.59,
+      "estagio_3_saldo": 40755187.47,
+      "estagio_1_pct": 68.67,
+      "estagio_2_pct": 15.01,
       "estagio_3_pct": 16.32
     },
     {
+      "data_fechamento": "2024-07-31",
+      "estagio_1_saldo": 169361061.16,
+      "estagio_2_saldo": 39039224.81,
+      "estagio_3_saldo": 39437396.47,
+      "estagio_1_pct": 68.34,
+      "estagio_2_pct": 15.75,
+      "estagio_3_pct": 15.91
+    },
+    {
+      "data_fechamento": "2024-08-31",
+      "estagio_1_saldo": 170248741.49,
+      "estagio_2_saldo": 40678098.06,
+      "estagio_3_saldo": 35035571.82,
+      "estagio_1_pct": 69.22,
+      "estagio_2_pct": 16.54,
+      "estagio_3_pct": 14.24
+    },
+    {
+      "data_fechamento": "2024-09-30",
+      "estagio_1_saldo": 167436963.62,
+      "estagio_2_saldo": 40901877.45,
+      "estagio_3_saldo": 35713464.5,
+      "estagio_1_pct": 68.61,
+      "estagio_2_pct": 16.76,
+      "estagio_3_pct": 14.63
+    },
+    {
+      "data_fechamento": "2024-10-31",
+      "estagio_1_saldo": 168324922.11,
+      "estagio_2_saldo": 39710541.65,
+      "estagio_3_saldo": 34071901.16,
+      "estagio_1_pct": 69.52,
+      "estagio_2_pct": 16.4,
+      "estagio_3_pct": 14.07
+    },
+    {
+      "data_fechamento": "2024-11-30",
+      "estagio_1_saldo": 166872209.29,
+      "estagio_2_saldo": 40860906.97,
+      "estagio_3_saldo": 32394473.28,
+      "estagio_1_pct": 69.49,
+      "estagio_2_pct": 17.02,
+      "estagio_3_pct": 13.49
+    },
+    {
+      "data_fechamento": "2024-12-31",
+      "estagio_1_saldo": 166116836.41,
+      "estagio_2_saldo": 40634102.02,
+      "estagio_3_saldo": 31362041.06,
+      "estagio_1_pct": 69.76,
+      "estagio_2_pct": 17.07,
+      "estagio_3_pct": 13.17
+    },
+    {
+      "data_fechamento": "2025-01-31",
+      "estagio_1_saldo": 164062765.07,
+      "estagio_2_saldo": 41058288.78,
+      "estagio_3_saldo": 30942480.82,
+      "estagio_1_pct": 69.5,
+      "estagio_2_pct": 17.39,
+      "estagio_3_pct": 13.11
+    },
+    {
+      "data_fechamento": "2025-02-28",
+      "estagio_1_saldo": 164417645.2,
+      "estagio_2_saldo": 40752662.61,
+      "estagio_3_saldo": 28808947.26,
+      "estagio_1_pct": 70.27,
+      "estagio_2_pct": 17.42,
+      "estagio_3_pct": 12.31
+    },
+    {
+      "data_fechamento": "2025-03-31",
+      "estagio_1_saldo": 162777892.13,
+      "estagio_2_saldo": 40159253.61,
+      "estagio_3_saldo": 28922994.9,
+      "estagio_1_pct": 70.21,
+      "estagio_2_pct": 17.32,
+      "estagio_3_pct": 12.47
+    },
+    {
+      "data_fechamento": "2025-04-30",
+      "estagio_1_saldo": 160246261.07,
+      "estagio_2_saldo": 41318541.19,
+      "estagio_3_saldo": 28141389.33,
+      "estagio_1_pct": 69.76,
+      "estagio_2_pct": 17.99,
+      "estagio_3_pct": 12.25
+    },
+    {
+      "data_fechamento": "2025-05-31",
+      "estagio_1_saldo": 158722069.36,
+      "estagio_2_saldo": 39906664.81,
+      "estagio_3_saldo": 28888673.46,
+      "estagio_1_pct": 69.76,
+      "estagio_2_pct": 17.54,
+      "estagio_3_pct": 12.7
+    },
+    {
+      "data_fechamento": "2025-06-30",
+      "estagio_1_saldo": 157299131.29,
+      "estagio_2_saldo": 39901575.28,
+      "estagio_3_saldo": 28093082.43,
+      "estagio_1_pct": 69.82,
+      "estagio_2_pct": 17.71,
+      "estagio_3_pct": 12.47
+    },
+    {
+      "data_fechamento": "2025-07-31",
+      "estagio_1_saldo": 155608983.38,
+      "estagio_2_saldo": 40595800.36,
+      "estagio_3_saldo": 26830551.78,
+      "estagio_1_pct": 69.77,
+      "estagio_2_pct": 18.2,
+      "estagio_3_pct": 12.03
+    },
+    {
+      "data_fechamento": "2025-08-31",
+      "estagio_1_saldo": 153938116.58,
+      "estagio_2_saldo": 36972887.98,
+      "estagio_3_saldo": 29831042.94,
+      "estagio_1_pct": 69.74,
+      "estagio_2_pct": 16.75,
+      "estagio_3_pct": 13.51
+    },
+    {
+      "data_fechamento": "2025-09-30",
+      "estagio_1_saldo": 151454565.84,
+      "estagio_2_saldo": 37145480.72,
+      "estagio_3_saldo": 29813878.07,
+      "estagio_1_pct": 69.34,
+      "estagio_2_pct": 17.01,
+      "estagio_3_pct": 13.65
+    },
+    {
+      "data_fechamento": "2025-10-31",
+      "estagio_1_saldo": 148075063.54,
+      "estagio_2_saldo": 38007927.77,
+      "estagio_3_saldo": 29967975.54,
+      "estagio_1_pct": 68.54,
+      "estagio_2_pct": 17.59,
+      "estagio_3_pct": 13.87
+    },
+    {
+      "data_fechamento": "2025-11-30",
+      "estagio_1_saldo": 145365352.98,
+      "estagio_2_saldo": 39390794.73,
+      "estagio_3_saldo": 28897026.75,
+      "estagio_1_pct": 68.04,
+      "estagio_2_pct": 18.44,
+      "estagio_3_pct": 13.53
+    },
+    {
+      "data_fechamento": "2025-12-31",
+      "estagio_1_saldo": 144111235.95,
+      "estagio_2_saldo": 38491539.05,
+      "estagio_3_saldo": 28617772.34,
+      "estagio_1_pct": 68.23,
+      "estagio_2_pct": 18.22,
+      "estagio_3_pct": 13.55
+    },
+    {
       "data_fechamento": "2026-01-31",
-      "estagio_1_saldo": 21591827.82,
-      "estagio_2_saldo": 5381711.18,
-      "estagio_3_saldo": 4780820.26,
-      "estagio_1_pct": 68.0,
-      "estagio_2_pct": 16.95,
-      "estagio_3_pct": 15.06
+      "estagio_1_saldo": 201332714.34,
+      "estagio_2_saldo": 51920561.49,
+      "estagio_3_saldo": 39939259.75,
+      "estagio_1_pct": 68.67,
+      "estagio_2_pct": 17.71,
+      "estagio_3_pct": 13.62
     },
     {
       "data_fechamento": "2026-02-28",
-      "estagio_1_saldo": 21645566.55,
-      "estagio_2_saldo": 5339823.27,
-      "estagio_3_saldo": 4543230.51,
-      "estagio_1_pct": 68.65,
-      "estagio_2_pct": 16.94,
-      "estagio_3_pct": 14.41
+      "estagio_1_saldo": 196924695.59,
+      "estagio_2_saldo": 53494240.7,
+      "estagio_3_saldo": 40689319.67,
+      "estagio_1_pct": 67.65,
+      "estagio_2_pct": 18.38,
+      "estagio_3_pct": 13.98
     },
     {
       "data_fechamento": "2026-03-31",
-      "estagio_1_saldo": 21540147.03,
-      "estagio_2_saldo": 5118044.87,
-      "estagio_3_saldo": 4640916.67,
-      "estagio_1_pct": 68.82,
-      "estagio_2_pct": 16.35,
-      "estagio_3_pct": 14.83
+      "estagio_1_saldo": 193761782.4,
+      "estagio_2_saldo": 54720749.36,
+      "estagio_3_saldo": 40506609.92,
+      "estagio_1_pct": 67.05,
+      "estagio_2_pct": 18.94,
+      "estagio_3_pct": 14.02
     },
     {
       "data_fechamento": "2026-04-30",
-      "estagio_1_saldo": 21581189.37,
-      "estagio_2_saldo": 4901541.88,
-      "estagio_3_saldo": 4583092.82,
-      "estagio_1_pct": 69.47,
-      "estagio_2_pct": 15.78,
-      "estagio_3_pct": 14.75
+      "estagio_1_saldo": 190336012.17,
+      "estagio_2_saldo": 54084196.21,
+      "estagio_3_saldo": 42414984.11,
+      "estagio_1_pct": 66.36,
+      "estagio_2_pct": 18.86,
+      "estagio_3_pct": 14.79
     },
     {
       "data_fechamento": "2026-05-31",
-      "estagio_1_saldo": 21938178.21,
-      "estagio_2_saldo": 4276466.16,
-      "estagio_3_saldo": 4614122.37,
-      "estagio_1_pct": 71.16,
-      "estagio_2_pct": 13.87,
-      "estagio_3_pct": 14.97
+      "estagio_1_saldo": 194169131.98,
+      "estagio_2_saldo": 49241505.63,
+      "estagio_3_saldo": 41235771.02,
+      "estagio_1_pct": 68.21,
+      "estagio_2_pct": 17.3,
+      "estagio_3_pct": 14.49
     },
     {
       "data_fechamento": "2026-06-30",
-      "estagio_1_saldo": 21868193.59,
-      "estagio_2_saldo": 4390124.44,
-      "estagio_3_saldo": 4329618.66,
-      "estagio_1_pct": 71.49,
-      "estagio_2_pct": 14.35,
-      "estagio_3_pct": 14.15
+      "estagio_1_saldo": 194922489.97,
+      "estagio_2_saldo": 48811043.34,
+      "estagio_3_saldo": 38689256.64,
+      "estagio_1_pct": 69.02,
+      "estagio_2_pct": 17.28,
+      "estagio_3_pct": 13.7
     }
   ],
   "decomposicao_ap": {
-    "total_ativo_problematico": 4329618.66,
-    "saldo_over90": 3984101.83,
-    "percentual_over90": 92.02,
-    "saldo_renegociacao": 345516.83,
-    "percentual_renegociacao": 7.98,
+    "total_ativo_problematico": 38689256.64,
+    "saldo_over90": 35313418.62,
+    "percentual_over90": 91.27,
+    "saldo_renegociacao": 3375838.02,
+    "percentual_renegociacao": 8.73,
     "saldo_outros_preventivos": 0.0,
     "percentual_outros_preventivos": 0.0
   },
   "dispersao_linhas": [
     {
-      "id_linha": 3,
-      "nome_linha": "Capital de Giro Rotativo PJ",
-      "grupo_modalidade": "Capital de Giro",
-      "saldo_linha": 5421393.19,
-      "provisao_linha": 248609.88,
-      "taxa_risco_linha": 4.59
-    },
-    {
       "id_linha": 1,
       "nome_linha": "Pronaf Custeio Agricola",
       "grupo_modalidade": "Credito Rural",
-      "saldo_linha": 4517498.74,
-      "provisao_linha": 220335.78,
-      "taxa_risco_linha": 4.88
+      "saldo_linha": 42229018.98,
+      "provisao_linha": 2402954.93,
+      "taxa_risco_linha": 5.69
     },
     {
-      "id_linha": 7,
-      "nome_linha": "Financiamento Imobiliario Habitacional",
-      "grupo_modalidade": "Habitacional",
-      "saldo_linha": 4406352.44,
-      "provisao_linha": 156451.86,
-      "taxa_risco_linha": 3.55
-    },
-    {
-      "id_linha": 6,
-      "nome_linha": "Credito Direto ao Consumidor Veiculos",
-      "grupo_modalidade": "Consumo",
-      "saldo_linha": 4402651.26,
-      "provisao_linha": 152610.42,
-      "taxa_risco_linha": 3.47
+      "id_linha": 3,
+      "nome_linha": "Capital de Giro Rotativo PJ",
+      "grupo_modalidade": "Capital de Giro",
+      "saldo_linha": 41921227.46,
+      "provisao_linha": 2462512.59,
+      "taxa_risco_linha": 5.87
     },
     {
       "id_linha": 2,
       "nome_linha": "Pronamp Investimento Tratores",
       "grupo_modalidade": "Credito Rural",
-      "saldo_linha": 4216617.83,
-      "provisao_linha": 168628.6,
-      "taxa_risco_linha": 4.0
+      "saldo_linha": 41879630.39,
+      "provisao_linha": 2083169.32,
+      "taxa_risco_linha": 4.97
     },
     {
       "id_linha": 5,
       "nome_linha": "Credito Pessoal Consignado",
       "grupo_modalidade": "Consumo",
-      "saldo_linha": 3905487.76,
-      "provisao_linha": 120614.27,
-      "taxa_risco_linha": 3.09
+      "saldo_linha": 41530220.45,
+      "provisao_linha": 1096662.62,
+      "taxa_risco_linha": 2.64
+    },
+    {
+      "id_linha": 7,
+      "nome_linha": "Financiamento Imobiliario Habitacional",
+      "grupo_modalidade": "Habitacional",
+      "saldo_linha": 40441089.59,
+      "provisao_linha": 1106045.46,
+      "taxa_risco_linha": 2.73
     },
     {
       "id_linha": 4,
       "nome_linha": "Financiamento de Estoque PJ",
       "grupo_modalidade": "Capital de Giro",
-      "saldo_linha": 3717935.47,
-      "provisao_linha": 138667.82,
-      "taxa_risco_linha": 3.73
+      "saldo_linha": 37224545.26,
+      "provisao_linha": 989045.85,
+      "taxa_risco_linha": 2.66
+    },
+    {
+      "id_linha": 6,
+      "nome_linha": "Credito Direto ao Consumidor Veiculos",
+      "grupo_modalidade": "Consumo",
+      "saldo_linha": 37197057.82,
+      "provisao_linha": 874885.65,
+      "taxa_risco_linha": 2.35
     }
   ],
   "matriz_safras_vintages": [
     {
       "safra": "2019-01",
       "mob": 12,
-      "saldo_total": 1694725.5,
-      "saldo_ativo_problematico": 48392.25,
-      "taxa_ativo_problematico": 0.0286
+      "saldo_total": 17799594.75,
+      "saldo_ativo_problematico": 588408.75,
+      "taxa_ativo_problematico": 0.0331
     },
     {
       "safra": "2019-01",
       "mob": 24,
-      "saldo_total": 1584594.42,
-      "saldo_ativo_problematico": 57705.41,
-      "taxa_ativo_problematico": 0.0364
+      "saldo_total": 16642894.92,
+      "saldo_ativo_problematico": 203756.45,
+      "taxa_ativo_problematico": 0.0122
     },
     {
       "safra": "2019-02",
       "mob": 12,
-      "saldo_total": 229826.05,
-      "saldo_ativo_problematico": 229826.05,
+      "saldo_total": 2245492.67,
+      "saldo_ativo_problematico": 2245492.67,
       "taxa_ativo_problematico": 1.0
     },
     {
       "safra": "2019-02",
       "mob": 24,
-      "saldo_total": 214313.48,
-      "saldo_ativo_problematico": 214313.48,
+      "saldo_total": 2093928.68,
+      "saldo_ativo_problematico": 2093928.68,
       "taxa_ativo_problematico": 1.0
     },
     {
       "safra": "2019-03",
       "mob": 12,
-      "saldo_total": 225251.36,
-      "saldo_ativo_problematico": 225251.36,
+      "saldo_total": 2005393.21,
+      "saldo_ativo_problematico": 2005393.21,
       "taxa_ativo_problematico": 1.0
     },
     {
       "safra": "2019-03",
       "mob": 24,
-      "saldo_total": 209473.69,
-      "saldo_ativo_problematico": 209473.69,
+      "saldo_total": 1864926.03,
+      "saldo_ativo_problematico": 1864926.03,
       "taxa_ativo_problematico": 1.0
     },
     {
       "safra": "2019-07",
       "mob": 6,
-      "saldo_total": 1442262.75,
+      "saldo_total": 16047363.75,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2019-07",
       "mob": 12,
-      "saldo_total": 1400193.06,
-      "saldo_ativo_problematico": 71716.48,
-      "taxa_ativo_problematico": 0.0512
+      "saldo_total": 15579274.5,
+      "saldo_ativo_problematico": 292058.9,
+      "taxa_ativo_problematico": 0.0187
     },
     {
       "safra": "2019-07",
       "mob": 24,
-      "saldo_total": 1287297.17,
-      "saldo_ativo_problematico": 180645.09,
-      "taxa_ativo_problematico": 0.1403
+      "saldo_total": 14323136.23,
+      "saldo_ativo_problematico": 902853.92,
+      "taxa_ativo_problematico": 0.063
     },
     {
       "safra": "2020-02",
       "mob": 1,
-      "saldo_total": 1686147.53,
-      "saldo_ativo_problematico": 191262.01,
-      "taxa_ativo_problematico": 0.1134
+      "saldo_total": 10833062.95,
+      "saldo_ativo_problematico": 316214.68,
+      "taxa_ativo_problematico": 0.0292
     },
     {
       "safra": "2020-02",
       "mob": 3,
-      "saldo_total": 1669604.34,
+      "saldo_total": 10726777.31,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2020-02",
       "mob": 6,
-      "saldo_total": 1642433.74,
-      "saldo_ativo_problematico": 112484.51,
-      "taxa_ativo_problematico": 0.0685
+      "saldo_total": 10552213.24,
+      "saldo_ativo_problematico": 520719.16,
+      "taxa_ativo_problematico": 0.0493
     },
     {
       "safra": "2020-02",
       "mob": 12,
-      "saldo_total": 1579611.57,
-      "saldo_ativo_problematico": 108182.04,
-      "taxa_ativo_problematico": 0.0685
+      "saldo_total": 10148596.86,
+      "saldo_ativo_problematico": 500801.94,
+      "taxa_ativo_problematico": 0.0493
     },
     {
       "safra": "2020-02",
       "mob": 24,
-      "saldo_total": 2004289.55,
-      "saldo_ativo_problematico": 66986.09,
-      "taxa_ativo_problematico": 0.0334
+      "saldo_total": 12877043.43,
+      "saldo_ativo_problematico": 384245.64,
+      "taxa_ativo_problematico": 0.0298
     },
     {
       "safra": "2020-08",
       "mob": 1,
-      "saldo_total": 1720010.78,
-      "saldo_ativo_problematico": 177186.47,
-      "taxa_ativo_problematico": 0.103
+      "saldo_total": 13350406.77,
+      "saldo_ativo_problematico": 1294496.81,
+      "taxa_ativo_problematico": 0.097
     },
     {
       "safra": "2020-08",
       "mob": 3,
-      "saldo_total": 1698612.65,
+      "saldo_total": 13184318.6,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2020-08",
       "mob": 6,
-      "saldo_total": 1664033.75,
-      "saldo_ativo_problematico": 37183.12,
-      "taxa_ativo_problematico": 0.0223
+      "saldo_total": 12915923.55,
+      "saldo_ativo_problematico": 645973.52,
+      "taxa_ativo_problematico": 0.05
     },
     {
       "safra": "2020-08",
       "mob": 12,
-      "saldo_total": 1585941.7,
-      "saldo_ativo_problematico": 35438.14,
-      "taxa_ativo_problematico": 0.0223
+      "saldo_total": 12309787.35,
+      "saldo_ativo_problematico": 615658.39,
+      "taxa_ativo_problematico": 0.05
     },
     {
       "safra": "2020-08",
       "mob": 24,
-      "saldo_total": 2033316.55,
-      "saldo_ativo_problematico": 232117.3,
-      "taxa_ativo_problematico": 0.1142
+      "saldo_total": 15782228.67,
+      "saldo_ativo_problematico": 1108859.0,
+      "taxa_ativo_problematico": 0.0703
     },
     {
       "safra": "2021-03",
       "mob": 1,
-      "saldo_total": 1568181.46,
+      "saldo_total": 12057718.74,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2021-03",
       "mob": 3,
-      "saldo_total": 1543280.5,
-      "saldo_ativo_problematico": 169438.33,
-      "taxa_ativo_problematico": 0.1098
+      "saldo_total": 11866255.56,
+      "saldo_ativo_problematico": 178806.26,
+      "taxa_ativo_problematico": 0.0151
     },
     {
       "safra": "2021-03",
       "mob": 6,
-      "saldo_total": 1503554.98,
-      "saldo_ativo_problematico": 165076.82,
-      "taxa_ativo_problematico": 0.1098
+      "saldo_total": 11560806.86,
+      "saldo_ativo_problematico": 174203.62,
+      "taxa_ativo_problematico": 0.0151
     },
     {
       "safra": "2021-03",
       "mob": 12,
-      "saldo_total": 2008116.39,
+      "saldo_total": 15440370.27,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2021-03",
       "mob": 24,
-      "saldo_total": 1843516.67,
+      "saldo_total": 14174766.15,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2021-09",
       "mob": 1,
-      "saldo_total": 1136214.32,
+      "saldo_total": 10302848.33,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2021-09",
       "mob": 3,
-      "saldo_total": 1114324.57,
-      "saldo_ativo_problematico": 97394.15,
-      "taxa_ativo_problematico": 0.0874
+      "saldo_total": 10104358.75,
+      "saldo_ativo_problematico": 295931.23,
+      "taxa_ativo_problematico": 0.0293
     },
     {
       "safra": "2021-09",
       "mob": 6,
-      "saldo_total": 1531637.96,
-      "saldo_ativo_problematico": 133868.16,
-      "taxa_ativo_problematico": 0.0874
+      "saldo_total": 13888430.69,
+      "saldo_ativo_problematico": 406757.17,
+      "taxa_ativo_problematico": 0.0293
     },
     {
       "safra": "2021-09",
       "mob": 12,
-      "saldo_total": 1473211.69,
+      "saldo_total": 13358638.73,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2021-09",
       "mob": 24,
-      "saldo_total": 1330284.56,
+      "saldo_total": 12062618.74,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2022-04",
       "mob": 1,
-      "saldo_total": 1779903.49,
-      "saldo_ativo_problematico": 267028.61,
-      "taxa_ativo_problematico": 0.15
+      "saldo_total": 20717768.48,
+      "saldo_ativo_problematico": 2525414.64,
+      "taxa_ativo_problematico": 0.1219
     },
     {
       "safra": "2022-04",
       "mob": 3,
-      "saldo_total": 1756994.39,
-      "saldo_ativo_problematico": 263591.69,
-      "taxa_ativo_problematico": 0.15
+      "saldo_total": 20451110.66,
+      "saldo_ativo_problematico": 2492910.1,
+      "taxa_ativo_problematico": 0.1219
     },
     {
       "safra": "2022-04",
       "mob": 6,
-      "saldo_total": 1720500.79,
-      "saldo_ativo_problematico": 258116.77,
-      "taxa_ativo_problematico": 0.15
+      "saldo_total": 20026331.41,
+      "saldo_ativo_problematico": 2441131.17,
+      "taxa_ativo_problematico": 0.1219
     },
     {
       "safra": "2022-04",
       "mob": 12,
-      "saldo_total": 1639845.64,
+      "saldo_total": 19087519.65,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2022-04",
       "mob": 24,
-      "saldo_total": 2064705.08,
-      "saldo_ativo_problematico": 88438.22,
-      "taxa_ativo_problematico": 0.0428
+      "saldo_total": 24032809.78,
+      "saldo_ativo_problematico": 1939160.15,
+      "taxa_ativo_problematico": 0.0807
     },
     {
       "safra": "2022-10",
       "mob": 1,
-      "saldo_total": 1510803.1,
-      "saldo_ativo_problematico": 51746.21,
-      "taxa_ativo_problematico": 0.0343
+      "saldo_total": 17309441.89,
+      "saldo_ativo_problematico": 1192114.56,
+      "taxa_ativo_problematico": 0.0689
     },
     {
       "safra": "2022-10",
       "mob": 3,
-      "saldo_total": 1487521.31,
-      "saldo_ativo_problematico": 50948.79,
-      "taxa_ativo_problematico": 0.0343
+      "saldo_total": 17042699.93,
+      "saldo_ativo_problematico": 1173743.84,
+      "taxa_ativo_problematico": 0.0689
     },
     {
       "safra": "2022-10",
       "mob": 6,
-      "saldo_total": 1450714.34,
-      "saldo_ativo_problematico": 49688.13,
-      "taxa_ativo_problematico": 0.0343
+      "saldo_total": 16620998.16,
+      "saldo_ativo_problematico": 1144700.91,
+      "taxa_ativo_problematico": 0.0689
     },
     {
       "safra": "2022-10",
       "mob": 12,
-      "saldo_total": 1370316.86,
+      "saldo_total": 15699874.9,
       "saldo_ativo_problematico": 0.0,
       "taxa_ativo_problematico": 0.0
     },
     {
       "safra": "2022-10",
       "mob": 24,
-      "saldo_total": 1746175.17,
-      "saldo_ativo_problematico": 117813.34,
-      "taxa_ativo_problematico": 0.0675
+      "saldo_total": 20006126.27,
+      "saldo_ativo_problematico": 1365109.5,
+      "taxa_ativo_problematico": 0.0682
     },
     {
       "safra": "2023-05",
       "mob": 1,
-      "saldo_total": 1777575.76,
-      "saldo_ativo_problematico": 43870.71,
-      "taxa_ativo_problematico": 0.0247
+      "saldo_total": 15947007.92,
+      "saldo_ativo_problematico": 576510.42,
+      "taxa_ativo_problematico": 0.0362
     },
     {
       "safra": "2023-05",
       "mob": 3,
-      "saldo_total": 1744144.02,
-      "saldo_ativo_problematico": 292440.64,
-      "taxa_ativo_problematico": 0.1677
+      "saldo_total": 15647084.77,
+      "saldo_ativo_problematico": 2954346.31,
+      "taxa_ativo_problematico": 0.1888
     },
     {
       "safra": "2023-05",
       "mob": 6,
-      "saldo_total": 1691645.73,
-      "saldo_ativo_problematico": 283638.25,
-      "taxa_ativo_problematico": 0.1677
+      "saldo_total": 15176111.69,
+      "saldo_ativo_problematico": 2865421.27,
+      "taxa_ativo_problematico": 0.1888
     },
     {
       "safra": "2023-05",
       "mob": 12,
-      "saldo_total": 2262701.54,
-      "saldo_ativo_problematico": 154911.01,
-      "taxa_ativo_problematico": 0.0685
+      "saldo_total": 20299174.09,
+      "saldo_ativo_problematico": 1518240.46,
+      "taxa_ativo_problematico": 0.0748
     },
     {
       "safra": "2023-05",
       "mob": 24,
-      "saldo_total": 2047066.86,
-      "saldo_ativo_problematico": 310214.32,
-      "taxa_ativo_problematico": 0.1515
+      "saldo_total": 18364669.73,
+      "saldo_ativo_problematico": 1034593.04,
+      "taxa_ativo_problematico": 0.0563
     },
     {
       "safra": "2023-11",
       "mob": 1,
-      "saldo_total": 1890291.19,
-      "saldo_ativo_problematico": 233190.42,
-      "taxa_ativo_problematico": 0.1234
+      "saldo_total": 14901371.06,
+      "saldo_ativo_problematico": 1904602.11,
+      "taxa_ativo_problematico": 0.1278
     },
     {
       "safra": "2023-11",
       "mob": 3,
-      "saldo_total": 2608716.31,
-      "saldo_ativo_problematico": 383977.66,
-      "taxa_ativo_problematico": 0.1472
+      "saldo_total": 20564794.38,
+      "saldo_ativo_problematico": 3180623.02,
+      "taxa_ativo_problematico": 0.1547
     },
     {
       "safra": "2023-11",
       "mob": 6,
-      "saldo_total": 2555790.26,
-      "saldo_ativo_problematico": 376187.46,
-      "taxa_ativo_problematico": 0.1472
+      "saldo_total": 20147572.74,
+      "saldo_ativo_problematico": 3116094.06,
+      "taxa_ativo_problematico": 0.1547
     },
     {
       "safra": "2023-11",
       "mob": 12,
-      "saldo_total": 2440379.65,
-      "saldo_ativo_problematico": 223521.53,
-      "taxa_ativo_problematico": 0.0916
+      "saldo_total": 19237778.39,
+      "saldo_ativo_problematico": 1216559.54,
+      "taxa_ativo_problematico": 0.0632
     },
     {
       "safra": "2023-11",
       "mob": 24,
-      "saldo_total": 2171324.26,
-      "saldo_ativo_problematico": 78395.89,
-      "taxa_ativo_problematico": 0.0361
+      "saldo_total": 17116785.41,
+      "saldo_ativo_problematico": 1844688.89,
+      "taxa_ativo_problematico": 0.1078
     },
     {
       "safra": "2024-06",
       "mob": 1,
-      "saldo_total": 2661381.7,
-      "saldo_ativo_problematico": 246617.77,
-      "taxa_ativo_problematico": 0.0927
+      "saldo_total": 26175234.43,
+      "saldo_ativo_problematico": 5747060.15,
+      "taxa_ativo_problematico": 0.2196
     },
     {
       "safra": "2024-06",
       "mob": 3,
-      "saldo_total": 2620732.79,
-      "saldo_ativo_problematico": 242851.03,
-      "taxa_ativo_problematico": 0.0927
+      "saldo_total": 25775444.05,
+      "saldo_ativo_problematico": 5659281.79,
+      "taxa_ativo_problematico": 0.2196
     },
     {
       "safra": "2024-06",
       "mob": 6,
-      "saldo_total": 2556953.92,
-      "saldo_ativo_problematico": 101781.65,
-      "taxa_ativo_problematico": 0.0398
+      "saldo_total": 25148165.52,
+      "saldo_ativo_problematico": 2856756.41,
+      "taxa_ativo_problematico": 0.1136
     },
     {
       "safra": "2024-06",
       "mob": 12,
-      "saldo_total": 2419296.22,
-      "saldo_ativo_problematico": 221050.59,
-      "taxa_ativo_problematico": 0.0914
+      "saldo_total": 23794274.09,
+      "saldo_ativo_problematico": 2123977.35,
+      "taxa_ativo_problematico": 0.0893
     },
     {
       "safra": "2024-06",
       "mob": 24,
-      "saldo_total": 3032770.64,
-      "saldo_ativo_problematico": 78475.98,
-      "taxa_ativo_problematico": 0.0259
+      "saldo_total": 29827920.7,
+      "saldo_ativo_problematico": 1693158.08,
+      "taxa_ativo_problematico": 0.0568
     },
     {
       "safra": "2024-12",
       "mob": 1,
-      "saldo_total": 2231895.26,
-      "saldo_ativo_problematico": 258738.34,
-      "taxa_ativo_problematico": 0.1159
+      "saldo_total": 21148548.03,
+      "saldo_ativo_problematico": 3734989.13,
+      "taxa_ativo_problematico": 0.1766
     },
     {
       "safra": "2024-12",
       "mob": 3,
-      "saldo_total": 2192153.69,
-      "saldo_ativo_problematico": 254131.2,
-      "taxa_ativo_problematico": 0.1159
+      "saldo_total": 20771972.82,
+      "saldo_ativo_problematico": 3668483.17,
+      "taxa_ativo_problematico": 0.1766
     },
     {
       "safra": "2024-12",
       "mob": 6,
-      "saldo_total": 2130071.22,
-      "saldo_ativo_problematico": 49226.53,
-      "taxa_ativo_problematico": 0.0231
+      "saldo_total": 20183704.06,
+      "saldo_ativo_problematico": 1952772.97,
+      "taxa_ativo_problematico": 0.0967
     },
     {
       "safra": "2024-12",
       "mob": 12,
-      "saldo_total": 1997013.83,
-      "saldo_ativo_problematico": 230194.34,
-      "taxa_ativo_problematico": 0.1153
+      "saldo_total": 18922905.23,
+      "saldo_ativo_problematico": 2397225.25,
+      "taxa_ativo_problematico": 0.1267
     }
   ],
   "simulador_capital_base": {
-    "sobras_atuais": 314517.99,
-    "patrimonio_referencia": 3785257.17,
-    "rwa_risco_credito": 22940952.52,
-    "indice_capital_atual_pct": 16.5,
-    "carteira_total": 30587936.69,
-    "provisao_atual": 1205918.63,
-    "ativo_problematico_atual": 4329618.66
+    "sobras_atuais": 1213340.87,
+    "patrimonio_referencia": 36390176.48,
+    "rwa_risco_credito": 211817092.46,
+    "indice_capital_atual_pct": 17.18,
+    "carteira_total": 282422789.95,
+    "provisao_atual": 11015276.42,
+    "ativo_problematico_atual": 38689256.64
   }
 }
