@@ -380,10 +380,10 @@ class SyntheticDataGenerator:
                 linha = linhas_credito[(proximo_cid - 1) % len(linhas_credito)]
                 ticket = Decimal(str(self.rng.randint(ticket_min, ticket_max)))
                 prazo = self.rng.choice([48, 60, 72])
-                p_estresse = 0.09 if 2022 <= y <= 2024 else 0.04
+                p_estresse = 0.06 if 2022 <= y <= 2024 else 0.04
                 perfil = self.rng.choices(
                     ["bom", "medio", "estresse"],
-                    weights=[0.82, 0.18 - p_estresse, p_estresse],
+                    weights=[0.85, 0.15 - p_estresse, p_estresse],
                 )[0]
                 contratos_pool.append(
                     {
@@ -464,7 +464,20 @@ class SyntheticDataGenerator:
                         pd = Decimal("0.0180")
                         lgd = Decimal("0.4000")
                     elif mob <= 3:
-                        if perfil == "estresse":
+                        if (
+                            perfil == "estresse"
+                            and competencia >= date(2022, 1, 1)
+                            and (cid % 4 == 0)
+                        ):
+                            # Reestruturação precoce (forbearance) em Estágio 3 / AP
+                            dias_atraso = min(35, max(0, idade_dias - 10))
+                            renegociado = 1
+                            estagio = 3
+                            ap = 1
+                            over90 = Decimal("0.00")
+                            pd = Decimal("1.0000")
+                            lgd = Decimal("0.4500")
+                        elif perfil == "estresse":
                             dias_atraso = min(20, max(0, idade_dias - 10))
                             renegociado = 0
                             estagio = 1
@@ -481,7 +494,20 @@ class SyntheticDataGenerator:
                             pd = Decimal("0.0160")
                             lgd = Decimal("0.4000")
                     elif mob <= 6:
-                        if perfil == "estresse":
+                        if (
+                            perfil == "estresse"
+                            and competencia >= date(2022, 1, 1)
+                            and (cid % 2 == 0)
+                        ):
+                            # Inadimplência crônica atingindo Estágio 3 / AP aos 6 meses
+                            dias_atraso = min(95, max(0, idade_dias - 15))
+                            renegociado = 1 if (cid % 4 == 0) else 0
+                            estagio = 3
+                            ap = 1
+                            over90 = saldo_atual if dias_atraso > 90 else Decimal("0.00")
+                            pd = Decimal("1.0000")
+                            lgd = Decimal("0.4800")
+                        elif perfil == "estresse":
                             dias_atraso = min(45, max(0, idade_dias - 15))
                             renegociado = 0
                             estagio = 2
