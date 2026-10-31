@@ -1567,3 +1567,259 @@ input[type="range"] {
     color: #374151 !important;
   }
 }
+
+/* ==========================================================================
+   Seletor de Modo de Visualização (Visão 1: Macro vs. Visão 2: Cooperativa)
+   ========================================================================== */
+.view-mode-bar {
+  background: #091024;
+  border-bottom: 2px solid var(--border-accent);
+  padding: 0.85rem 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.view-mode-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 1720px;
+  margin: 0 auto;
+}
+
+.view-mode-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.view-mode-icon {
+  font-size: 1.1rem;
+}
+
+.view-mode-switch {
+  display: flex;
+  gap: 0.75rem;
+  background-color: rgba(15, 23, 42, 0.8);
+  padding: 0.3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.mode-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mode-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.mode-toggle-btn.active {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: var(--text-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+}
+
+.mode-toggle-btn[data-mode="coop"].active {
+  border-color: var(--color-warning);
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
+}
+
+.mode-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mode-pill.official {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.mode-pill.sandbox {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* ==========================================================================
+   Banner de Disclaimer e Governança do Sandbox (Visão Cooperativa)
+   ========================================================================== */
+.sandbox-disclaimer-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.14) 0%, rgba(245, 158, 11, 0.06) 100%);
+  border: 1px solid #f59e0b;
+  border-left: 6px solid #f59e0b;
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.sandbox-disclaimer-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.sandbox-disclaimer-content {
+  flex: 1;
+}
+
+.sandbox-disclaimer-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fbbf24;
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sandbox-disclaimer-content p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+
+.sandbox-disclaimer-content strong {
+  color: #ffffff;
+}
+
+.view-section {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.view-section.active {
+  display: block;
+}
+
+/* ==========================================================================
+   Estilos da Visão 1: Panorama Sistêmico Macro (SFN & SNCC)
+   ========================================================================== */
+.macro-intro-card {
+  background: linear-gradient(135deg, #0d1730 0%, #080d1a 100%);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.macro-intro-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.macro-intro-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 900px;
+}
+
+.macro-badge-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.macro-table-container {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  margin-top: 1.25rem;
+}
+
+.macro-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+.macro-data-table th {
+  background-color: #0b1329;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.macro-data-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.macro-data-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.macro-segment-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.macro-segment-badge.sfn {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.macro-segment-badge.sncc {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.macro-segment-badge.sing {
+  background-color: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
