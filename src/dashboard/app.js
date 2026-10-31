@@ -34,6 +34,21 @@ const formatarMilhoes = (valor) => {
 };
 
 /**
+ * Formata um valor numérico em bilhões ou trilhões para séries sistêmicas.
+ * @param {number} valor - Valor numérico.
+ * @returns {string} String formatada (ex: R$ 7,34 Tri ou R$ 701,25 Bi).
+ */
+const formatarBilhoes = (valor) => {
+  if (!valor) return 'R$ 0 Bi';
+  if (valor >= 1000000000000) {
+    const tri = valor / 1000000000000;
+    return `R$ ${tri.toFixed(2).replace('.', ',')} Tri`;
+  }
+  const bi = valor / 1000000000;
+  return `R$ ${bi.toFixed(2).replace('.', ',')} Bi`;
+};
+
+/**
  * Formata um valor numérico em percentual.
  * @param {number|null|undefined} valor - Valor percentual a formatar.
  * @param {number} [casas=2] - Quantidade de casas decimais.
@@ -94,6 +109,8 @@ let chartDispersao = null;
 let chartVintages = null;
 let chartMixSetorial = null;
 let chartGarantias = null;
+let chartMacroHistorico = null;
+let chartMacroREF = null;
 
 // Estado global de visualização de estágios: 'nominal' (R$) ou 'pct' (%)
 let modoExibicaoEstagios = 'nominal';
@@ -256,6 +273,9 @@ function configurarAcoesRapidas() {
 // Inicialização Global dos Gráficos e Componentes
 // ============================================================================
 function inicializarDashboard(dados) {
+  configurarSeletorModo(dados);
+  renderizarVisaoMacro(dados);
+
   serieEstagiosAtiva = dados.evolucao_estagios_mensal;
 
   preencherMetadadosEKpis(dados);
@@ -272,6 +292,414 @@ function inicializarDashboard(dados) {
   configurarAlternadorEstagios();
   configurarAlternadorVintages(dados);
   preencherModalBriefing(dados);
+}
+
+// ============================================================================
+// Alternador de Modo de Visualização (Visão 1: Macro vs Visão 2: Cooperativa)
+// ============================================================================
+function configurarSeletorModo(dados) {
+  const btnMacro = document.getElementById('btn-mode-macro');
+  const btnCoop = document.getElementById('btn-mode-coop');
+  const secMacro = document.getElementById('section-view-macro');
+  const secCoop = document.getElementById('section-view-coop');
+  const headerTitle = document.getElementById('main-header-title');
+  const headerSubtitle = document.getElementById('main-header-subtitle');
+  const badgeMode = document.getElementById('badge-mode-type');
+  const metaStatus = document.getElementById('meta-status-text');
+
+  const ativarMacro = () => {
+    btnMacro.classList.add('active');
+    btnMacro.setAttribute('aria-selected', 'true');
+    btnCoop.classList.remove('active');
+    btnCoop.setAttribute('aria-selected', 'false');
+
+    secMacro.classList.add('active');
+    secCoop.classList.remove('active');
+
+    if (headerTitle) headerTitle.textContent = 'Radar 4966 — Panorama Sistêmico Nacional';
+    if (headerSubtitle) headerSubtitle.textContent = 'Inteligência Macroprudencial de Crédito | SFN, Grandes Bancos & Sistema Cooperativo (SNCC) | Séries Oficiais Bacen 2020 a 06/2026';
+    if (badgeMode) {
+      badgeMode.textContent = 'Visão 1: Panorama Sistêmico Bacen';
+      badgeMode.className = 'brand-badge';
+    }
+    if (metaStatus) {
+      metaStatus.textContent = '100% Séries Oficiais Bacen';
+      metaStatus.style.color = 'var(--color-success)';
+    }
+
+    if (chartMacroHistorico) chartMacroHistorico.resize();
+    if (chartMacroREF) chartMacroREF.resize();
+  };
+
+  const ativarCoop = () => {
+    btnCoop.classList.add('active');
+    btnCoop.setAttribute('aria-selected', 'true');
+    btnMacro.classList.remove('active');
+    btnMacro.setAttribute('aria-selected', 'false');
+
+    secCoop.classList.add('active');
+    secMacro.classList.remove('active');
+
+    if (headerTitle) headerTitle.textContent = 'Radar 4966 — Estudo de Caso: Sicoob Credijequitinhonha';
+    if (headerSubtitle) headerSubtitle.textContent = 'Simulação e Homologação da Resolução CMN nº 4.966 / IFRS 9 | Cooperativa Singular de Livre Admissão | Capelinha - MG';
+    if (badgeMode) {
+      badgeMode.textContent = 'Visão 2: Estudo de Caso (Sandbox PoC)';
+      badgeMode.className = 'brand-badge highlight';
+    }
+    if (metaStatus) {
+      metaStatus.textContent = 'Sandbox Educativo (Seed 42)';
+      metaStatus.style.color = 'var(--color-warning)';
+    }
+
+    if (chartHistorico) chartHistorico.resize();
+    if (chartRegua) chartRegua.resize();
+    if (chartEvolucaoEstagios) chartEvolucaoEstagios.resize();
+    if (chartDecomposicao) chartDecomposicao.resize();
+    if (chartMixSetorial) chartMixSetorial.resize();
+    if (chartGarantias) chartGarantias.resize();
+    if (chartDispersao) chartDispersao.resize();
+    if (chartVintages) chartVintages.resize();
+  };
+
+  if (btnMacro) btnMacro.addEventListener('click', ativarMacro);
+  if (btnCoop) btnCoop.addEventListener('click', ativarCoop);
+}
+
+// ============================================================================
+// Renderização Completa da Visão 1: Panorama Sistêmico Macro (SFN vs SNCC)
+// ============================================================================
+function renderizarVisaoMacro(dados) {
+  const ifdata = dados.benchmarking_ifdata || [];
+  const refData = dados.benchmarking_ref || [];
+
+  // Obter registros mais recentes por segmento do IF.data
+  const sfnRegistros = ifdata.filter((item) => item.segmento_analise === 'SFN Total');
+  const snccRegistros = ifdata.filter((item) => item.segmento_analise === 'SNCC Consolidado');
+  const singularesRegistros = ifdata.filter((item) => item.segmento_analise === 'Cooperativas Singulares');
+
+  const ultSFN = sfnRegistros[sfnRegistros.length - 1] || {};
+  const ultSNCC = snccRegistros[snccRegistros.length - 1] || {};
+
+  // Preenchimento dos KPIs Macro
+  const elCartSFN = document.getElementById('macro-kpi-carteira-sfn');
+  if (elCartSFN && ultSFN.carteira_total_bacen) {
+    elCartSFN.textContent = formatarBilhoes(ultSFN.carteira_total_bacen);
+  }
+
+  const elCartSNCC = document.getElementById('macro-kpi-carteira-sncc');
+  if (elCartSNCC && ultSNCC.carteira_total_bacen) {
+    elCartSNCC.textContent = formatarBilhoes(ultSNCC.carteira_total_bacen);
+  }
+
+  const elAPComp = document.getElementById('macro-kpi-ap-comparativo');
+  if (elAPComp && ultSFN.percentual_ap_ifdata && ultSNCC.percentual_ap_ifdata) {
+    const sfnPct = (Number(ultSFN.percentual_ap_ifdata) * 100).toFixed(2);
+    const snccPct = (Number(ultSNCC.percentual_ap_ifdata) * 100).toFixed(2);
+    elAPComp.innerHTML = `${sfnPct}% <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary)">vs ${snccPct}%</span>`;
+  }
+
+  const elOver90SFN = document.getElementById('macro-kpi-over90-sfn');
+  if (elOver90SFN && ultSFN.ap_over90_bacen) {
+    elOver90SFN.textContent = formatarBilhoes(ultSFN.ap_over90_bacen);
+  }
+
+  const elProvSFN = document.getElementById('macro-kpi-prov-sfn');
+  if (elProvSFN && ultSFN.provisao_total_bacen) {
+    elProvSFN.textContent = formatarBilhoes(ultSFN.provisao_total_bacen);
+  }
+
+  // KPIs do Relatório REF
+  const ultRefSFN = refData.filter((r) => r.segmento === 'SFN').slice(-1)[0] || {};
+  const ultRefSNCC = refData.filter((r) => r.segmento === 'SNCC').slice(-1)[0] || {};
+
+  const elCoRRef = document.getElementById('macro-kpi-cor-ref');
+  if (elCoRRef && ultRefSFN.custo_credito_12m_percentual && ultRefSNCC.custo_credito_12m_percentual) {
+    const sfnCoR = (Number(ultRefSFN.custo_credito_12m_percentual) * 100).toFixed(2);
+    const snccCoR = (Number(ultRefSNCC.custo_credito_12m_percentual) * 100).toFixed(2);
+    elCoRRef.innerHTML = `${sfnCoR}% <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary)">vs ${snccCoR}%</span>`;
+  }
+
+  // Renderizar Gráficos e Tabela
+  renderizarGraficoMacroHistorico(sfnRegistros, snccRegistros, singularesRegistros);
+  renderizarGraficoMacroREF(refData);
+  preencherTabelaMacroBacen(ifdata);
+}
+
+// Gráfico 1 Macro: Ativo Problemático e Provisão (SFN vs SNCC vs Singulares)
+function renderizarGraficoMacroHistorico(sfnList, snccList, singList) {
+  const canvas = document.getElementById('chart-macro-historico');
+  if (!canvas) return;
+
+  const labels = sfnList.map((item) => {
+    const dt = new Date(item.data_trimestre + 'T00:00:00');
+    const m = dt.getMonth() + 1;
+    const tri = m <= 3 ? '1T' : m <= 6 ? '2T' : m <= 9 ? '3T' : '4T';
+    return `${tri}/${dt.getFullYear()}`;
+  });
+
+  const sfnAP = sfnList.map((item) => (Number(item.percentual_ap_ifdata) * 100).toFixed(2));
+  const snccAP = snccList.map((item) => (Number(item.percentual_ap_ifdata) * 100).toFixed(2));
+  const singAP = singList.map((item) => (Number(item.percentual_ap_ifdata) * 100).toFixed(2));
+
+  const sfnProv = sfnList.map((item) => (Number(item.percentual_provisao_ifdata) * 100).toFixed(2));
+  const snccProv = snccList.map((item) => (Number(item.percentual_provisao_ifdata) * 100).toFixed(2));
+
+  if (chartMacroHistorico) {
+    chartMacroHistorico.destroy();
+  }
+
+  chartMacroHistorico = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'SFN Total - AP (%) [Grandes Bancos]',
+          data: sfnAP,
+          borderColor: '#ef4444',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          borderWidth: 2.5,
+          tension: 0.25,
+          pointRadius: 3,
+        },
+        {
+          label: 'SNCC Consolidado - AP (%) [Cooperativas]',
+          data: snccAP,
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          borderWidth: 2.5,
+          tension: 0.25,
+          pointRadius: 3,
+        },
+        {
+          label: 'Cooperativas Singulares - AP (%)',
+          data: singAP,
+          borderColor: '#06b6d4',
+          borderWidth: 1.8,
+          borderDash: [4, 4],
+          tension: 0.25,
+          pointRadius: 2,
+        },
+        {
+          label: 'SFN Total - Provisão (%)',
+          data: sfnProv,
+          borderColor: '#f87171',
+          borderDash: [6, 4],
+          borderWidth: 1.8,
+          tension: 0.2,
+          pointRadius: 0,
+        },
+        {
+          label: 'SNCC Consolidado - Provisão (%)',
+          data: snccProv,
+          borderColor: '#34d399',
+          borderDash: [6, 4],
+          borderWidth: 1.8,
+          tension: 0.2,
+          pointRadius: 0,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          grid: { color: 'rgba(255, 255, 255, 0.06)' },
+          ticks: {
+            color: '#94a3b8',
+            callback: (v) => `${v}%`,
+          },
+        },
+        x: {
+          grid: { color: 'rgba(255, 255, 255, 0.04)' },
+          ticks: {
+            color: '#94a3b8',
+            maxRotation: 45,
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: '#f8fafc', font: { size: 11 }, usePointStyle: true },
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%`,
+          },
+        },
+      },
+    },
+  });
+}
+
+// Gráfico 2 Macro: Séries do REF Bacen
+function renderizarGraficoMacroREF(refData) {
+  const canvas = document.getElementById('chart-macro-ref');
+  if (!canvas) return;
+
+  const sfnRef = refData.filter((r) => r.segmento === 'SFN');
+  const snccRef = refData.filter((r) => r.segmento === 'SNCC');
+
+  const labels = sfnRef.map((item) => {
+    const dt = new Date(item.data_semestre + 'T00:00:00');
+    const sem = dt.getMonth() + 1 <= 6 ? '1S' : '2S';
+    return `${sem}/${dt.getFullYear()}`;
+  });
+
+  const corSFN = sfnRef.map((r) => (Number(r.custo_credito_12m_percentual) * 100).toFixed(2));
+  const corSNCC = snccRef.map((r) => (Number(r.custo_credito_12m_percentual) * 100).toFixed(2));
+  const cobSFN = sfnRef.map((r) => Number(r.indice_cobertura_perda_esperada).toFixed(3));
+  const cobSNCC = snccRef.map((r) => Number(r.indice_cobertura_perda_esperada).toFixed(3));
+
+  if (chartMacroREF) {
+    chartMacroREF.destroy();
+  }
+
+  chartMacroREF = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Custo do Crédito 12M - SFN (%)',
+          data: corSFN,
+          backgroundColor: 'rgba(239, 68, 68, 0.7)',
+          yAxisID: 'y',
+        },
+        {
+          label: 'Custo do Crédito 12M - SNCC (%)',
+          data: corSNCC,
+          backgroundColor: 'rgba(16, 185, 129, 0.7)',
+          yAxisID: 'y',
+        },
+        {
+          type: 'line',
+          label: 'Cobertura ECL - SNCC (x)',
+          data: cobSNCC,
+          borderColor: '#38bdf8',
+          borderWidth: 2.5,
+          pointRadius: 4,
+          yAxisID: 'y1',
+        },
+        {
+          type: 'line',
+          label: 'Cobertura ECL - SFN (x)',
+          data: cobSFN,
+          borderColor: '#f59e0b',
+          borderWidth: 2,
+          borderDash: [5, 4],
+          pointRadius: 3,
+          yAxisID: 'y1',
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          type: 'linear',
+          position: 'left',
+          grid: { color: 'rgba(255, 255, 255, 0.06)' },
+          ticks: {
+            color: '#94a3b8',
+            callback: (v) => `${v}%`,
+          },
+          title: {
+            display: true,
+            text: 'Custo do Crédito (% ao ano)',
+            color: '#94a3b8',
+          },
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          ticks: {
+            color: '#38bdf8',
+            callback: (v) => `${v}x`,
+          },
+          title: {
+            display: true,
+            text: 'Índice de Cobertura (Provisão / ECL)',
+            color: '#38bdf8',
+          },
+        },
+        x: {
+          grid: { color: 'rgba(255, 255, 255, 0.04)' },
+          ticks: { color: '#94a3b8' },
+        },
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: '#f8fafc', font: { size: 11 }, usePointStyle: true },
+        },
+      },
+    },
+  });
+}
+
+// Tabela Oficial de Séries Bacen
+function preencherTabelaMacroBacen(ifdata) {
+  const tbody = document.getElementById('tbody-macro-bacen');
+  if (!tbody) return;
+
+  const segmentosValidos = ['SFN Total', 'SNCC Consolidado', 'Cooperativas Singulares'];
+  const filtrados = ifdata.filter((item) => segmentosValidos.includes(item.segmento_analise));
+
+  const ordenados = [...filtrados].sort((a, b) => {
+    if (a.data_trimestre !== b.data_trimestre) {
+      return b.data_trimestre.localeCompare(a.data_trimestre);
+    }
+    return a.segmento_analise.localeCompare(b.segmento_analise);
+  });
+
+  const ultimos = ordenados.slice(0, 24);
+
+  tbody.innerHTML = '';
+  ultimos.forEach((row) => {
+    const tr = document.createElement('tr');
+
+    const dt = new Date(row.data_trimestre + 'T00:00:00');
+    const m = dt.getMonth() + 1;
+    const tri = m <= 3 ? '1T' : m <= 6 ? '2T' : m <= 9 ? '3T' : '4T';
+    const triLabel = `${tri}/${dt.getFullYear()}`;
+
+    let badgeClass = 'sfn';
+    if (row.segmento_analise === 'SNCC Consolidado') badgeClass = 'sncc';
+    if (row.segmento_analise === 'Cooperativas Singulares') badgeClass = 'sing';
+
+    const cartFmt = formatarBilhoes(row.carteira_total_bacen);
+    const apFmt = formatarBilhoes(row.ativo_problematico_bacen);
+    const apPct = (Number(row.percentual_ap_ifdata) * 100).toFixed(2) + '%';
+    const over90Fmt = formatarBilhoes(row.ap_over90_bacen);
+    const over90NoApPct = (
+      (Number(row.ap_over90_bacen) / Number(row.ativo_problematico_bacen)) *
+      100
+    ).toFixed(1) + '%';
+    const provFmt = formatarBilhoes(row.provisao_total_bacen);
+    const provPct = (Number(row.percentual_provisao_ifdata) * 100).toFixed(2) + '%';
+
+    tr.innerHTML = `
+      <td><strong>${triLabel}</strong></td>
+      <td><span class="macro-segment-badge ${badgeClass}">${row.segmento_analise}</span></td>
+      <td>${cartFmt}</td>
+      <td>${apFmt}</td>
+      <td><strong>${apPct}</strong></td>
+      <td>${over90Fmt}</td>
+      <td>${over90NoApPct}</td>
+      <td>${provFmt}</td>
+      <td><strong>${provPct}</strong></td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
 // ============================================================================

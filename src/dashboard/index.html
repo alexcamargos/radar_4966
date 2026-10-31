@@ -13,15 +13,15 @@
   <header class="header-container">
     <div class="header-branding">
       <div class="brand-row">
-        <span class="brand-badge">Resolução CMN nº 4.966 / IFRS 9</span>
-        <span class="brand-badge secondary">Resolução BCB nº 352</span>
+        <span class="brand-badge" id="badge-mode-type">Visão 1: Panorama Sistêmico Bacen</span>
+        <span class="brand-badge secondary">Resolução CMN nº 4.966 / IFRS 9</span>
         <span class="brand-badge highlight">IF.data &amp; REF Bacen</span>
       </div>
-      <h1 class="header-title">Radar 4966 — Sicoob Credijequitinhonha</h1>
-      <p class="header-subtitle">Inteligência em Risco de Crédito &amp; Capital | CNPJ 71.243.034/0001-55 | Capelinha - MG | Séries Oficiais 2020 a 06/2026</p>
+      <h1 class="header-title" id="main-header-title">Radar 4966 — Panorama Sistêmico Nacional</h1>
+      <p class="header-subtitle" id="main-header-subtitle">Inteligência Macroprudencial de Crédito | SFN, Grandes Bancos &amp; Sistema Cooperativo (SNCC) | Séries Oficiais Bacen 2020 a 06/2026</p>
     </div>
     <div class="header-actions-meta">
-      <div class="header-quick-actions">
+      <div class="header-quick-actions" id="header-quick-actions">
         <button id="btn-open-briefing" class="action-btn primary" title="Visualizar síntese executiva dos pontos críticos para o C-level">
           <span class="btn-icon">📋</span> Briefing da Diretoria
         </button>
@@ -35,36 +35,299 @@
           <span class="btn-icon">🖨️</span> Exportar Relatório (PDF)
         </button>
       </div>
-      <div class="header-meta">
+      <div class="header-meta" id="header-meta-block">
         <p>Data-Base Mais Recente: <strong id="meta-competencia">--/----</strong> | Ativo: <strong id="meta-ativo-total" style="color: var(--color-primary)">R$ 881,8M</strong></p>
-        <p>Basileia: <strong id="meta-basileia" style="color: var(--color-success)">17,18% (+6,68 p.p.)</strong> | Status: <strong style="color: var(--color-success)">Conciliação Auditada</strong></p>
+        <p>Basileia: <strong id="meta-basileia" style="color: var(--color-success)">17,18% (+6,68 p.p.)</strong> | Status: <strong id="meta-status-text" style="color: var(--color-success)">100% Séries Oficiais Bacen</strong></p>
       </div>
     </div>
   </header>
 
-  <!-- Navegação por Abas Executivas e Filtro Temporal -->
-  <div class="nav-bar-container">
-    <nav class="nav-tabs" aria-label="Navegação do Dashboard">
-      <button class="tab-btn active" data-target="pane-post-executivo">
-        <span class="tab-number">1</span> Posicionamento &amp; Benchmarking
-      </button>
-      <button class="tab-btn" data-target="pane-anatomia-risco">
-        <span class="tab-number">2</span> Anatomia do Risco 4.966 &amp; Mix Regional
-      </button>
-      <button class="tab-btn" data-target="pane-safras-capital">
-        <span class="tab-number">3</span> Safras &amp; Simulador de Capital
-      </button>
-    </nav>
-    <div class="period-filter-group" aria-label="Filtro de Período Temporal">
-      <span class="filter-label">Recorte Temporal:</span>
-      <button class="filter-chip active" data-period="all">Série Completa (2020 - 2026)</button>
-      <button class="filter-chip" data-period="pre">5 Anos Pré-4.966 (2020 - 2024)</button>
-      <button class="filter-chip" data-period="post">Vigência 4.966 (2025 - 2026)</button>
-      <button class="filter-chip" data-period="12m">Últimos 12M</button>
+  <!-- Barra de Seleção de Nível de Análise (Duas Caras Distintas) -->
+  <div class="view-mode-bar">
+    <div class="view-mode-container">
+      <div class="view-mode-label">
+        <span class="view-mode-icon">🎯</span> Nível de Análise:
+      </div>
+      <div class="view-mode-switch" role="tablist">
+        <button class="mode-toggle-btn active" id="btn-mode-macro" data-mode="macro" role="tab" aria-selected="true" title="Análise agregada oficial do Sistema Financeiro Nacional, Grandes Bancos e Cooperativismo">
+          <span class="mode-icon">🌐</span> Visão 1: Panorama Sistêmico Nacional (SFN, Grandes Bancos &amp; SNCC)
+          <span class="mode-pill official">Dados Oficiais Bacen</span>
+        </button>
+        <button class="mode-toggle-btn" id="btn-mode-coop" data-mode="coop" role="tab" aria-selected="false" title="Estudo de caso no nível de contrato e cooperado com motor sintético para fins de PoC">
+          <span class="mode-icon">🏛️</span> Visão 2: Estudo de Caso Singular (Sicoob Credijequitinhonha)
+          <span class="mode-pill sandbox">Sandbox PoC Educativo</span>
+        </button>
+      </div>
     </div>
   </div>
 
   <main class="content-wrapper">
+    <!-- ====================================================================
+         VISÃO 1: PANORAMA SISTÊMICO NACIONAL (SFN, GRANDES BANCOS & SNCC)
+         ==================================================================== -->
+    <div id="section-view-macro" class="view-section active">
+      <div class="macro-intro-card">
+        <div>
+          <div class="brand-row" style="margin-bottom: 0.5rem;">
+            <span class="brand-badge highlight">Séries Oficiais Bacen (2020 - 06/2026)</span>
+            <span class="brand-badge secondary">Relatório de Estabilidade Financeira (REF)</span>
+            <span class="brand-badge">Sistema IF.data</span>
+          </div>
+          <h2 class="macro-intro-title">Panorama Macroprudencial do Crédito no Brasil</h2>
+          <p class="macro-intro-desc">
+            Análise consolidada e oficial do Sistema Financeiro Nacional (SFN / Grandes Bancos Comerciais e Múltiplos) confrontada com o Sistema Nacional de Crédito Cooperativo (SNCC) e Cooperativas Singulares. Dados 100% públicos extraídos das estatísticas trimestrais e semestrais do Banco Central do Brasil.
+          </p>
+        </div>
+        <div class="macro-badge-group">
+          <span class="mode-pill official" style="font-size: 0.8rem; padding: 0.35rem 0.8rem;">100% Dados Oficiais Bacen</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Última Data-Base: Jun/2026</span>
+        </div>
+      </div>
+
+      <!-- KPIs Sistêmicos do Sistema Financeiro Nacional & Cooperativismo -->
+      <div class="kpi-grid">
+        <!-- CARD 1: Carteira SFN Total -->
+        <div class="kpi-card" title="Volume total da carteira classificada ativa do Sistema Financeiro Nacional (Bancos Comerciais, Múltiplos e demais IFs).">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Carteira SFN Total</span>
+            <span class="kpi-badge info">Grandes Bancos &amp; SFN</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="macro-kpi-carteira-sfn">R$ 7,34 Tri</div>
+          </div>
+          <div class="kpi-subtext">Crédito Amplo no Brasil</div>
+          <div class="kpi-metrics-row">
+            <span>IF.data Bacen: <strong>Jun/2026</strong></span>
+            <span>Crescimento 5A: <strong>+81,8%</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator info"></span>
+            <span class="status-text">Série Oficial SFN Total</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: Carteira SNCC Consolidado -->
+        <div class="kpi-card" title="Volume agregado da carteira de crédito do Sistema Nacional de Crédito Cooperativo.">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Carteira SNCC (Cooperativas)</span>
+            <span class="kpi-badge success">SNCC Consolidado</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="macro-kpi-carteira-sncc" style="color: var(--color-success)">R$ 701,25 Bi</div>
+          </div>
+          <div class="kpi-subtext">Participação de Mercado: ~9,6%</div>
+          <div class="kpi-metrics-row">
+            <span>Singulares: <strong>R$ 593,37 Bi</strong></span>
+            <span>Crescimento 5A: <strong>+82,0%</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator success"></span>
+            <span class="status-text">Expansão contínua de market share</span>
+          </div>
+        </div>
+
+        <!-- CARD 3: Ativo Problemático SFN vs SNCC -->
+        <div class="kpi-card" title="Taxa agregada de Ativos Problemáticos (atraso > 90 dias, renegociações em estresse e perdas esperadas).">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Ativo Problemático (AP)</span>
+            <span class="kpi-badge warning">SFN vs. SNCC</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="macro-kpi-ap-comparativo">6,64% <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary)">vs 5,68%</span></div>
+          </div>
+          <div class="kpi-subtext">SFN (6,64%) | SNCC (5,68%)</div>
+          <div class="kpi-metrics-row">
+            <span>Singulares: <strong>5,48%</strong></span>
+            <span>Spread Cooperativo: <strong style="color: var(--color-success)">-0,96 p.p.</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator success"></span>
+            <span class="status-text">Cooperativas mantêm menor taxa de AP</span>
+          </div>
+        </div>
+
+        <!-- CARD 4: Inadimplência Crônica Over90 -->
+        <div class="kpi-card" title="Parcela de créditos em atraso superior a 90 dias no SFN e no SNCC.">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Inadimplência Over90</span>
+            <span class="kpi-badge warning">Créditos Vencidos</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="macro-kpi-over90-sfn">R$ 282,5 Bi</div>
+          </div>
+          <div class="kpi-subtext">58,0% do AP do SFN Total</div>
+          <div class="kpi-metrics-row">
+            <span>SNCC Over90: <strong>R$ 21,1 Bi (53,0%)</strong></span>
+            <span>Singulares: <strong>R$ 17,5 Bi</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator warning"></span>
+            <span class="status-text">SFN concentra maior proporção de Over90</span>
+          </div>
+        </div>
+
+        <!-- CARD 5: Estoque de Provisão & Cobertura -->
+        <div class="kpi-card" title="Estoque acumulado de Provisão de Crédito e taxa de provisionamento da carteira total.">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Provisão Constituída</span>
+            <span class="kpi-badge info">Estoque PDD</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="macro-kpi-prov-sfn">R$ 432,8 Bi</div>
+          </div>
+          <div class="kpi-subtext">Taxa SFN: 5,90% | SNCC: 5,18%</div>
+          <div class="kpi-metrics-row">
+            <span>SNCC PDD: <strong>R$ 36,3 Bi</strong></span>
+            <span>Singulares: <strong>R$ 29,5 Bi</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator success"></span>
+            <span class="status-text">Provisões adequadas aos marcos Bacen</span>
+          </div>
+        </div>
+
+        <!-- CARD 6: Custo do Crédito & Cobertura REF -->
+        <div class="kpi-card" title="Dados do Relatório de Estabilidade Financeira (REF Bacen): CoR 12M e Cobertura de Perda Esperada.">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Custo do Crédito (REF)</span>
+            <span class="kpi-badge highlight">Relatório REF Bacen</span>
+          </div>
+          <div class="kpi-value-container">
+            <div class="kpi-value" id="macro-kpi-cor-ref" style="color: var(--color-purple)">4,60% <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary)">vs 3,80%</span></div>
+          </div>
+          <div class="kpi-subtext">CoR: SFN 4,60% | SNCC 3,80%</div>
+          <div class="kpi-metrics-row">
+            <span>Cob. Perda Esp. SNCC: <strong style="color: var(--color-success)">1,035x</strong></span>
+            <span>SFN: <strong>0,980x</strong></span>
+          </div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator success"></span>
+            <span class="status-text">SNCC com cobertura integral de ECL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos Centrais Macro: Comparativo SFN vs SNCC vs Singulares -->
+      <div class="chart-grid-main" style="margin-top: 1.75rem;">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-badge-row">
+                <span class="chart-tag">Séries Oficiais Bacen (2020 a 06/2026)</span>
+                <span class="chart-tag outline">IF.data Bacen</span>
+              </div>
+              <h3 class="chart-title">Evolução Histórica do Ativo Problemático e Provisão: SFN vs. Cooperativas</h3>
+              <p class="chart-desc">Comparação trimestral das taxas de Ativo Problemático (%) e Provisão Constituída (%) entre o Sistema Financeiro Nacional (Grandes Bancos), SNCC Consolidado e Cooperativas Singulares.</p>
+            </div>
+          </div>
+          <div class="chart-body" style="height: 380px;">
+            <canvas id="chart-macro-historico"></canvas>
+          </div>
+          <div class="executive-insight-box" style="margin-top: 1rem;">
+            <div class="insight-icon">💡</div>
+            <div class="insight-content">
+              <h4>Diagnóstico Estrutural do Banco Central</h4>
+              <p>Ao longo de todo o ciclo pós-2020 e durante a implantação da Resolução CMN nº 4.966, o Sistema Cooperativo (SNCC) manteve taxas de Ativo Problemático sensivelmente inferiores às do SFN Total (composta precipuamente pelos Grandes Bancos Comerciais), sustentando maior nível de colateralização e menor volatilidade no Custo do Crédito.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-badge-row">
+                <span class="chart-tag">Macroprudencial</span>
+                <span class="chart-tag outline">REF Bacen Semestral</span>
+              </div>
+              <h3 class="chart-title">Custo do Crédito 12M e Índice de Cobertura de Perda Esperada</h3>
+              <p class="chart-desc">Séries do Relatório de Estabilidade Financeira (REF) comparando o dispêndio líquido com provisões e a razão de cobertura entre provisão constituída e perda esperada teórica.</p>
+            </div>
+          </div>
+          <div class="chart-body" style="height: 380px;">
+            <canvas id="chart-macro-ref"></canvas>
+          </div>
+          <div class="executive-insight-box" style="margin-top: 1rem;">
+            <div class="insight-icon">🛡️</div>
+            <div class="insight-content">
+              <h4>Resiliência e Cobertura Prudencial</h4>
+              <p>O índice de cobertura de perda esperada do cooperativismo (SNCC) permaneceu consistentemente acima de 1,00x (1,035x em Jun/2026), evidenciando que o volume de provisão alocado supera a perda esperada modelada, enquanto o SFN operou em torno de 0,98x a 1,00x.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabela Comparativa de Séries Oficiais do Bacen (IF.data) -->
+      <div class="chart-card" style="margin-top: 1.75rem;">
+        <div class="chart-header">
+          <div>
+            <div class="chart-badge-row">
+              <span class="chart-tag">Base Trimestral Consolidada</span>
+              <span class="chart-tag outline">Tabela Oficial Bacen</span>
+            </div>
+            <h3 class="chart-title">Painel de Benchmarking Trimestral: SFN Total, SNCC e Cooperativas Singulares</h3>
+            <p class="chart-desc">Confronto direto dos indicadores de carteira, saldo em risco e taxas médias em cada trimestre civil apurado pelo Banco Central.</p>
+          </div>
+        </div>
+        <div class="macro-table-container">
+          <table class="macro-data-table" id="tabela-macro-bacen">
+            <thead>
+              <tr>
+                <th>Trimestre</th>
+                <th>Segmento Bacen</th>
+                <th>Carteira Classificada</th>
+                <th>Ativo Problemático (AP)</th>
+                <th>Taxa AP (%)</th>
+                <th>Inadimplência Over90</th>
+                <th>Over90 / AP (%)</th>
+                <th>Provisão Constituída</th>
+                <th>Taxa Provisão (%)</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-macro-bacen">
+              <!-- Preenchido via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VISÃO 2: ESTUDO DE CASO SINGULAR (SICOOB CREDIJEQUITINHONHA - SANDBOX POC)
+         ==================================================================== -->
+    <div id="section-view-coop" class="view-section">
+      <!-- Banner de Disclaimer e Governança do Sandbox Educacional -->
+      <div class="sandbox-disclaimer-banner">
+        <div class="sandbox-disclaimer-icon">⚠️</div>
+        <div class="sandbox-disclaimer-content">
+          <div class="sandbox-disclaimer-title">AMBIENTE DE SANDBOX &amp; PROVA DE CONCEITO (PoC) EDUCACIONAL</div>
+          <p>
+            <strong>Aviso de Governança e Transparência:</strong> Este módulo é um estudo analítico externo projetado para demonstrar e homologar os impactos da <strong>Resolução CMN nº 4.966 / IFRS 9</strong> no cooperativismo de crédito. Enquanto os parâmetros agregados de porte (Ativo de R$ 881,8M, Carteira de R$ 495,1M e Basileia de 17,18%) refletem demonstrações financeiras públicas auditadas e relatórios do Banco Central, <strong>as operações, associados e contratos individuais apresentados são gerados por um motor sintético determinístico (seed=42) para fins estritamente pedagógicos e de prova de conceito</strong>. Não devem ser interpretados como balanço oficial, auditoria interna ou posição contábil definitiva da Cooperativa de Crédito Credijequitinhonha Ltda.
+          </p>
+        </div>
+      </div>
+
+      <!-- Navegação por Abas Executivas e Filtro Temporal da Cooperativa -->
+      <div class="nav-bar-container">
+        <nav class="nav-tabs" aria-label="Navegação do Dashboard da Singular">
+          <button class="tab-btn active" data-target="pane-post-executivo">
+            <span class="tab-number">1</span> Posicionamento &amp; Benchmarking
+          </button>
+          <button class="tab-btn" data-target="pane-anatomia-risco">
+            <span class="tab-number">2</span> Anatomia do Risco 4.966 &amp; Mix Regional
+          </button>
+          <button class="tab-btn" data-target="pane-safras-capital">
+            <span class="tab-number">3</span> Safras &amp; Simulador de Capital
+          </button>
+        </nav>
+        <div class="period-filter-group" aria-label="Filtro de Período Temporal">
+          <span class="filter-label">Recorte Temporal:</span>
+          <button class="filter-chip active" data-period="all">Série Completa (2020 - 2026)</button>
+          <button class="filter-chip" data-period="pre">5 Anos Pré-4.966 (2020 - 2024)</button>
+          <button class="filter-chip" data-period="post">Vigência 4.966 (2025 - 2026)</button>
+          <button class="filter-chip" data-period="12m">Últimos 12M</button>
+        </div>
+      </div>
+
     <!-- TELA 1: Posicionamento Estratégico e Benchmarking (O Post Executivo) -->
     <section id="pane-post-executivo" class="tab-pane active">
       <!-- KPI Header Cards com Contexto Executivo Completo (6 Cards) -->
@@ -566,6 +829,7 @@
         </div>
       </div>
     </section>
+  </div> <!-- Fecha section-view-coop -->
   </main>
 
   <!-- MODAL 1: Briefing da Diretoria Executiva -->
