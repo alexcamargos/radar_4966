@@ -1,7 +1,8 @@
 /**
  * @fileoverview Aplicação cliente nativa Vanilla JS para o painel executivo Radar 4966.
  * Consome os dados compilados em data/dashboard_data.json e inicializa as visualizações
- * interativas via Chart.js, além do simulador reativo de capital e sensibilidade.
+ * interativas via Chart.js, benchmarking quádruplo Bacen, raio-x setorial/regional e
+ * o simulador reativo de solvência de capital (Basileia What-If).
  */
 
 // ============================================================================
@@ -19,6 +20,17 @@ const formatarMoeda = (valor) => {
     currency: 'BRL',
     maximumFractionDigits: 0,
   }).format(valor);
+};
+
+/**
+ * Formata um valor numérico no padrão monetário com milhões abreviados para headers.
+ * @param {number} valor - Valor numérico.
+ * @returns {string} String abreviada (ex: R$ 881,8M).
+ */
+const formatarMilhoes = (valor) => {
+  if (!valor) return 'R$ 0M';
+  const mi = valor / 1000000;
+  return `R$ ${mi.toFixed(1).replace('.', ',')}M`;
 };
 
 /**
@@ -40,13 +52,19 @@ const CORES = {
   azulClaro: '#60a5fa',
   azulGrad: 'rgba(59, 130, 246, 0.15)',
   verde: '#10b981',
+  verdeClaro: '#34d399',
   verdeGrad: 'rgba(16, 185, 129, 0.2)',
   amarelo: '#f59e0b',
+  amareloClaro: '#fbbf24',
   amareloGrad: 'rgba(245, 158, 11, 0.2)',
   vermelho: '#ef4444',
+  vermelhoClaro: '#f87171',
   vermelhoGrad: 'rgba(239, 68, 68, 0.15)',
   roxo: '#8b5cf6',
+  roxoClaro: '#a78bfa',
   ciano: '#06b6d4',
+  cianoClaro: '#22d3ee',
+  laranja: '#ea580c',
   cinzaLinha: '#1e293b',
   cinzaTexto: '#94a3b8',
   cinzaCard: '#0f172a',
@@ -74,10 +92,22 @@ let chartEvolucaoEstagios = null;
 let chartDecomposicao = null;
 let chartDispersao = null;
 let chartVintages = null;
+let chartMixSetorial = null;
+let chartGarantias = null;
 
 // Estado global de visualização de estágios: 'nominal' (R$) ou 'pct' (%)
 let modoExibicaoEstagios = 'nominal';
 let serieEstagiosAtiva = [];
+
+// Estado global das séries ativas no Benchmarking Quádruplo (Gráfico 1)
+const seriesBenchmarkingAtivas = {
+  'singular-ap': true,
+  'singular-prov': true,
+  'sncc': true,
+  'singulares': false,
+  'sfn': false,
+  'credijequitinhonha-trim': false,
+};
 
 // ============================================================================
 // Ponto de Entrada da Aplicação
@@ -85,6 +115,7 @@ let serieEstagiosAtiva = [];
 document.addEventListener('DOMContentLoaded', async () => {
   configurarNavegacaoAbas();
   configurarModais();
+  configurarAcoesRapidas();
 
   try {
     const resposta = await fetch('data/dashboard_data.json');
@@ -102,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="alert-callout-icon">❌</div>
           <div class="alert-callout-content">
             <h4>Erro ao Carregar Dados Compilados</h4>
-            <p>Não foi possível carregar o arquivo <code>dashboard_data.json</code>. Certifique-se de executar o exportador de dados analíticos.</p>
+            <p>Não foi possível carregar o arquivo <code>dashboard_data.json</code>. Certifique-se de executar o pipeline analítico via <code>uv run python -m src.pipeline --stage all</code>.</p>
           </div>
         </div>
       `;
@@ -134,16 +165,22 @@ function configurarNavegacaoAbas() {
 }
 
 // ============================================================================
-// Modais Executivos: Briefing da Diretoria & Glossário Regulatório
+// Modais Executivos: Briefing, Matriz de Decisão C-Level & Glossário
 // ============================================================================
 function configurarModais() {
   const modalBriefing = document.getElementById('modal-briefing');
+  const modalMatriz = document.getElementById('modal-matriz');
   const modalGlossario = document.getElementById('modal-glossario');
 
   const btnOpenBriefing = document.getElementById('btn-open-briefing');
   const btnCloseBriefing = document.getElementById('btn-close-briefing');
   const btnDismissBriefing = document.getElementById('btn-dismiss-briefing');
   const btnPrintBriefing = document.getElementById('btn-print-briefing');
+
+  const btnOpenMatriz = document.getElementById('btn-open-matriz');
+  const btnCloseMatriz = document.getElementById('btn-close-matriz');
+  const btnDismissMatriz = document.getElementById('btn-dismiss-matriz');
+  const btnPrintMatriz = document.getElementById('btn-print-matriz');
 
   const btnOpenGlossario = document.getElementById('btn-open-glossario');
   const btnCloseGlossario = document.getElementById('btn-close-glossario');
@@ -167,13 +204,23 @@ function configurarModais() {
     });
   }
 
+  // Matriz de Decisão
+  if (btnOpenMatriz) btnOpenMatriz.addEventListener('click', () => abrirModal(modalMatriz));
+  if (btnCloseMatriz) btnCloseMatriz.addEventListener('click', () => fecharModal(modalMatriz));
+  if (btnDismissMatriz) btnDismissMatriz.addEventListener('click', () => fecharModal(modalMatriz));
+  if (btnPrintMatriz) {
+    btnPrintMatriz.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
   // Glossário
   if (btnOpenGlossario) btnOpenGlossario.addEventListener('click', () => abrirModal(modalGlossario));
   if (btnCloseGlossario) btnCloseGlossario.addEventListener('click', () => fecharModal(modalGlossario));
   if (btnDismissGlossario) btnDismissGlossario.addEventListener('click', () => fecharModal(modalGlossario));
 
   // Fechar ao clicar fora da caixa do modal
-  [modalBriefing, modalGlossario].forEach((modal) => {
+  [modalBriefing, modalMatriz, modalGlossario].forEach((modal) => {
     if (modal) {
       modal.addEventListener('click', (evento) => {
         if (evento.target === modal) {
@@ -187,9 +234,22 @@ function configurarModais() {
   document.addEventListener('keydown', (evento) => {
     if (evento.key === 'Escape') {
       fecharModal(modalBriefing);
+      fecharModal(modalMatriz);
       fecharModal(modalGlossario);
     }
   });
+}
+
+/**
+ * Configura botões de exportação rápida e impressão em PDF.
+ */
+function configurarAcoesRapidas() {
+  const btnExportPdf = document.getElementById('btn-export-pdf');
+  if (btnExportPdf) {
+    btnExportPdf.addEventListener('click', () => {
+      window.print();
+    });
+  }
 }
 
 // ============================================================================
@@ -199,15 +259,18 @@ function inicializarDashboard(dados) {
   serieEstagiosAtiva = dados.evolucao_estagios_mensal;
 
   preencherMetadadosEKpis(dados);
+  configurarSeletorBenchmarking(dados);
   renderizarGraficoHistoricoAPProv(dados.serie_temporal_mensal, dados);
   renderizarReguaCobertura(dados);
   renderizarEvolucaoEstagios(serieEstagiosAtiva);
   renderizarDecomposicaoAP(dados);
+  renderizarMixSetorialERegional(dados);
   renderizarDispersaoLinhas(dados);
   renderizarMatrizSafras(dados);
-  inicializarSimuladorCapital(dados.simulador_capital_base);
+  inicializarSimuladorCapital(dados.simulador_capital_base, dados.perfil_institucional);
   configurarFiltroPeriodos(dados);
   configurarAlternadorEstagios();
+  preencherModalBriefing(dados);
 }
 
 // ============================================================================
@@ -252,6 +315,8 @@ function preencherMetadadosEKpis(dados) {
   const meta = dados.metadata;
   const kpis = dados.kpis_topo;
   const capBase = dados.simulador_capital_base;
+  const perfil = dados.perfil_institucional || {};
+  const porte = perfil.porte_financeiro_recente || {};
 
   // Header Metadados
   const dtFechamento = new Date(meta.competencia_mais_recente + 'T00:00:00');
@@ -259,11 +324,36 @@ function preencherMetadadosEKpis(dados) {
   const elMeta = document.getElementById('meta-competencia');
   if (elMeta) elMeta.textContent = mesAno.toUpperCase();
 
+  const elMetaAtivo = document.getElementById('meta-ativo-total');
+  if (elMetaAtivo && porte.ativo_total_brl) {
+    elMetaAtivo.textContent = formatarMilhoes(porte.ativo_total_brl);
+  }
+
+  const elMetaBasileia = document.getElementById('meta-basileia');
+  const basileiaNum = porte.indice_basileia_pct || capBase.indice_capital_atual_pct || 17.18;
+  const folgaNum = basileiaNum - 10.5;
+  if (elMetaBasileia) {
+    elMetaBasileia.textContent = `${formatarPct(basileiaNum)} (+${folgaNum.toFixed(2)} p.p.)`;
+  }
+
+  // Obter média mais recente do SNCC no IF.data para referência dinâmica
+  const ifdataSNCC = (dados.benchmarking_ifdata || []).filter(
+    (b) => b.segmento_analise === 'SNCC Consolidado'
+  );
+  const mediaSNCC = ifdataSNCC.length > 0
+    ? Number(ifdataSNCC[ifdataSNCC.length - 1].percentual_ap_ifdata) * 100
+    : 5.3;
+
   // 1. Ativo Problemático (AP)
   const elApValor = document.getElementById('kpi-ap-valor');
   const elApSub = document.getElementById('kpi-ap-sub');
+  const elApTag = document.getElementById('kpi-ap-tag');
   if (elApValor) elApValor.textContent = formatarPct(kpis.taxa_ativo_problematico_pct);
   if (elApSub) elApSub.textContent = `Saldo: ${formatarMoeda(kpis.saldo_ativo_problematico)}`;
+  if (elApTag) {
+    const deltaSNCC = kpis.taxa_ativo_problematico_pct - mediaSNCC;
+    elApTag.textContent = `SNCC: ${mediaSNCC.toFixed(2)}% (${deltaSNCC >= 0 ? '+' : ''}${deltaSNCC.toFixed(2)} p.p.)`;
+  }
 
   // 2. Provisão Constituída e Gap de Cobertura
   const elProvValor = document.getElementById('kpi-prov-valor');
@@ -291,11 +381,10 @@ function preencherMetadadosEKpis(dados) {
   // 5. Índice de Basileia e Solvência
   const elBasileiaValor = document.getElementById('kpi-basileia-valor');
   const elBasileiaSub = document.getElementById('kpi-basileia-sub');
-  if (capBase && elBasileiaValor) {
-    elBasileiaValor.textContent = formatarPct(capBase.indice_capital_atual_pct);
-    const folga = capBase.indice_capital_atual_pct - 10.5;
+  if (elBasileiaValor) {
+    elBasileiaValor.textContent = formatarPct(basileiaNum);
     if (elBasileiaSub) {
-      elBasileiaSub.textContent = `Folga Prudencial: +${folga.toFixed(2)} p.p.`;
+      elBasileiaSub.textContent = `Folga Prudencial: +${folgaNum.toFixed(2)} p.p.`;
     }
   }
 
@@ -306,17 +395,59 @@ function preencherMetadadosEKpis(dados) {
     const mesCruz = dtCruz.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
     const elCruzTitulo = document.getElementById('alerta-cruzamento-titulo');
     const elCruzDesc = document.getElementById('alerta-cruzamento-desc');
+    const elCruzAcao = document.getElementById('alerta-cruzamento-acao');
     if (elCruzTitulo) {
       elCruzTitulo.textContent = `Ponto Crítico Histórico Identificado: Em ${mesCruz}, a Provisão cruzou abaixo do Ativo Problemático`;
     }
     if (elCruzDesc) {
-      elCruzDesc.textContent = `Nesta data de corte, a Taxa de Provisão (${formatarPct(cruzamento.taxa_provisao)}) descolou para baixo da Taxa de Ativo Problemático (${formatarPct(cruzamento.taxa_ap)}), abrindo um gap inicial de ${formatarPct(cruzamento.gap_cobertura)}. Sob a Resolução 4.966, a gestão ativa desse gap é indispensável para evitar pressões repentinas de capital.`;
+      elCruzDesc.textContent = `Nesta data de corte, a Taxa de Provisão (${formatarPct(cruzamento.taxa_provisao)}) descolou para baixo da Taxa de Ativo Problemático (${formatarPct(cruzamento.taxa_ap)}), abrindo um gap inicial de ${formatarPct(cruzamento.gap_cobertura)}. Sob a Resolução 4.966, a gestão ativa desse gap é indispensável para evitar contingenciamentos intempestivos de capital.`;
     }
+    if (elCruzAcao) {
+      elCruzAcao.innerHTML = `<strong>Direcionamento Executivo:</strong> Conter o avanço de créditos migrando para Estágio 2 (SICR) e priorizar colaterais reais com alienação fiduciária e penhor agrícola para conter a severidade de perda (LGD).`;
+    }
+  }
+
+  // Diagnóstico Executivo Dinâmico em Tela 1
+  const elDiagAP = document.getElementById('insight-diagnostico-ap');
+  const elImpactoSobras = document.getElementById('insight-impacto-sobras');
+  if (elDiagAP) {
+    elDiagAP.innerHTML = `<strong>Diagnóstico:</strong> A taxa de Ativo Problemático do Sicoob Credijequitinhonha encerrou o período em <strong>${formatarPct(kpis.taxa_ativo_problematico_pct)}</strong>, distanciando-se em <strong>+${(kpis.taxa_ativo_problematico_pct - mediaSNCC).toFixed(2)} p.p.</strong> da média nacional do SNCC (${formatarPct(mediaSNCC)}). Sob a Resolução CMN 4.966, a exigência de perdas esperadas prospectivas penaliza o carregamento de créditos estressados prolongados.`;
+  }
+  if (elImpactoSobras) {
+    elImpactoSobras.innerHTML = `<strong>Impacto nas Sobras:</strong> O estoque de provisão constituída (${formatarMoeda(kpis.saldo_provisao_constituida)}, ou ${formatarPct(kpis.taxa_provisao_pct)}) opera com um gap de <strong>${formatarPct(kpis.gap_cobertura_pct)}</strong> frente ao AP. A aceleração de perdas potenciais no café ou comércio local demandará consumo de sobras líquidas para rebalancear a cobertura.`;
   }
 }
 
 // ============================================================================
-// Gráfico 1: Evolução Histórica (AP vs. Provisão vs. SNCC)
+// Seletor Interativo de Comparadores (Benchmarking Quádruplo IF.data)
+// ============================================================================
+function configurarSeletorBenchmarking(dados) {
+  const container = document.querySelector('.benchmark-chips-row');
+  if (!container) return;
+
+  const chips = container.querySelectorAll('.benchmark-toggle-chip');
+  chips.forEach((chip) => {
+    const input = chip.querySelector('input');
+    if (!input) return;
+
+    input.addEventListener('change', () => {
+      const serieKey = input.getAttribute('data-series');
+      seriesBenchmarkingAtivas[serieKey] = input.checked;
+
+      if (input.checked) {
+        chip.classList.add('active');
+      } else {
+        chip.classList.remove('active');
+      }
+
+      // Re-renderizar o gráfico com as séries selecionadas
+      renderizarGraficoHistoricoAPProv(dados.serie_temporal_mensal, dados);
+    });
+  });
+}
+
+// ============================================================================
+// Gráfico 1: Evolução Histórica (Benchmarking Quádruplo Bacen IF.data)
 // ============================================================================
 function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
   const ctx = document.getElementById('chart-historico-ap-prov');
@@ -334,14 +465,39 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
   const serieAP = serieMensal.map((s) => s.taxa_ap);
   const serieProv = serieMensal.map((s) => s.taxa_provisao);
 
-  // Média de AP do SNCC via IF.data
-  const ifdataSNCC = dados.benchmarking_ifdata.filter(
-    (b) => b.segmento_analise === 'SNCC Consolidado'
-  );
+  // Mapeamento das 4 séries do Bacen IF.data
+  const ifdata = dados.benchmarking_ifdata || [];
+
+  // 1. SNCC Consolidado
+  const ifdataSNCC = ifdata.filter((b) => b.segmento_analise === 'SNCC Consolidado');
   const taxaMediaSNCC = ifdataSNCC.length > 0
     ? Number(ifdataSNCC[ifdataSNCC.length - 1].percentual_ap_ifdata) * 100
     : 5.3;
   const serieSNCC = labels.map(() => taxaMediaSNCC);
+
+  // 2. Cooperativas Singulares Brasil
+  const ifdataSingulares = ifdata.filter((b) => b.segmento_analise === 'Cooperativas Singulares');
+  const taxaMediaSingulares = ifdataSingulares.length > 0
+    ? Number(ifdataSingulares[ifdataSingulares.length - 1].percentual_ap_ifdata) * 100
+    : 5.1;
+  const serieSingulares = labels.map(() => taxaMediaSingulares);
+
+  // 3. Sistema Financeiro Nacional (SFN Total)
+  const ifdataSFN = ifdata.filter((b) => b.segmento_analise === 'SFN Total');
+  const taxaMediaSFN = ifdataSFN.length > 0
+    ? Number(ifdataSFN[ifdataSFN.length - 1].percentual_ap_ifdata) * 100
+    : 4.8;
+  const serieSFN = labels.map(() => taxaMediaSFN);
+
+  // 4. Sicoob Credijequitinhonha Trimestral (Bacen IF.data oficial)
+  const ifdataCredi = ifdata.filter((b) => b.segmento_analise === 'Sicoob Credijequitinhonha');
+  const mapaCrediTrim = {};
+  ifdataCredi.forEach((item) => {
+    const d = new Date(item.data_trimestre + 'T00:00:00');
+    const chave = d.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
+    mapaCrediTrim[chave] = Number(item.percentual_ap_ifdata) * 100;
+  });
+  const serieCrediTrim = labels.map((l) => mapaCrediTrim[l] !== undefined ? mapaCrediTrim[l] : null);
 
   // Marcadores visuais em pontos-chave
   const pointRadii = serieMensal.map((s) => {
@@ -356,44 +512,91 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
     return CORES.azul;
   });
 
+  // Montagem dinâmica dos datasets com base no estado do seletor
+  const datasets = [];
+
+  if (seriesBenchmarkingAtivas['singular-ap']) {
+    datasets.push({
+      label: 'Taxa de AP (Credijequitinhonha)',
+      data: serieAP,
+      borderColor: CORES.vermelho,
+      backgroundColor: 'rgba(239, 68, 68, 0.08)',
+      fill: true,
+      borderWidth: 2.8,
+      tension: 0.25,
+      pointRadius: pointRadii,
+      pointHoverRadius: 8,
+      pointBackgroundColor: CORES.vermelho,
+    });
+  }
+
+  if (seriesBenchmarkingAtivas['singular-prov']) {
+    datasets.push({
+      label: 'Taxa de Provisão (Credijequitinhonha)',
+      data: serieProv,
+      borderColor: CORES.azul,
+      backgroundColor: 'rgba(59, 130, 246, 0.08)',
+      fill: true,
+      borderWidth: 2.8,
+      tension: 0.25,
+      pointRadius: pointRadii,
+      pointHoverRadius: 8,
+      pointBackgroundColor: pointColors,
+    });
+  }
+
+  if (seriesBenchmarkingAtivas['sncc']) {
+    datasets.push({
+      label: 'Média de AP do SNCC (IF.data)',
+      data: serieSNCC,
+      borderColor: CORES.roxo,
+      borderDash: [5, 4],
+      borderWidth: 2,
+      pointRadius: 0,
+    });
+  }
+
+  if (seriesBenchmarkingAtivas['singulares']) {
+    datasets.push({
+      label: 'Média Singulares Brasil (IF.data)',
+      data: serieSingulares,
+      borderColor: CORES.amarelo,
+      borderDash: [4, 4],
+      borderWidth: 2,
+      pointRadius: 0,
+    });
+  }
+
+  if (seriesBenchmarkingAtivas['sfn']) {
+    datasets.push({
+      label: 'Média SFN Total (IF.data)',
+      data: serieSFN,
+      borderColor: CORES.ciano,
+      borderDash: [3, 3],
+      borderWidth: 2,
+      pointRadius: 0,
+    });
+  }
+
+  if (seriesBenchmarkingAtivas['credijequitinhonha-trim']) {
+    datasets.push({
+      label: 'Credijequitinhonha Trimestral (IF.data)',
+      data: serieCrediTrim,
+      borderColor: CORES.verde,
+      backgroundColor: CORES.verde,
+      borderWidth: 2,
+      pointRadius: 5,
+      pointHoverRadius: 8,
+      showLine: true,
+      spanGaps: true,
+    });
+  }
+
   chartHistorico = new Chart(ctx, {
     type: 'line',
     data: {
       labels,
-      datasets: [
-        {
-          label: 'Taxa de AP (Sicoob Credijequitinhonha)',
-          data: serieAP,
-          borderColor: CORES.vermelho,
-          backgroundColor: 'rgba(239, 68, 68, 0.08)',
-          fill: true,
-          borderWidth: 2.8,
-          tension: 0.25,
-          pointRadius: pointRadii,
-          pointHoverRadius: 8,
-          pointBackgroundColor: CORES.vermelho,
-        },
-        {
-          label: 'Taxa de Provisão (Sicoob Credijequitinhonha)',
-          data: serieProv,
-          borderColor: CORES.azul,
-          backgroundColor: 'rgba(59, 130, 246, 0.08)',
-          fill: true,
-          borderWidth: 2.8,
-          tension: 0.25,
-          pointRadius: pointRadii,
-          pointHoverRadius: 8,
-          pointBackgroundColor: pointColors,
-        },
-        {
-          label: 'Média de AP do SNCC (IF.data Bacen)',
-          data: serieSNCC,
-          borderColor: CORES.roxo,
-          borderDash: [5, 4],
-          borderWidth: 2,
-          pointRadius: 0,
-        },
-      ],
+      datasets,
     },
     options: {
       responsive: true,
@@ -408,7 +611,7 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
           labels: {
             boxWidth: 14,
             usePointStyle: true,
-            padding: 15,
+            padding: 14,
             color: '#cbd5e1',
           },
         },
@@ -423,7 +626,7 @@ function renderizarGraficoHistoricoAPProv(serieMensal, dados) {
               return `${nomeMes.toUpperCase()} • ${regime}`;
             },
             label: (item) => {
-              return `  ${item.dataset.label}: ${item.parsed.y.toFixed(2)}%`;
+              return `  ${item.dataset.label}: ${item.parsed.y !== null ? item.parsed.y.toFixed(2) + '%' : '--'}`;
             },
             afterBody: (items) => {
               const idx = items[0].dataIndex;
@@ -470,8 +673,8 @@ function renderizarReguaCobertura(dados) {
   }
 
   const cobSingular = Number(dados.kpis_topo.indice_cobertura_ecl || 1.0);
-  const refSNCC = dados.benchmarking_ref.find((r) => r.segmento === 'SNCC');
-  const refSFN = dados.benchmarking_ref.find((r) => r.segmento === 'SFN');
+  const refSNCC = (dados.benchmarking_ref || []).find((r) => r.segmento === 'SNCC');
+  const refSFN = (dados.benchmarking_ref || []).find((r) => r.segmento === 'SFN');
 
   const cobSNCC = refSNCC ? Number(refSNCC.indice_cobertura_perda_esperada) : 1.03;
   const cobSFN = refSFN ? Number(refSFN.indice_cobertura_perda_esperada) : 0.98;
@@ -710,6 +913,156 @@ function renderizarDecomposicaoAP(dados) {
 }
 
 // ============================================================================
+// NOVO: Painel de Concentração Econômica Regional (Mix & Garantias)
+// ============================================================================
+function renderizarMixSetorialERegional(dados) {
+  const perfil = dados.perfil_institucional || {};
+  const setorial = perfil.distribuicao_setorial_carteira_pct || {
+    agropecuario: 42.0,
+    comercial_capital_giro: 28.0,
+    consumo_pessoa_fisica: 22.0,
+    financiamento_habitacional: 8.0,
+  };
+
+  const garantias = perfil.garantias_predominantes_pct || {
+    alienacao_fiduciaria_e_penhor_agricola: 60.0,
+    fidejussoria_aval: 28.0,
+    limpa_sem_garantia_real: 12.0,
+  };
+
+  // 1. Gráfico de Mix Setorial da Singular
+  const ctxMix = document.getElementById('chart-mix-setorial');
+  const legMix = document.getElementById('legend-mix-setorial');
+  if (ctxMix) {
+    if (chartMixSetorial) chartMixSetorial.destroy();
+
+    const labelsMix = [
+      'Agropecuário (Café, Silvicultura & Pecuária)',
+      'Comercial & Capital de Giro PJ',
+      'Consumo Pessoa Física (Assalariados/Servidores)',
+      'Financiamento Habitacional',
+    ];
+    const dataMix = [
+      setorial.agropecuario,
+      setorial.comercial_capital_giro,
+      setorial.consumo_pessoa_fisica,
+      setorial.financiamento_habitacional,
+    ];
+    const coresMix = [CORES.verde, CORES.azul, CORES.amarelo, CORES.roxo];
+
+    chartMixSetorial = new Chart(ctxMix, {
+      type: 'doughnut',
+      data: {
+        labels: labelsMix,
+        datasets: [
+          {
+            data: dataMix,
+            backgroundColor: coresMix,
+            borderWidth: 2,
+            borderColor: '#0f172a',
+            hoverOffset: 5,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (item) => `  ${item.label}: ${item.parsed.toFixed(1)}% da carteira`,
+            },
+          },
+        },
+        cutout: '60%',
+      },
+    });
+
+    // Renderizar legenda detalhada
+    if (legMix) {
+      legMix.innerHTML = labelsMix
+        .map(
+          (lbl, i) => `
+          <div class="mini-stat-row">
+            <span class="mini-stat-label">
+              <span class="mini-stat-dot" style="background-color: ${coresMix[i]}"></span>
+              ${lbl}
+            </span>
+            <span class="mini-stat-val">${dataMix[i].toFixed(1)}%</span>
+          </div>
+        `
+        )
+        .join('');
+    }
+  }
+
+  // 2. Gráfico de Estrutura de Colateralização & Garantias (LGD)
+  const ctxGar = document.getElementById('chart-garantias');
+  const legGar = document.getElementById('legend-garantias');
+  if (ctxGar) {
+    if (chartGarantias) chartGarantias.destroy();
+
+    const labelsGar = [
+      'Alienação Fiduciária & Penhor Agrícola',
+      'Fidejussória / Aval de Terceiros',
+      'Sem Garantia Real / Limpa',
+    ];
+    const dataGar = [
+      garantias.alienacao_fiduciaria_e_penhor_agricola,
+      garantias.fidejussoria_aval,
+      garantias.limpa_sem_garantia_real,
+    ];
+    const coresGar = [CORES.verdeClaro, CORES.azulClaro, CORES.vermelhoClaro];
+
+    chartGarantias = new Chart(ctxGar, {
+      type: 'doughnut',
+      data: {
+        labels: labelsGar,
+        datasets: [
+          {
+            data: dataGar,
+            backgroundColor: coresGar,
+            borderWidth: 2,
+            borderColor: '#0f172a',
+            hoverOffset: 5,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (item) => `  ${item.label}: ${item.parsed.toFixed(1)}% do estoque`,
+            },
+          },
+        },
+        cutout: '60%',
+      },
+    });
+
+    if (legGar) {
+      legGar.innerHTML = labelsGar
+        .map(
+          (lbl, i) => `
+          <div class="mini-stat-row">
+            <span class="mini-stat-label">
+              <span class="mini-stat-dot" style="background-color: ${coresGar[i]}"></span>
+              ${lbl}
+            </span>
+            <span class="mini-stat-val">${dataGar[i].toFixed(1)}%</span>
+          </div>
+        `
+        )
+        .join('');
+    }
+  }
+}
+
+// ============================================================================
 // Gráfico 5: Concentração & Risco por Linha de Crédito
 // ============================================================================
 function renderizarDispersaoLinhas(dados) {
@@ -881,9 +1234,9 @@ function renderizarMatrizSafras(dados) {
 }
 
 // ============================================================================
-// Simulador What-If de Capital & Sensibilidade
+// Simulador What-If de Capital & Sensibilidade de Solvência (Basileia)
 // ============================================================================
-function inicializarSimuladorCapital(base) {
+function inicializarSimuladorCapital(base, perfil) {
   const slider = document.getElementById('stress-slider');
   const valorDisplay = document.getElementById('slider-valor-display');
   const botoesCenario = document.querySelectorAll('.scenario-btn');
@@ -896,47 +1249,79 @@ function inicializarSimuladorCapital(base) {
   const elCapProjetado = document.getElementById('sim-capital-projetado');
   const elMargemBasileia = document.getElementById('sim-margem-basileia');
 
+  const elGaugePointer = document.getElementById('basileia-gauge-pointer');
+  const elGaugeStatusLabel = document.getElementById('basileia-gauge-status-label');
+
   const elParecerTexto = document.getElementById('sim-parecer-texto');
   const elStatusTag = document.getElementById('sim-status-tag');
+
+  // Calibrar parâmetros com os dados oficiais do Sicoob Credijequitinhonha
+  const porte = (perfil && perfil.porte_financeiro_recente) || {};
+  const carteiraTotal = porte.carteira_credito_classificada_brl || base.carteira_total || 495120000.0;
+  const sobrasBase = porte.sobras_liquidas_anuais_brl || base.sobras_atuais || 18450000.0;
+  const prBase = porte.patrimonio_referencia_pr_brl || base.patrimonio_referencia || 114850000.0;
+  const rwaBase = porte.rwa_risco_credito_brl || base.rwa_risco_credito || 668400000.0;
 
   const recalcular = () => {
     const deltaAPPct = parseFloat(slider.value);
     valorDisplay.textContent = `+${deltaAPPct.toFixed(1)}%`;
 
     // 1. Aumento nominal de AP em função da carteira total
-    const volumeNovoAP = base.carteira_total * (deltaAPPct / 100);
+    const volumeNovoAP = carteiraTotal * (deltaAPPct / 100);
 
-    // 2. Provisão adicional média requerida (~50% de provisão sobre os novos ativos em default/AP)
+    // 2. Provisão adicional requerida (~50% de provisão sobre ativos problemáticos)
     const adicionalProvisao = volumeNovoAP * 0.5;
 
     // 3. Impacto nas Sobras Líquidas
-    const sobrasAtual = base.sobras_atuais;
+    const sobrasAtual = sobrasBase;
     const sobrasProjetada = sobrasAtual - adicionalProvisao;
     const variacaoSobrasPct = ((sobrasProjetada - sobrasAtual) / sobrasAtual) * 100;
 
     // 4. Impacto no Patrimônio de Referência e Índice de Basileia (Piso Bacen: 10,50%)
-    const prAtual = base.patrimonio_referencia;
-    const rwa = base.rwa_risco_credito;
+    const prAtual = prBase;
+    const rwa = rwaBase;
     const prProjetado = prAtual - adicionalProvisao;
     const basileiaAtual = (prAtual / rwa) * 100;
     const basileiaProjetada = (prProjetado / rwa) * 100;
     const margemSolvencia = basileiaProjetada - 10.5;
 
     // Atualização dos elementos no DOM
-    elDeltaProv.textContent = `+ ${formatarMoeda(adicionalProvisao)}`;
+    if (elDeltaProv) elDeltaProv.textContent = `+ ${formatarMoeda(adicionalProvisao)}`;
 
-    elSobrasAtual.textContent = formatarMoeda(sobrasAtual);
-    elSobrasProjetada.textContent = formatarMoeda(sobrasProjetada);
-    elSobrasProjetada.className = `impact-simulated ${sobrasProjetada >= 0 ? 'positive' : 'negative'}`;
-    elSobrasPct.textContent = `Variação nas Sobras: ${variacaoSobrasPct.toFixed(1)}%`;
+    if (elSobrasAtual) elSobrasAtual.textContent = formatarMoeda(sobrasAtual);
+    if (elSobrasProjetada) {
+      elSobrasProjetada.textContent = formatarMoeda(sobrasProjetada);
+      elSobrasProjetada.className = `impact-simulated ${sobrasProjetada >= 0 ? 'positive' : 'negative'}`;
+    }
+    if (elSobrasPct) elSobrasPct.textContent = `Variação nas Sobras: ${variacaoSobrasPct.toFixed(1)}%`;
 
-    elCapAtual.textContent = formatarPct(basileiaAtual);
-    elCapProjetado.textContent = formatarPct(basileiaProjetada);
-    elCapProjetado.className = `impact-simulated ${basileiaProjetada >= 11.5 ? 'positive' : basileiaProjetada >= 10.5 ? 'negative' : 'negative'}`;
+    if (elCapAtual) elCapAtual.textContent = formatarPct(basileiaAtual);
+    if (elCapProjetado) {
+      elCapProjetado.textContent = formatarPct(basileiaProjetada);
+      elCapProjetado.className = `impact-simulated ${basileiaProjetada >= 13.0 ? 'positive' : basileiaProjetada >= 10.5 ? 'negative' : 'negative'}`;
+    }
 
     if (elMargemBasileia) {
       elMargemBasileia.textContent = `${margemSolvencia >= 0 ? '+' : ''}${margemSolvencia.toFixed(2)} p.p.`;
-      elMargemBasileia.className = `impact-simulated ${margemSolvencia >= 2.0 ? 'positive' : margemSolvencia >= 0 ? 'negative' : 'negative'}`;
+      elMargemBasileia.className = `impact-simulated ${margemSolvencia >= 2.5 ? 'positive' : margemSolvencia >= 0 ? 'negative' : 'negative'}`;
+    }
+
+    // Régua Visual do Gauge (0% a 20%)
+    if (elGaugePointer) {
+      const pctPos = Math.max(0, Math.min(100, (basileiaProjetada / 20.0) * 100));
+      elGaugePointer.style.left = `${pctPos.toFixed(1)}%`;
+    }
+    if (elGaugeStatusLabel) {
+      if (basileiaProjetada >= 15.0) {
+        elGaugeStatusLabel.textContent = `Confortável (${formatarPct(basileiaProjetada)})`;
+        elGaugeStatusLabel.className = 'gauge-status-badge';
+      } else if (basileiaProjetada >= 10.5) {
+        elGaugeStatusLabel.textContent = `Alerta Prudencial (${formatarPct(basileiaProjetada)})`;
+        elGaugeStatusLabel.className = 'gauge-status-badge alert';
+      } else {
+        elGaugeStatusLabel.textContent = `Crítico / Abaixo do Piso (${formatarPct(basileiaProjetada)})`;
+        elGaugeStatusLabel.className = 'gauge-status-badge critical';
+      }
     }
 
     // Parecer Dinâmico da Diretoria de Riscos
@@ -954,7 +1339,6 @@ function inicializarSimuladorCapital(base) {
   });
 
   slider.addEventListener('input', () => {
-    // Sincronizar botões de cenário com valor do slider
     botoesCenario.forEach((b) => {
       if (parseFloat(b.getAttribute('data-stress')) === parseFloat(slider.value)) {
         b.classList.add('active');
@@ -977,14 +1361,59 @@ function atualizarParecerSensibilidade(deltaAP, addProv, sobrasProj, basileiaPro
   if (deltaAP <= 0.8) {
     elTag.textContent = 'Status: Cenário Benigno';
     elTag.className = 'opinion-status-tag';
-    elTexto.innerHTML = `Sob um choque controlado de <strong>+${deltaAP.toFixed(1)}%</strong> no AP (consumo de PDD de <strong>${formatarMoeda(addProv)}</strong>), as Sobras Líquidas permanecem em <strong>${formatarMoeda(sobrasProj)}</strong> e o Índice de Basileia fica confortável em <strong>${formatarPct(basileiaProj)}</strong> (folga de <strong>+${margem.toFixed(2)} p.p.</strong> sobre o piso Bacen de 10,50%). Capacidade plena de retenção patrimonial sem necessidade de chamadas de capital.`;
+    elTexto.innerHTML = `Sob um choque controlado de <strong>+${deltaAP.toFixed(1)}%</strong> no AP (consumo de PDD de <strong>${formatarMoeda(addProv)}</strong>), as Sobras Líquidas permanecem em <strong>${formatarMoeda(sobrasProj)}</strong> e o Índice de Basileia sustenta-se confortável em <strong>${formatarPct(basileiaProj)}</strong> (folga de <strong>+${margem.toFixed(2)} p.p.</strong> sobre o piso Bacen de 10,50%). Capacidade plena de absorção patrimonial sem risco de estresse de capital.`;
   } else if (deltaAP <= 1.8) {
     elTag.textContent = 'Status: Estresse Moderado';
     elTag.className = 'opinion-status-tag alert';
-    elTexto.innerHTML = `Sob estresse moderado de <strong>+${deltaAP.toFixed(1)}%</strong> no AP, a exigência adicional de <strong>${formatarMoeda(addProv)}</strong> em PDD consome parcela expressiva do resultado do exercício (${sobrasProj < 0 ? '<span style="color: var(--color-danger)">Resultado deficitário projetado</span>' : `sobras de <strong>${formatarMoeda(sobrasProj)}</strong>`}). O Índice de Basileia recua para <strong>${formatarPct(basileiaProj)}</strong>, mantendo margem prudencial de <strong>+${margem.toFixed(2)} p.p.</strong> Recomendado contingenciar distribuição de sobras e intensificar renegociações preventivas.`;
+    elTexto.innerHTML = `Sob estresse moderado de <strong>+${deltaAP.toFixed(1)}%</strong> no AP, a exigência de <strong>${formatarMoeda(addProv)}</strong> adicionais em PDD consome parcela expressiva do resultado anual (${sobrasProj < 0 ? '<span style="color: var(--color-danger)">Resultado deficitário projetado</span>' : `sobras residuais de <strong>${formatarMoeda(sobrasProj)}</strong>`}). O Índice de Basileia recua para <strong>${formatarPct(basileiaProj)}</strong>, mantendo margem prudencial de <strong>+${margem.toFixed(2)} p.p.</strong> Recomenda-se contingenciar a distribuição de sobras aos associados.`;
   } else {
     elTag.textContent = 'Status: Estresse Severo / Crítico';
     elTag.className = 'opinion-status-tag critical';
-    elTexto.innerHTML = `No cenário de estresse severo de <strong>+${deltaAP.toFixed(1)}%</strong> no AP, a necessidade imediata de aporte de <strong>${formatarMoeda(addProv)}</strong> em PDD consome a totalidade das sobras e afeta o Patrimônio Líquido. Embora o Índice de Basileia projetado de <strong>${formatarPct(basileiaProj)}</strong> ainda cumpra formalmente o piso regulatório (margem de <strong>+${margem.toFixed(2)} p.p.</strong>), aciona-se o gatilho de preservação de capital com bloqueio de expansão de ativos ponderados pelo risco.`;
+    elTexto.innerHTML = `No cenário de estresse severo de <strong>+${deltaAP.toFixed(1)}%</strong> no AP, o débito de <strong>${formatarMoeda(addProv)}</strong> em despesa de provisão exaure as sobras anuais e corrói o Patrimônio Líquido. Embora o Índice de Basileia projetado de <strong>${formatarPct(basileiaProj)}</strong> preserve <strong>+${margem.toFixed(2)} p.p.</strong> de distância até o piso regulatório, impõe-se a interrupção de expansão de ativos de maior risco e revisão das políticas de crédito no agronegócio e giro regional.`;
+  }
+}
+
+// ============================================================================
+// NOVO: Preenchimento Dinâmico do Modal de Briefing da Diretoria
+// ============================================================================
+function preencherModalBriefing(dados) {
+  const kpis = dados.kpis_topo;
+  const perfil = dados.perfil_institucional || {};
+  const porte = perfil.porte_financeiro_recente || {};
+  const ifdataSNCC = (dados.benchmarking_ifdata || []).filter(
+    (b) => b.segmento_analise === 'SNCC Consolidado'
+  );
+  const mediaSNCC = ifdataSNCC.length > 0
+    ? Number(ifdataSNCC[ifdataSNCC.length - 1].percentual_ap_ifdata) * 100
+    : 5.3;
+
+  const basileiaNum = porte.indice_basileia_pct || dados.simulador_capital_base.indice_capital_atual_pct || 17.18;
+  const folgaBasileia = basileiaNum - 10.5;
+
+  const elItem1 = document.getElementById('briefing-item-1');
+  const elItem2 = document.getElementById('briefing-item-2');
+  const elItem3 = document.getElementById('briefing-item-3');
+  const elItem4 = document.getElementById('briefing-item-4');
+
+  if (elItem1) {
+    const delta = (kpis.taxa_ativo_problematico_pct - mediaSNCC).toFixed(2);
+    elItem1.innerHTML = `A taxa de Ativo Problemático do <strong>Sicoob Credijequitinhonha</strong> atingiu <strong>${formatarPct(kpis.taxa_ativo_problematico_pct)}</strong> (saldo de <strong>${formatarMoeda(kpis.saldo_ativo_problematico)}</strong>), posicionando-se <strong>+${delta} p.p.</strong> acima da média consolidada do SNCC (${formatarPct(mediaSNCC)}). Esse distanciamento decorre predominantemente da maturação de safras concedidas entre 2022 e 2024 que alcançaram atraso superior a 90 dias.`;
+  }
+
+  if (elItem2) {
+    elItem2.innerHTML = `O estoque de Provisão Constituída é de <strong>${formatarMoeda(kpis.saldo_provisao_constituida)} (${formatarPct(kpis.taxa_provisao_pct)})</strong>, resultando em um gap de cobertura de <strong>${formatarPct(kpis.gap_cobertura_pct)}</strong> frente ao AP. A Singular cumpre estritamente <strong>${Number(kpis.indice_cobertura_ecl).toFixed(3)}x</strong> a Perda Esperada estimada sob a Resolução CMN 4.966, porém a alta concentração de atrasos crônicos restringe a elasticidade de absorção em caso de choques na economia do Vale do Jequitinhonha.`;
+  }
+
+  if (elItem3) {
+    elItem3.innerHTML = `O Índice de Basileia oficial da Singular situa-se em <strong>${formatarPct(basileiaNum)}</strong>, garantindo uma folga prudencial expressiva de <strong>+${folgaBasileia.toFixed(2)} p.p.</strong> em relação ao piso do Banco Central (10,50%). As Sobras Líquidas anuais auditadas de <strong>${formatarMoeda(porte.sobras_liquidas_anuais_brl || 18450000)}</strong> conferem robustez para contingenciamentos programados de provisão sem risco de insuficiência de capital.`;
+  }
+
+  if (elItem4) {
+    elItem4.innerHTML = `
+      <li><strong>Aceleração de Cobrança no Over90:</strong> Atuar assertivamente sobre os <strong>${formatarMoeda(kpis.saldo_over90)}</strong> em atraso superior a 90 dias (${formatarPct(kpis.percentual_over90_no_ap_pct)} do AP) com renegociações estruturadas.</li>
+      <li><strong>Barreira Preventiva ao Estágio 2:</strong> Monitorar cooperados com degradação de rating &ge; 2 níveis antes do atraso para evitar elevação do Lifetime ECL na DRE.</li>
+      <li><strong>Alavancagem no Mix Agrícola com Colateral:</strong> Preservar a participação de 42% no agronegócio regional ancorando os novos desembolsos em alienação fiduciária de imóveis e penhor de safra (60% da carteira colateralizada).</li>
+      <li><strong>Governança de Sobras:</strong> Destinar prioritariamente as sobras do exercício para reforço do Fundo de Reserva, mantendo Basileia acima da meta interna de 15,0%.</li>
+    `;
   }
 }
