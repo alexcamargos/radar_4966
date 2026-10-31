@@ -141,6 +141,13 @@ def exportar_dashboard_data(
         "metadata": {
             "projeto": "Radar 4966 - Inteligência de Risco e Capital",
             "regulacao": "Resolução CMN nº 4.966 / IFRS 9 e Resolução BCB nº 352",
+            "instituicao_singular": {
+                "razao_social": "Cooperativa de Crédito Credijequitinhonha Ltda.",
+                "nome_fantasia": "Sicoob Credijequitinhonha",
+                "cnpj": "71.243.034/0001-55",
+                "codigo_bcb": 71243034,
+                "sede": "Capelinha - MG",
+            },
             "data_geracao": date.today().isoformat(),
             "data_inicio": calendario[0].data.isoformat(),
             "competencia_mais_recente": data_base_recente.isoformat(),
