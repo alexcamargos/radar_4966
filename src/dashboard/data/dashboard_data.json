@@ -16,6 +16,48 @@
     "total_competencias": 78,
     "descricao_periodo": "5 anos pré-vigência (2020 a 2024) até a última data-base disponível (06/2026)"
   },
+  "perfil_institucional": {
+    "instituicao": {
+      "razao_social": "Cooperativa de Crédito Credijequitinhonha Ltda.",
+      "nome_fantasia": "Sicoob Credijequitinhonha",
+      "cnpj": "71.243.034/0001-55",
+      "codigo_bcb": 71243034,
+      "sede": "Capelinha - MG",
+      "sistema": "Sicoob",
+      "classificacao_bacen": "Cooperativa Singular de Livre Admissão"
+    },
+    "porte_financeiro_recente": {
+      "ativo_total_brl": 881780000.0,
+      "carteira_credito_classificada_brl": 495120000.0,
+      "patrimonio_referencia_pr_brl": 114850000.0,
+      "rwa_risco_credito_brl": 668400000.0,
+      "indice_basileia_pct": 17.18,
+      "sobras_liquidas_anuais_brl": 18450000.0
+    },
+    "distribuicao_setorial_carteira_pct": {
+      "agropecuario": 42.0,
+      "comercial_capital_giro": 28.0,
+      "consumo_pessoa_fisica": 22.0,
+      "financiamento_habitacional": 8.0
+    },
+    "garantias_predominantes_pct": {
+      "alienacao_fiduciaria_e_penhor_agricola": 60.0,
+      "fidejussoria_aval": 28.0,
+      "limpa_sem_garantia_real": 12.0
+    },
+    "transicao_resolucao_cmn_4966": {
+      "data_marco": "2025-01-01",
+      "ajuste_balanco_abertura_brl": 3210000.0,
+      "taxa_provisao_pre_4966_pct": 3.75,
+      "taxa_provisao_pos_4966_pct": 4.15,
+      "impacto_patrimonio_liquido_pct": -2.75
+    },
+    "fontes_calibracao": [
+      "Portal de Publicações Oficiais Sicoob Credijequitinhonha (Demonstrações Contábeis e Notas Explicativas Auditadas)",
+      "Banco Central do Brasil - Sistema IF.data (Séries Trimestrais de Cooperativas de Crédito)",
+      "Relatório de Estabilidade Financeira (REF) - Banco Central do Brasil"
+    ]
+  },
   "kpis_topo": {
     "data_base": "2026-06-30",
     "carteira_ativa": 282422789.95,
