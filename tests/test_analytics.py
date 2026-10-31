@@ -157,6 +157,8 @@ def test_exportar_dashboard_data(tmp_path: Path) -> None:
     assert "serie_temporal_mensal" in dados
     assert "benchmarking_ifdata" in dados
     assert "benchmarking_ref" in dados
+    assert "matriz_safras_vintages" in dados
+    assert "matriz_safras_anuais" in dados
     assert "simulador_capital_base" in dados
 
     with open(arquivo_teste, encoding="utf-8") as f:

@@ -128,8 +128,11 @@ def exportar_dashboard_data(
             }
         )
 
-    # 8. Matriz de Safras (Vintage por MOB)
+    # 8. Matriz de Safras (Vintage por MOB: Mensal e Anual Consolidado)
     vintages = MotorClassificador4966.calcular_matriz_safras(carteira, mobs_alvo=[1, 3, 6, 12, 24])
+    vintages_anuais = MotorClassificador4966.calcular_matriz_safras_anuais(
+        carteira, mobs_alvo=[1, 3, 6, 12, 24]
+    )
 
     # 9. Dados base para o Simulador What-If de Capital
     ultimo_dre = dre[-1]
@@ -188,6 +191,7 @@ def exportar_dashboard_data(
         "decomposicao_ap": decomposicao_ap,
         "dispersao_linhas": dispersao_linhas,
         "matriz_safras_vintages": vintages,
+        "matriz_safras_anuais": vintages_anuais,
         "simulador_capital_base": capital_base,
     }
 
