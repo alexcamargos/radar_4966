@@ -77,10 +77,14 @@ def exportar_dashboard_data(
 
     # Mapear CoR 12M e metadados regulatórios na série temporal mensal
     mapa_cor = {c["data_fechamento"]: c["percentual_cor_12m"] for c in cor_12m}
+    mapa_despesa = {c["data_fechamento"]: c["despesa_pdd_12m"] for c in cor_12m}
+    mapa_media = {c["data_fechamento"]: c["media_carteira_12m"] for c in cor_12m}
     data_marco_4966 = date(2025, 1, 1)
     for item in serie_mensal:
         dt = item["data_fechamento"]
         item["percentual_cor_12m"] = mapa_cor.get(dt, Decimal("0.00"))
+        item["despesa_pdd_12m"] = mapa_despesa.get(dt, Decimal("0.00"))
+        item["media_carteira_12m"] = mapa_media.get(dt, Decimal("0.00"))
         item["vigencia_4966"] = dt >= data_marco_4966
         item["marco_transicao_4966"] = (dt.year == 2025 and dt.month == 1)
         item["regime_normativo"] = (
@@ -88,6 +92,12 @@ def exportar_dashboard_data(
             if dt >= data_marco_4966
             else "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
         )
+
+    if cor_12m:
+        ult_cor = cor_12m[-1]
+        kpis_fechamento["percentual_cor_12m"] = ult_cor["percentual_cor_12m"]
+        kpis_fechamento["despesa_pdd_12m"] = ult_cor["despesa_pdd_12m"]
+        kpis_fechamento["media_carteira_12m"] = ult_cor["media_carteira_12m"]
 
     # 6. Dados de Benchmarking Bacen
     ifdata_cli = IFDataClient()

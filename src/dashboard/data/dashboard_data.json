@@ -69,7 +69,10 @@
     "gap_cobertura_pct": -9.8,
     "taxa_inadimplencia_over90_pct": 12.5,
     "percentual_over90_no_ap_pct": 91.27,
-    "indice_cobertura_ecl": 1.0
+    "indice_cobertura_ecl": 1.0,
+    "percentual_cor_12m": 3.48,
+    "despesa_pdd_12m": 8787899.93,
+    "media_carteira_12m": 252525860.05
   },
   "serie_temporal_mensal": [
     {
@@ -80,6 +83,8 @@
       "gap_cobertura": -5.6,
       "cruzamento_alerta": true,
       "percentual_cor_12m": 0.29,
+      "despesa_pdd_12m": 547195.97,
+      "media_carteira_12m": 188688265.5,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -92,6 +97,8 @@
       "gap_cobertura": -5.14,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 0.58,
+      "despesa_pdd_12m": 1091984.28,
+      "media_carteira_12m": 188273151.31,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -104,6 +111,8 @@
       "gap_cobertura": -5.47,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 0.87,
+      "despesa_pdd_12m": 1634263.91,
+      "media_carteira_12m": 187846425.53,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -116,6 +125,8 @@
       "gap_cobertura": -5.6,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 1.16,
+      "despesa_pdd_12m": 2173933.83,
+      "media_carteira_12m": 187408088.18,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -128,6 +139,8 @@
       "gap_cobertura": -6.35,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 1.45,
+      "despesa_pdd_12m": 2710893.02,
+      "media_carteira_12m": 186958139.25,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -140,6 +153,8 @@
       "gap_cobertura": -5.9,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 1.74,
+      "despesa_pdd_12m": 3245040.47,
+      "media_carteira_12m": 186496578.72,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -152,6 +167,8 @@
       "gap_cobertura": -5.84,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.03,
+      "despesa_pdd_12m": 3776275.16,
+      "media_carteira_12m": 186023406.61,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -164,6 +181,8 @@
       "gap_cobertura": -5.13,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.32,
+      "despesa_pdd_12m": 4304496.06,
+      "media_carteira_12m": 185538622.92,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -176,6 +195,8 @@
       "gap_cobertura": -5.09,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.61,
+      "despesa_pdd_12m": 4829602.15,
+      "media_carteira_12m": 185042227.63,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -188,6 +209,8 @@
       "gap_cobertura": -5.19,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 2.9,
+      "despesa_pdd_12m": 5351492.41,
+      "media_carteira_12m": 184534220.76,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -200,6 +223,8 @@
       "gap_cobertura": -5.87,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.19,
+      "despesa_pdd_12m": 5870065.82,
+      "media_carteira_12m": 184014602.3,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -212,6 +237,8 @@
       "gap_cobertura": -5.75,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6385221.36,
+      "media_carteira_12m": 183483372.26,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -224,6 +251,8 @@
       "gap_cobertura": -5.75,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6349662.04,
+      "media_carteira_12m": 182461552.74,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -236,6 +265,8 @@
       "gap_cobertura": -5.18,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6312890.47,
+      "media_carteira_12m": 181404898.45,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -248,6 +279,8 @@
       "gap_cobertura": -5.93,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6274906.65,
+      "media_carteira_12m": 180313409.41,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -260,6 +293,8 @@
       "gap_cobertura": -5.93,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6235710.59,
+      "media_carteira_12m": 179187085.62,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -272,6 +307,8 @@
       "gap_cobertura": -6.34,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6195302.28,
+      "media_carteira_12m": 178025927.06,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -284,6 +321,8 @@
       "gap_cobertura": -5.61,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6153681.72,
+      "media_carteira_12m": 176829933.74,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -296,6 +335,8 @@
       "gap_cobertura": -5.1,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6110848.9,
+      "media_carteira_12m": 175599105.67,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -308,6 +349,8 @@
       "gap_cobertura": -4.74,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6066803.83,
+      "media_carteira_12m": 174333442.85,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -320,6 +363,8 @@
       "gap_cobertura": -4.71,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6021546.51,
+      "media_carteira_12m": 173032945.27,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -332,6 +377,8 @@
       "gap_cobertura": -5.34,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 5975076.95,
+      "media_carteira_12m": 171697612.93,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -344,6 +391,8 @@
       "gap_cobertura": -5.12,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 5927395.13,
+      "media_carteira_12m": 170327445.83,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -356,6 +405,8 @@
       "gap_cobertura": -4.35,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 5878501.07,
+      "media_carteira_12m": 168922443.98,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -368,6 +419,8 @@
       "gap_cobertura": -4.49,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6015081.19,
+      "media_carteira_12m": 172847159.9,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -380,6 +433,8 @@
       "gap_cobertura": -4.71,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6151661.3,
+      "media_carteira_12m": 176771875.83,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -392,6 +447,8 @@
       "gap_cobertura": -5.37,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6288241.41,
+      "media_carteira_12m": 180696591.74,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -404,6 +461,8 @@
       "gap_cobertura": -5.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6424821.52,
+      "media_carteira_12m": 184621307.66,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -416,6 +475,8 @@
       "gap_cobertura": -6.13,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6561401.63,
+      "media_carteira_12m": 188546023.59,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -428,6 +489,8 @@
       "gap_cobertura": -6.47,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6697981.74,
+      "media_carteira_12m": 192470739.51,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -440,6 +503,8 @@
       "gap_cobertura": -5.86,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6834561.85,
+      "media_carteira_12m": 196395455.44,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -452,6 +517,8 @@
       "gap_cobertura": -6.18,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6971141.97,
+      "media_carteira_12m": 200320171.36,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -464,6 +531,8 @@
       "gap_cobertura": -6.34,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7107722.09,
+      "media_carteira_12m": 204244887.27,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -476,6 +545,8 @@
       "gap_cobertura": -6.77,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7244302.2,
+      "media_carteira_12m": 208169603.19,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -488,6 +559,8 @@
       "gap_cobertura": -6.5,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7380882.32,
+      "media_carteira_12m": 212094319.11,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -500,6 +573,8 @@
       "gap_cobertura": -6.18,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7517462.43,
+      "media_carteira_12m": 216019035.03,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -512,6 +587,8 @@
       "gap_cobertura": -6.01,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7467356.11,
+      "media_carteira_12m": 214579198.42,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -524,6 +601,8 @@
       "gap_cobertura": -5.89,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7416037.55,
+      "media_carteira_12m": 213104527.05,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -536,6 +615,8 @@
       "gap_cobertura": -5.12,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7363506.74,
+      "media_carteira_12m": 211595020.92,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -548,6 +629,8 @@
       "gap_cobertura": -4.97,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7309763.68,
+      "media_carteira_12m": 210050680.04,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -560,6 +643,8 @@
       "gap_cobertura": -4.85,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7254808.37,
+      "media_carteira_12m": 208471504.4,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -572,6 +657,8 @@
       "gap_cobertura": -5.24,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7198640.81,
+      "media_carteira_12m": 206857494.01,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -584,6 +671,8 @@
       "gap_cobertura": -5.38,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7141261.0,
+      "media_carteira_12m": 205208648.85,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -596,6 +685,8 @@
       "gap_cobertura": -6.86,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7082668.93,
+      "media_carteira_12m": 203524968.95,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -608,6 +699,8 @@
       "gap_cobertura": -7.5,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7022864.61,
+      "media_carteira_12m": 201806454.28,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -620,6 +713,8 @@
       "gap_cobertura": -8.78,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6961848.05,
+      "media_carteira_12m": 200053104.86,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -632,6 +727,8 @@
       "gap_cobertura": -9.86,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6899619.24,
+      "media_carteira_12m": 198264920.69,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -644,6 +741,8 @@
       "gap_cobertura": -10.25,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6836178.18,
+      "media_carteira_12m": 196441901.76,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -656,6 +755,8 @@
       "gap_cobertura": -11.25,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 6987305.29,
+      "media_carteira_12m": 200784634.76,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -668,6 +769,8 @@
       "gap_cobertura": -11.91,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7138432.4,
+      "media_carteira_12m": 205127367.77,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -680,6 +783,8 @@
       "gap_cobertura": -12.47,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7289559.51,
+      "media_carteira_12m": 209470100.77,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -692,6 +797,8 @@
       "gap_cobertura": -12.46,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7440686.61,
+      "media_carteira_12m": 213812833.77,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -704,6 +811,8 @@
       "gap_cobertura": -11.97,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7591813.72,
+      "media_carteira_12m": 218155566.78,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -716,6 +825,8 @@
       "gap_cobertura": -11.89,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7742940.83,
+      "media_carteira_12m": 222498299.78,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -728,6 +839,8 @@
       "gap_cobertura": -11.55,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7894067.94,
+      "media_carteira_12m": 226841032.78,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -740,6 +853,8 @@
       "gap_cobertura": -10.24,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8045195.05,
+      "media_carteira_12m": 231183765.79,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -752,6 +867,8 @@
       "gap_cobertura": -10.53,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8196322.17,
+      "media_carteira_12m": 235526498.81,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -764,6 +881,8 @@
       "gap_cobertura": -10.11,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8347449.28,
+      "media_carteira_12m": 239869231.81,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -776,6 +895,8 @@
       "gap_cobertura": -9.64,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8498576.39,
+      "media_carteira_12m": 244211964.81,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -788,6 +909,8 @@
       "gap_cobertura": -9.39,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8649703.5,
+      "media_carteira_12m": 248554697.81,
       "vigencia_4966": false,
       "marco_transicao_4966": false,
       "regime_normativo": "Período Pré-4.966 (Res. 2.682 / Pro Forma)"
@@ -800,6 +923,8 @@
       "gap_cobertura": -9.34,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8585050.19,
+      "media_carteira_12m": 246696844.12,
       "vigencia_4966": true,
       "marco_transicao_4966": true,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -812,6 +937,8 @@
       "gap_cobertura": -8.72,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8519184.63,
+      "media_carteira_12m": 244804155.68,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -824,6 +951,8 @@
       "gap_cobertura": -8.84,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8452106.82,
+      "media_carteira_12m": 242876632.47,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -836,6 +965,8 @@
       "gap_cobertura": -8.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8383816.77,
+      "media_carteira_12m": 240914274.52,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -848,6 +979,8 @@
       "gap_cobertura": -9.02,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8314314.47,
+      "media_carteira_12m": 238917081.8,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -860,6 +993,8 @@
       "gap_cobertura": -8.83,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8243599.91,
+      "media_carteira_12m": 236885054.33,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -872,6 +1007,8 @@
       "gap_cobertura": -8.48,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8171673.1,
+      "media_carteira_12m": 234818192.08,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -884,6 +1021,8 @@
       "gap_cobertura": -9.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8098534.05,
+      "media_carteira_12m": 232716495.1,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -896,6 +1035,8 @@
       "gap_cobertura": -9.77,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8024182.75,
+      "media_carteira_12m": 230579963.35,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -908,6 +1049,8 @@
       "gap_cobertura": -9.92,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7948619.19,
+      "media_carteira_12m": 228408596.84,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -920,6 +1063,8 @@
       "gap_cobertura": -9.64,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7871843.39,
+      "media_carteira_12m": 226202395.59,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -932,6 +1077,8 @@
       "gap_cobertura": -9.66,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7793855.34,
+      "media_carteira_12m": 223961359.58,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -944,6 +1091,8 @@
       "gap_cobertura": -9.73,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 7959529.44,
+      "media_carteira_12m": 228722109.65,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -956,6 +1105,8 @@
       "gap_cobertura": -9.99,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8125203.55,
+      "media_carteira_12m": 233482859.73,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -968,6 +1119,8 @@
       "gap_cobertura": -10.01,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8290877.65,
+      "media_carteira_12m": 238243609.81,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -980,6 +1133,8 @@
       "gap_cobertura": -10.61,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8456551.74,
+      "media_carteira_12m": 243004359.89,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -992,6 +1147,8 @@
       "gap_cobertura": -10.41,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8622225.83,
+      "media_carteira_12m": 247765109.97,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
@@ -1004,6 +1161,8 @@
       "gap_cobertura": -9.8,
       "cruzamento_alerta": false,
       "percentual_cor_12m": 3.48,
+      "despesa_pdd_12m": 8787899.93,
+      "media_carteira_12m": 252525860.05,
       "vigencia_4966": true,
       "marco_transicao_4966": false,
       "regime_normativo": "Resolução CMN nº 4.966 (Vigência Plena)"
