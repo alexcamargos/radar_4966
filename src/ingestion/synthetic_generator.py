@@ -234,12 +234,14 @@ class SyntheticDataGenerator:
             SegmentoCooperadoEnum.SERVIDOR_PUBLICO,
             SegmentoCooperadoEnum.OUTROS,
         ]
+        # Calibração com as notas explicativas do Sicoob Credijequitinhonha (Agro 42%)
+        pesos_segmentos = [0.42, 0.28, 0.12, 0.10, 0.08]
 
         associados: list[DimAssociadoSchema] = []
 
         for i in range(1, quantidade + 1):
             tipo = TipoPessoaEnum.PJ if (i % 3 == 0) else TipoPessoaEnum.PF
-            segmento = segmentos[i % len(segmentos)]
+            segmento = self.rng.choices(segmentos, weights=pesos_segmentos)[0]
             ano_admissao = 2018 + (i % 6)
             data_adm = date(ano_admissao, ((i % 12) + 1), min(28, (i % 25) + 1))
             # Distribuição com concentração em ratings 2 a 5
@@ -302,7 +304,8 @@ class SyntheticDataGenerator:
         for cid in range(1, num_contratos + 1):
             assoc = associados[(cid - 1) % len(associados)]
             linha = linhas_credito[(cid - 1) % len(linhas_credito)]
-            saldo_inicial = Decimal(str(self.rng.randint(25000, 350000))) + Decimal("0.00")
+            # Calibração de escala financeira com o porte do Sicoob Credijequitinhonha
+            saldo_inicial = Decimal(str(self.rng.randint(250000, 3200000))) + Decimal("0.00")
             ano_conc = 2019 + (cid % 6)
             mes_conc = ((cid % 12) + 1)
             contratos_base.append(
@@ -428,10 +431,10 @@ class SyntheticDataGenerator:
             recuperacao = (total_carteira_mes * Decimal("0.0006")).quantize(Decimal("0.01"))
             despesa_liquida = despesa_pdd - recuperacao
 
-            # RWA e Patrimônio de Referência aderentes às regras de capital de cooperativas
+            # RWA e Patrimônio de Referência aderentes à Credijequitinhonha (Basileia ~17.18%)
             rwa = (total_carteira_mes * Decimal("0.75")).quantize(Decimal("0.01"))
-            pr = (rwa * Decimal("0.165")).quantize(Decimal("0.01"))
-            sobras = (Decimal("350000.00") - (despesa_liquida * Decimal("0.40"))).quantize(
+            pr = (rwa * Decimal("0.1718")).quantize(Decimal("0.01"))
+            sobras = (Decimal("1500000.00") - (despesa_liquida * Decimal("0.35"))).quantize(
                 Decimal("0.01")
             )
 
