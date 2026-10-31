@@ -240,7 +240,9 @@ class MotorClassificador4966:
             saldo_ap = valores["saldo_ap"]
             taxa_ap = Decimal("0.0000")
             if saldo_tot > Decimal("0.00"):
-                taxa_ap = (saldo_ap / saldo_tot).quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)
+                taxa_ap = (saldo_ap / saldo_tot).quantize(
+                    Decimal("0.0001"), rounding=ROUND_HALF_UP
+                )
 
             linhas_vintage.append(
                 {
@@ -253,3 +255,66 @@ class MotorClassificador4966:
             )
 
         return linhas_vintage
+
+    @staticmethod
+    def calcular_matriz_safras_anuais(
+        carteira: list[FatoCarteiraMensalSchema],
+        mobs_alvo: list[int] | None = None,
+    ) -> list[dict[str, Any]]:
+        """Calcula a matriz de safras por maturação agrupada por ano civil de concessão.
+
+        Consolida todas as concessões de cada ano (Safra YYYY) para proporcionar
+        visão executiva estatisticamente robusta da evolução de risco por MOB.
+
+        Args:
+            carteira: Lista de contratos da carteira ao longo do tempo.
+            mobs_alvo: Lista de MOBs avaliados (padrão [1, 3, 6, 12, 24]).
+
+        Returns:
+            Lista de dicionários agregados por safra anual (Safra YYYY) e MOB.
+        """
+        mobs = mobs_alvo or [1, 3, 6, 12, 24]
+
+        agrupado: dict[tuple[str, int], dict[str, Decimal]] = defaultdict(
+            lambda: {
+                "saldo_total": Decimal("0.00"),
+                "saldo_ap": Decimal("0.00"),
+            }
+        )
+
+        for c in carteira:
+            if c.data_fechamento < c.data_concessao:
+                continue
+
+            safra_ano = f"Safra {c.data_concessao.year}"
+            mob = (c.data_fechamento.year - c.data_concessao.year) * 12 + (
+                c.data_fechamento.month - c.data_concessao.month
+            )
+
+            if mob in mobs and mob >= 0:
+                chave = (safra_ano, mob)
+                agrupado[chave]["saldo_total"] += c.saldo_devedor_contabil
+                if c.indicador_ativo_problematico == 1:
+                    agrupado[chave]["saldo_ap"] += c.saldo_devedor_contabil
+
+        linhas_anuais: list[dict[str, Any]] = []
+        for (safra, mob), valores in sorted(agrupado.items()):
+            saldo_tot = valores["saldo_total"]
+            saldo_ap = valores["saldo_ap"]
+            taxa_ap = Decimal("0.0000")
+            if saldo_tot > Decimal("0.00"):
+                taxa_ap = (saldo_ap / saldo_tot).quantize(
+                    Decimal("0.0001"), rounding=ROUND_HALF_UP
+                )
+
+            linhas_anuais.append(
+                {
+                    "safra": safra,
+                    "mob": mob,
+                    "saldo_total": saldo_tot,
+                    "saldo_ativo_problematico": saldo_ap,
+                    "taxa_ativo_problematico": taxa_ap,
+                }
+            )
+
+        return linhas_anuais

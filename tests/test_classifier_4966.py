@@ -202,3 +202,51 @@ def test_matriz_safras_vintage() -> None:
     assert linhas[0]["saldo_total"] == Decimal("100000.00")
     assert linhas[0]["saldo_ativo_problematico"] == Decimal("100000.00")
     assert linhas[0]["taxa_ativo_problematico"] == Decimal("1.0000")
+
+
+def test_matriz_safras_anuais() -> None:
+    """Valida o cálculo da matriz de safras agregada por ano de concessão."""
+    c_safra1 = FatoCarteiraMensalSchema(
+        data_fechamento=date(2024, 7, 31),
+        id_contrato=8001,
+        id_associado=1,
+        id_linha=1,
+        data_concessao=date(2024, 1, 15),
+        saldo_devedor_contabil=Decimal("100000.00"),
+        dias_atraso=95,
+        saldo_vencido_over90=Decimal("100000.00"),
+        indicador_renegociacao=0,
+        indicador_ativo_problematico=1,
+        estagio_contabil=3,
+        probabilidade_default_pd=Decimal("1.0000"),
+        loss_given_default_lgd=Decimal("0.6000"),
+        saldo_provisao_constituida=Decimal("60000.00"),
+    )
+    c_safra2 = FatoCarteiraMensalSchema(
+        data_fechamento=date(2024, 7, 31),
+        id_contrato=8002,
+        id_associado=2,
+        id_linha=1,
+        data_concessao=date(2024, 4, 15),
+        saldo_devedor_contabil=Decimal("100000.00"),
+        dias_atraso=0,
+        saldo_vencido_over90=Decimal("0.00"),
+        indicador_renegociacao=0,
+        indicador_ativo_problematico=0,
+        estagio_contabil=1,
+        probabilidade_default_pd=Decimal("0.0200"),
+        loss_given_default_lgd=Decimal("0.4000"),
+        saldo_provisao_constituida=Decimal("800.00"),
+    )
+
+    linhas_anuais = MotorClassificador4966.calcular_matriz_safras_anuais(
+        [c_safra1, c_safra2], mobs_alvo=[3, 6]
+    )
+    # c_safra1 está no MOB 6 (Jan -> Jul = 6 meses)
+    # c_safra2 está no MOB 3 (Abr -> Jul = 3 meses)
+    assert len(linhas_anuais) == 2
+    assert all(item["safra"] == "Safra 2024" for item in linhas_anuais)
+    mob3 = next(item for item in linhas_anuais if item["mob"] == 3)
+    mob6 = next(item for item in linhas_anuais if item["mob"] == 6)
+    assert mob3["taxa_ativo_problematico"] == Decimal("0.0000")
+    assert mob6["taxa_ativo_problematico"] == Decimal("1.0000")
