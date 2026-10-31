@@ -18,11 +18,13 @@ class SegmentoIFDataEnum(StrEnum):
         COOPERATIVAS_SINGULARES: Cooperativas de crédito singulares.
         SNCC_CONSOLIDADO: Sistema Nacional de Crédito Cooperativo agregado.
         SFN_TOTAL: Sistema Financeiro Nacional consolidado.
+        SICOOB_CREDIJEQUITINHONHA: Cooperativa de Crédito Credijequitinhonha Ltda. (Sicoob).
     """
 
     COOPERATIVAS_SINGULARES = "Cooperativas Singulares"
     SNCC_CONSOLIDADO = "SNCC Consolidado"
     SFN_TOTAL = "SFN Total"
+    SICOOB_CREDIJEQUITINHONHA = "Sicoob Credijequitinhonha"
 
 
 class SegmentoREFEnum(StrEnum):
