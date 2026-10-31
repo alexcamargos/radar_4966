@@ -106,7 +106,7 @@ Demonstrativo contábil mensal e parâmetros de capital regulatório.
 | Atributo | Tipo de Dado | Descrição |
 | :--- | :--- | :--- |
 | `data_trimestre` | `date` | Fim do trimestre civil de referência. |
-| `segmento_analise` | `string` | `Cooperativas Singulares`, `SNCC Consolidado`, `SFN Total`. |
+| `segmento_analise` | `string` | `Cooperativas Singulares`, `SNCC Consolidado`, `SFN Total`, `Sicoob Credijequitinhonha`. |
 | `carteira_total_bacen` | `Decimal(18,2)` | Saldo agregado da carteira de crédito. |
 | `provisao_total_bacen` | `Decimal(18,2)` | Estoque agregado de provisão constituída. |
 | `ativo_problematico_bacen`| `Decimal(18,2)` | Saldo agregado de Ativos Problemáticos. |
