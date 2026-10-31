@@ -336,57 +336,104 @@ function preencherMetadadosEKpis(dados) {
     elMetaBasileia.textContent = `${formatarPct(basileiaNum)} (+${folgaNum.toFixed(2)} p.p.)`;
   }
 
-  // Obter média mais recente do SNCC no IF.data para referência dinâmica
-  const ifdataSNCC = (dados.benchmarking_ifdata || []).filter(
-    (b) => b.segmento_analise === 'SNCC Consolidado'
-  );
+  // Obter médias mais recentes do Bacen IF.data para referência dinâmica
+  const ifdata = dados.benchmarking_ifdata || [];
+
+  const ifdataSNCC = ifdata.filter((b) => b.segmento_analise === 'SNCC Consolidado');
   const mediaSNCC = ifdataSNCC.length > 0
     ? Number(ifdataSNCC[ifdataSNCC.length - 1].percentual_ap_ifdata) * 100
-    : 5.3;
+    : 5.68;
 
-  // 1. Ativo Problemático (AP)
+  const ifdataSingulares = ifdata.filter((b) => b.segmento_analise === 'Cooperativas Singulares');
+  const mediaSingulares = ifdataSingulares.length > 0
+    ? Number(ifdataSingulares[ifdataSingulares.length - 1].percentual_ap_ifdata) * 100
+    : 5.10;
+
+  const ifdataSFN = ifdata.filter((b) => b.segmento_analise === 'SFN Total');
+  const mediaSFN = ifdataSFN.length > 0
+    ? Number(ifdataSFN[ifdataSFN.length - 1].percentual_ap_ifdata) * 100
+    : 4.80;
+
+  // 1. CARD 1: Carteira Classificada Total
+  const elCartValor = document.getElementById('kpi-carteira-valor');
+  const elCartSub = document.getElementById('kpi-carteira-sub');
+  const elCartTag = document.getElementById('kpi-carteira-tag');
+  const elCartAtivo = document.getElementById('kpi-carteira-ativo');
+  const elCartMedia = document.getElementById('kpi-carteira-media');
+
+  if (elCartValor) elCartValor.textContent = formatarMoeda(kpis.carteira_ativa);
+  if (elCartSub) elCartSub.textContent = `Saldo Contábil DRE: ${formatarMoeda(kpis.carteira_ativa)}`;
+  if (elCartTag && porte.ativo_total_brl) elCartTag.textContent = `Ativo: ${formatarMilhoes(porte.ativo_total_brl)}`;
+  if (elCartAtivo) elCartAtivo.textContent = formatarMilhoes(porte.ativo_total_brl || 881780000);
+  if (elCartMedia) elCartMedia.textContent = formatarMilhoes(kpis.media_carteira_12m || 252525860);
+
+  // 2. CARD 2: Ativo Problemático (AP)
   const elApValor = document.getElementById('kpi-ap-valor');
   const elApSub = document.getElementById('kpi-ap-sub');
   const elApTag = document.getElementById('kpi-ap-tag');
+  const elApSingulares = document.getElementById('kpi-ap-singulares');
+  const elApSfn = document.getElementById('kpi-ap-sfn');
+
   if (elApValor) elApValor.textContent = formatarPct(kpis.taxa_ativo_problematico_pct);
-  if (elApSub) elApSub.textContent = `Saldo: ${formatarMoeda(kpis.saldo_ativo_problematico)}`;
+  if (elApSub) elApSub.textContent = `Saldo em Risco: ${formatarMoeda(kpis.saldo_ativo_problematico)}`;
   if (elApTag) {
     const deltaSNCC = kpis.taxa_ativo_problematico_pct - mediaSNCC;
     elApTag.textContent = `SNCC: ${mediaSNCC.toFixed(2)}% (${deltaSNCC >= 0 ? '+' : ''}${deltaSNCC.toFixed(2)} p.p.)`;
   }
+  if (elApSingulares) elApSingulares.textContent = formatarPct(mediaSingulares);
+  if (elApSfn) elApSfn.textContent = formatarPct(mediaSFN);
 
-  // 2. Provisão Constituída e Gap de Cobertura
+  // 3. CARD 3: Provisão Constituída e Gap de Cobertura
   const elProvValor = document.getElementById('kpi-prov-valor');
   const elProvSub = document.getElementById('kpi-prov-sub');
   const elGapTag = document.getElementById('kpi-prov-tag');
+  const elProvCobertura = document.getElementById('kpi-prov-cobertura');
+  const elProvGap = document.getElementById('kpi-prov-gap');
+
   if (elProvValor) elProvValor.textContent = formatarPct(kpis.taxa_provisao_pct);
-  if (elProvSub) elProvSub.textContent = `Estoque: ${formatarMoeda(kpis.saldo_provisao_constituida)}`;
+  if (elProvSub) elProvSub.textContent = `Estoque PDD: ${formatarMoeda(kpis.saldo_provisao_constituida)}`;
   if (elGapTag) {
     const gap = Number(kpis.gap_cobertura_pct);
-    elGapTag.textContent = `Gap: ${gap > 0 ? '+' : ''}${formatarPct(gap)}`;
+    elGapTag.textContent = `Gap: ${gap > 0 ? '+' : ''}${gap.toFixed(2)} p.p.`;
     elGapTag.className = gap < 0 ? 'kpi-badge danger' : 'kpi-badge success';
   }
+  if (elProvCobertura) elProvCobertura.textContent = `${Number(kpis.indice_cobertura_ecl).toFixed(3)}x (Integral)`;
+  if (elProvGap) elProvGap.textContent = `${kpis.gap_cobertura_pct > 0 ? '+' : ''}${Number(kpis.gap_cobertura_pct).toFixed(2)} p.p.`;
 
-  // 3. Cost of Risk 12M
+  // 4. CARD 4: Cost of Risk 12M
   const ultSerie = dados.serie_temporal_mensal[dados.serie_temporal_mensal.length - 1];
   const elCorValor = document.getElementById('kpi-cor-valor');
-  if (elCorValor) elCorValor.textContent = formatarPct(ultSerie.percentual_cor_12m || 0);
+  const elCorSub = document.getElementById('kpi-cor-sub');
+  const elCorMedia = document.getElementById('kpi-cor-media');
 
-  // 4. Over90 no Ativo Problemático
+  const cor12mNum = kpis.percentual_cor_12m || ultSerie.percentual_cor_12m || 0;
+  if (elCorValor) elCorValor.textContent = formatarPct(cor12mNum);
+  if (elCorSub) elCorSub.textContent = `Despesa PDD 12M: ${formatarMoeda(kpis.despesa_pdd_12m || 8787900)}`;
+  if (elCorMedia) elCorMedia.textContent = formatarMilhoes(kpis.media_carteira_12m || 252525860);
+
+  // 5. CARD 5: Inadimplência Crônica (Over90)
   const elOver90Valor = document.getElementById('kpi-over90-valor');
   const elOver90Sub = document.getElementById('kpi-over90-sub');
-  if (elOver90Valor) elOver90Valor.textContent = formatarPct(kpis.percentual_over90_no_ap_pct);
-  if (elOver90Sub) elOver90Sub.textContent = `Over90: ${formatarMoeda(kpis.saldo_over90)}`;
+  const elOver90Tag = document.getElementById('kpi-over90-tag');
+  const elOver90NoAp = document.getElementById('kpi-over90-no-ap');
+  const elOver90NaCart = document.getElementById('kpi-over90-na-carteira');
 
-  // 5. Índice de Basileia e Solvência
+  if (elOver90Valor) elOver90Valor.textContent = formatarPct(kpis.taxa_inadimplencia_over90_pct || 12.50);
+  if (elOver90Sub) elOver90Sub.textContent = `Volume Over90: ${formatarMoeda(kpis.saldo_over90)}`;
+  if (elOver90Tag) elOver90Tag.textContent = `${formatarPct(kpis.percentual_over90_no_ap_pct)} do AP`;
+  if (elOver90NoAp) elOver90NoAp.textContent = formatarPct(kpis.percentual_over90_no_ap_pct);
+  if (elOver90NaCart) elOver90NaCart.textContent = `${formatarPct(kpis.taxa_inadimplencia_over90_pct)} da carteira`;
+
+  // 6. CARD 6: Índice de Basileia e Solvência
   const elBasileiaValor = document.getElementById('kpi-basileia-valor');
   const elBasileiaSub = document.getElementById('kpi-basileia-sub');
-  if (elBasileiaValor) {
-    elBasileiaValor.textContent = formatarPct(basileiaNum);
-    if (elBasileiaSub) {
-      elBasileiaSub.textContent = `Folga Prudencial: +${folgaNum.toFixed(2)} p.p.`;
-    }
-  }
+  const elBasileiaPr = document.getElementById('kpi-basileia-pr');
+  const elBasileiaRwa = document.getElementById('kpi-basileia-rwa');
+
+  if (elBasileiaValor) elBasileiaValor.textContent = formatarPct(basileiaNum);
+  if (elBasileiaSub) elBasileiaSub.textContent = `Folga Prudencial: +${folgaNum.toFixed(2)} p.p.`;
+  if (elBasileiaPr) elBasileiaPr.textContent = formatarMilhoes(porte.patrimonio_referencia_pr_brl || capBase.patrimonio_referencia || 114850000);
+  if (elBasileiaRwa) elBasileiaRwa.textContent = formatarMilhoes(porte.rwa_risco_credito_brl || capBase.rwa_risco_credito || 668400000);
 
   // Alerta de Inflexão Histórica (Cruzamento)
   const cruzamento = dados.serie_temporal_mensal.find((s) => s.cruzamento_alerta);
