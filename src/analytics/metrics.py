@@ -7,6 +7,7 @@ Carteira Ativa, Saldo de AP, Taxa de Provisão, Gap de Cobertura,
 
 from datetime import date
 from decimal import Decimal
+from pathlib import Path
 from typing import Any
 
 import duckdb
@@ -70,6 +71,31 @@ class MotorAnaliticoDuckDB:
         self.con.execute("CREATE OR REPLACE TABLE d_LinhaCredito AS SELECT * FROM tmp_linhas")
         self.con.execute("CREATE OR REPLACE TABLE f_Carteira_Mensal AS SELECT * FROM tmp_cart")
         self.con.execute("CREATE OR REPLACE TABLE f_DRE_Gerencial AS SELECT * FROM tmp_dre")
+
+    def carregar_de_parquet(self, diretorio_interim: Path | str) -> None:
+        """Carrega e registra as tabelas intermediárias em formato Parquet no catálogo do DuckDB.
+
+        Args:
+            diretorio_interim: Caminho para o diretório interim contendo os arquivos parquet.
+
+        Raises:
+            FileNotFoundError: Se algum arquivo parquet obrigatório não for encontrado.
+        """
+        p = Path(diretorio_interim)
+        arquivos = {
+            "d_Calendario": p / "calendario_staging.parquet",
+            "d_Associado": p / "associados_staging.parquet",
+            "d_LinhaCredito": p / "linhas_credito_staging.parquet",
+            "f_Carteira_Mensal": p / "carteira_staging.parquet",
+            "f_DRE_Gerencial": p / "dre_staging.parquet",
+        }
+        for tabela, arq in arquivos.items():
+            if not arq.exists():
+                raise FileNotFoundError(f"Arquivo parquet obrigatório '{arq}' não encontrado.")
+            caminho_sql = arq.resolve().as_posix()
+            self.con.execute(
+                f"CREATE OR REPLACE TABLE {tabela} AS SELECT * FROM read_parquet('{caminho_sql}')"
+            )
 
     def calcular_kpis_fechamento(self, data_base: date) -> dict[str, Any]:
         """Calcula os KPIs executivos sintéticos da cooperativa na data-base informada.
