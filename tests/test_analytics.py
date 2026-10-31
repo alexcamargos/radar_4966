@@ -5,7 +5,6 @@ decomposição de AP e geração do arquivo JSON do painel executivo.
 """
 
 import json
-from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
@@ -28,7 +27,7 @@ def test_motor_analitico_kpis_fechamento() -> None:
         dre=base["f_DRE_Gerencial"],
     )
 
-    data_base = date(2025, 12, 31)
+    data_base = base["d_Calendario"][-1].data
     kpis = motor.calcular_kpis_fechamento(data_base)
 
     assert kpis["data_base"] == data_base
@@ -41,7 +40,7 @@ def test_motor_analitico_kpis_fechamento() -> None:
 
 
 def test_motor_analitico_serie_historica_e_cruzamento() -> None:
-    """Verifica o histórico mensal de 24 meses e detecção do cruzamento Prov < AP."""
+    """Verifica o histórico mensal de 78 meses e detecção do cruzamento Prov < AP."""
     gen = SyntheticDataGenerator(seed=42)
     base = gen.gerar_base_completa()
 
@@ -55,7 +54,7 @@ def test_motor_analitico_serie_historica_e_cruzamento() -> None:
     )
 
     serie = motor.calcular_serie_historica_mensal()
-    assert len(serie) == 24
+    assert len(serie) == 78
     assert all("taxa_ap" in s and "taxa_provisao" in s for s in serie)
     # Deve conter chave de alerta de cruzamento
     assert any("cruzamento_alerta" in s for s in serie)
@@ -76,7 +75,7 @@ def test_motor_analitico_cor_12m_janela_movel() -> None:
     )
 
     cor_lista = motor.calcular_custo_credito_movel_12m()
-    assert len(cor_lista) == 24
+    assert len(cor_lista) == 78
     # Nos últimos meses, despesa acumulada e CoR devem ser estritamente positivos
     ultimo_cor = cor_lista[-1]
     assert ultimo_cor["despesa_pdd_12m"] > Decimal("0.00")
@@ -103,4 +102,6 @@ def test_exportar_dashboard_data(tmp_path: Path) -> None:
 
     with open(arquivo_teste, encoding="utf-8") as f:
         carregado = json.load(f)
-    assert carregado["metadata"]["total_competencias"] == 24
+    assert carregado["metadata"]["total_competencias"] == 78
+    assert carregado["metadata"]["data_inicio"] == "2020-01-31"
+    assert carregado["metadata"]["competencia_mais_recente"] == "2026-06-30"

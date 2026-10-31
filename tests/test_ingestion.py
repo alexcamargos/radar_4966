@@ -17,11 +17,11 @@ from src.schemas.facts import SegmentoIFDataEnum, SegmentoREFEnum
 
 
 def test_ifdata_client_obter_dados_trimestrais_fallback() -> None:
-    """Verifica que o IFDataClient retorna a série histórica de fallback completa."""
+    """Verifica que o IFDataClient retorna a série histórica de fallback completa (2020 a 2026)."""
     cliente = IFDataClient()
     dados = cliente.obter_dados_trimestrais()
 
-    assert len(dados) == 24  # 8 trimestres x 3 segmentos
+    assert len(dados) == 78  # 26 trimestres x 3 segmentos
     segmentos = {item.segmento_analise for item in dados}
     assert SegmentoIFDataEnum.COOPERATIVAS_SINGULARES in segmentos
     assert SegmentoIFDataEnum.SNCC_CONSOLIDADO in segmentos
@@ -57,7 +57,7 @@ def test_ifdata_client_com_mock_http(mocker: MockerFixture) -> None:
     )
     cliente = IFDataClient()
     dados = cliente.obter_dados_trimestrais()
-    assert len(dados) == 24
+    assert len(dados) == 78
 
 
 def test_ref_client_obter_dados_semestrais_fallback() -> None:
@@ -65,7 +65,7 @@ def test_ref_client_obter_dados_semestrais_fallback() -> None:
     cliente = REFClient()
     dados = cliente.obter_dados_semestrais()
 
-    assert len(dados) == 8  # 4 semestres x 2 segmentos (SNCC e SFN)
+    assert len(dados) == 26  # 13 semestres x 2 segmentos (SNCC e SFN)
     segmentos = {item.segmento for item in dados}
     assert SegmentoREFEnum.SNCC in segmentos
     assert SegmentoREFEnum.SFN in segmentos
@@ -98,7 +98,7 @@ def test_ref_client_com_mock_http(mocker: MockerFixture) -> None:
     )
     cliente = REFClient()
     dados = cliente.obter_dados_semestrais()
-    assert len(dados) == 8
+    assert len(dados) == 26
 
 
 def test_synthetic_generator_calendario_24m() -> None:
@@ -111,6 +111,18 @@ def test_synthetic_generator_calendario_24m() -> None:
     assert cal[-1].data == date(2025, 12, 31)
     assert cal[0].mes_ano == "Jan/2024"
     assert cal[-1].mes_ano == "Dez/2025"
+
+
+def test_synthetic_generator_calendario_historico_78m() -> None:
+    """Valida a geração de 78 meses (5 anos pré-4.966 de 2020 a 2024 até 06/2026)."""
+    gerador = SyntheticDataGenerator(seed=42)
+    cal = gerador.gerar_calendario(ano_inicio=2020, ano_fim=2026, mes_fim=6)
+
+    assert len(cal) == 78
+    assert cal[0].data == date(2020, 1, 31)
+    assert cal[-1].data == date(2026, 6, 30)
+    assert cal[0].mes_ano == "Jan/2020"
+    assert cal[-1].mes_ano == "Jun/2026"
 
 
 def test_synthetic_generator_dimensoes() -> None:
@@ -130,13 +142,13 @@ def test_synthetic_generator_dataset_completo_conciliacao() -> None:
     gerador = SyntheticDataGenerator(seed=42)
     dataset = gerador.gerar_dataset_completo()
 
-    assert len(dataset.calendario) == 24
-    assert len(dataset.dre_gerencial) == 24
+    assert len(dataset.calendario) == 78  # 2020-01 a 2026-06
+    assert len(dataset.dre_gerencial) == 78
     assert len(dataset.carteira_mensal) > 0
 
     # Agrupa por competência e audita a igualdade contábil
     competencias = {cal.data for cal in dataset.calendario}
-    assert len(competencias) == 24
+    assert len(competencias) == 78
 
     for comp in competencias:
         contratos_mes = [c for c in dataset.carteira_mensal if c.data_fechamento == comp]
