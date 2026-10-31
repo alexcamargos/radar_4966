@@ -21,11 +21,13 @@ def test_ifdata_client_obter_dados_trimestrais_fallback() -> None:
     cliente = IFDataClient()
     dados = cliente.obter_dados_trimestrais()
 
-    assert len(dados) == 78  # 26 trimestres x 3 segmentos
+    # 26 trimestres x 4 segmentos (Singulares, SNCC, SFN e Credijequitinhonha)
+    assert len(dados) == 104
     segmentos = {item.segmento_analise for item in dados}
     assert SegmentoIFDataEnum.COOPERATIVAS_SINGULARES in segmentos
     assert SegmentoIFDataEnum.SNCC_CONSOLIDADO in segmentos
     assert SegmentoIFDataEnum.SFN_TOTAL in segmentos
+    assert SegmentoIFDataEnum.SICOOB_CREDIJEQUITINHONHA in segmentos
 
     # Validação de tipos decimais
     for item in dados:
@@ -40,9 +42,28 @@ def test_ifdata_client_filtro_data() -> None:
     data_filtro = date(2025, 9, 30)
     dados = cliente.obter_dados_trimestrais(data_trimestre=data_filtro)
 
-    assert len(dados) == 3  # 3 segmentos do mesmo trimestre
+    assert len(dados) == 4  # 4 segmentos do mesmo trimestre
     for item in dados:
         assert item.data_trimestre == data_filtro
+
+
+def test_ifdata_client_obter_dados_credijequitinhonha() -> None:
+    """Verifica a extração das séries exclusivas do Sicoob Credijequitinhonha no IF.data."""
+    cliente = IFDataClient()
+    dados_singular = cliente.obter_dados_credijequitinhonha()
+
+    assert len(dados_singular) == 26  # 26 trimestres de 2020 a 2026
+    for item in dados_singular:
+        assert item.segmento_analise == SegmentoIFDataEnum.SICOOB_CREDIJEQUITINHONHA
+        assert item.carteira_total_bacen > Decimal("200000000.00")
+        assert item.provisao_total_bacen > Decimal("5000000.00")
+        assert Decimal("0.0300") <= item.percentual_ap_ifdata <= Decimal("0.0600")
+
+    # Filtro pontual por competência trimestral
+    data_filtro = date(2026, 6, 30)
+    dado_recente = cliente.obter_dados_credijequitinhonha(data_trimestre=data_filtro)
+    assert len(dado_recente) == 1
+    assert dado_recente[0].data_trimestre == data_filtro
 
 
 def test_ifdata_client_com_mock_http(mocker: MockerFixture) -> None:
@@ -57,7 +78,7 @@ def test_ifdata_client_com_mock_http(mocker: MockerFixture) -> None:
     )
     cliente = IFDataClient()
     dados = cliente.obter_dados_trimestrais()
-    assert len(dados) == 78
+    assert len(dados) == 104
 
 
 def test_ref_client_obter_dados_semestrais_fallback() -> None:
