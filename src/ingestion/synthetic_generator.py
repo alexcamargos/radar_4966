@@ -8,7 +8,7 @@ e conciliação centavo a centavo entre a carteira e o balancete/DRE.
 import random
 from dataclasses import dataclass
 from datetime import date
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
 
 from src.schemas.dimensions import (
@@ -269,11 +269,14 @@ class SyntheticDataGenerator:
 
         Abrange desde 5 anos anteriores à vigência da Resolução 4.966 (2020 a 2024)
         até a última data-base disponível (junho de 2026 - 78 competências mensais).
+        Garante consistência cronológica estrita (sem contratos contratados no futuro
+        e sem dias de atraso superiores à idade do contrato), curvas de safra (MOB)
+        realistas e alinhamento com a escala patrimonial auditada da singular.
 
         Inclui os 3 casos de teste limítrofes regulatórios:
-        1. Contrato 1001: 35 dias de atraso com rebaixamento (Estágio 2 / SICR);
-        2. Contrato 1002: Renegociado por estresse com 0 dias de atraso (Estágio 3 / AP);
-        3. Contrato 1003: 95 dias de atraso (Estágio 3 e Over90).
+        1. Contrato 1: 35 dias de atraso com rebaixamento (Estágio 2 / SICR);
+        2. Contrato 2: Renegociado por estresse com 0 dias de atraso (Estágio 3 / AP);
+        3. Contrato 3: 95 dias de atraso (Estágio 3 e Over90).
 
         Args:
             ano_inicio: Primeiro ano da série histórica (padrão 2020).
@@ -294,56 +297,138 @@ class SyntheticDataGenerator:
         linhas_credito = self.gerar_linhas_credito()
         associados = self.gerar_associados(quantidade=120)
 
+        # 1. Criação do catálogo de contratos com concessão temporal verídica
+        # Casos de teste limítrofes regulatórios fixados em 2019
+        contratos_pool: list[dict[str, Any]] = [
+            {
+                "id_contrato": 1,
+                "id_associado": 1,
+                "id_linha": 1,
+                "data_concessao": date(2019, 1, 10),
+                "saldo_base": Decimal("2800000.00"),
+                "prazo_meses": 96,
+                "perfil_risco": "teste_caso_1",
+            },
+            {
+                "id_contrato": 2,
+                "id_associado": 2,
+                "id_linha": 3,
+                "data_concessao": date(2019, 2, 10),
+                "saldo_base": Decimal("3000000.00"),
+                "prazo_meses": 96,
+                "perfil_risco": "teste_caso_2",
+            },
+            {
+                "id_contrato": 3,
+                "id_associado": 3,
+                "id_linha": 2,
+                "data_concessao": date(2019, 3, 10),
+                "saldo_base": Decimal("3200000.00"),
+                "prazo_meses": 96,
+                "perfil_risco": "teste_caso_3",
+            },
+        ]
+
+        proximo_cid = 4
+
+        # Carteira pré-2020 (concessões graduais de 2017 a 2019)
+        for y_base in (2017, 2018, 2019):
+            for m_base in range(1, 13):
+                qtd_concessoes = 2 if y_base == 2017 else 3
+                for _ in range(qtd_concessoes):
+                    assoc = associados[(proximo_cid - 1) % len(associados)]
+                    linha = linhas_credito[(proximo_cid - 1) % len(linhas_credito)]
+                    ticket = Decimal(str(self.rng.randint(2200000, 3600000)))
+                    prazo = self.rng.choice([60, 72, 84])
+                    perfil = self.rng.choices(
+                        ["bom", "medio", "estresse"],
+                        weights=[0.88, 0.08, 0.04],
+                    )[0]
+                    contratos_pool.append(
+                        {
+                            "id_contrato": proximo_cid,
+                            "id_associado": assoc.id_associado,
+                            "id_linha": linha.id_linha,
+                            "data_concessao": date(y_base, m_base, 10),
+                            "saldo_base": ticket,
+                            "prazo_meses": prazo,
+                            "perfil_risco": perfil,
+                        }
+                    )
+                    proximo_cid += 1
+
+        # Novas concessões contínuas ao longo de 2020 a 2026
+        for cal in calendario:
+            y = cal.ano
+            m = cal.data.month
+            # Expansão orgânica da cooperativa acompanhando o crescimento regional
+            if y <= 2020:
+                qtd_novos = 2
+                ticket_min, ticket_max = 2200000, 3500000
+            elif y <= 2022:
+                qtd_novos = 3
+                ticket_min, ticket_max = 2600000, 3800000
+            elif y <= 2024:
+                qtd_novos = 4
+                ticket_min, ticket_max = 3200000, 4500000
+            else:
+                qtd_novos = 4
+                ticket_min, ticket_max = 3800000, 5000000
+
+            for _ in range(qtd_novos):
+                assoc = associados[(proximo_cid - 1) % len(associados)]
+                linha = linhas_credito[(proximo_cid - 1) % len(linhas_credito)]
+                ticket = Decimal(str(self.rng.randint(ticket_min, ticket_max)))
+                prazo = self.rng.choice([48, 60, 72])
+                p_estresse = 0.09 if 2022 <= y <= 2024 else 0.04
+                perfil = self.rng.choices(
+                    ["bom", "medio", "estresse"],
+                    weights=[0.82, 0.18 - p_estresse, p_estresse],
+                )[0]
+                contratos_pool.append(
+                    {
+                        "id_contrato": proximo_cid,
+                        "id_associado": assoc.id_associado,
+                        "id_linha": linha.id_linha,
+                        "data_concessao": date(y, m, 10),
+                        "saldo_base": ticket,
+                        "prazo_meses": prazo,
+                        "perfil_risco": perfil,
+                    }
+                )
+                proximo_cid += 1
+
         carteira_total: list[FatoCarteiraMensalSchema] = []
         dre_total: list[FatoDREGerencialSchema] = []
+        provisao_mes_anterior = Decimal("0.00")
 
-        # Histórico de saldo de contratos base para evolução contínua
-        num_contratos = 150
-        contratos_base: list[dict[str, Any]] = []
-
-        for cid in range(1, num_contratos + 1):
-            assoc = associados[(cid - 1) % len(associados)]
-            linha = linhas_credito[(cid - 1) % len(linhas_credito)]
-            # Calibração de escala financeira com o porte do Sicoob Credijequitinhonha
-            saldo_inicial = Decimal(str(self.rng.randint(250000, 3200000))) + Decimal("0.00")
-            ano_conc = 2019 + (cid % 6)
-            mes_conc = ((cid % 12) + 1)
-            contratos_base.append(
-                {
-                    "id_contrato": cid,
-                    "id_associado": assoc.id_associado,
-                    "id_linha": linha.id_linha,
-                    "data_concessao": date(ano_conc, mes_conc, 10),
-                    "saldo_base": saldo_inicial,
-                    "rating_origem": assoc.rating_interno_comportamental,
-                }
-            )
-
-        # Garante concessão prévia para os casos de testes regulatórios
-        contratos_base[0]["data_concessao"] = date(2019, 1, 10)
-        contratos_base[1]["data_concessao"] = date(2019, 2, 10)
-        contratos_base[2]["data_concessao"] = date(2019, 3, 10)
-
-        # Processa cada competência temporal mensal
-        total_meses = len(calendario)
+        # 2. Processamento mensal com respeito estrito à cronologia
         for idx_mes, cal in enumerate(calendario):
             competencia = cal.data
             registros_mes: list[FatoCarteiraMensalSchema] = []
 
-            for base in contratos_base:
-                cid = base["id_contrato"]
-                # Amortização e rotação contínua da carteira com crescimento orgânico da cooperativa
-                fator_mes = (idx_mes % 24) * Decimal("0.012")
-                fator_crescimento = Decimal("0.75") + (
-                    Decimal(str(idx_mes)) / Decimal(str(max(1, total_meses)))
-                ) * Decimal("0.45")
-                saldo_atual = (
-                    (base["saldo_base"] * (Decimal("1.00") - fator_mes)) * fator_crescimento
-                ).quantize(Decimal("0.01"))
+            for c in contratos_pool:
+                # Regra inegociável: contrato só entra em carteira após ou na data de concessão
+                if c["data_concessao"] > competencia:
+                    continue
 
-                # Injeção determinística dos casos limítrofes obrigatórios
+                mob = (competencia.year - c["data_concessao"].year) * 12 + (
+                    competencia.month - c["data_concessao"].month
+                )
+                if mob > c["prazo_meses"]:
+                    continue
+
+                idade_dias = (competencia - c["data_concessao"]).days
+                fator_rem = max(
+                    Decimal("0.05"),
+                    Decimal("1.00") - (Decimal(str(mob)) / Decimal(str(c["prazo_meses"]))),
+                )
+                saldo_atual = (c["saldo_base"] * fator_rem).quantize(Decimal("0.01"))
+
+                cid = c["id_contrato"]
+
+                # Casos limítrofes regulatórios mandatórios
                 if cid == 1:
-                    # Caso 1: Atraso de 35 dias com rebaixamento de rating (Estágio 2 / SICR)
                     dias_atraso = 35
                     over90 = Decimal("0.00")
                     renegociado = 0
@@ -352,63 +437,133 @@ class SyntheticDataGenerator:
                     pd = Decimal("0.0650")
                     lgd = Decimal("0.4500")
                 elif cid == 2:
-                    # Caso 2: Operação renegociada com 0 dias de atraso (Estágio 3 / AP)
                     dias_atraso = 0
                     over90 = Decimal("0.00")
                     renegociado = 1
                     ap = 1
                     estagio = 3
-                    pd = Decimal("0.2500")
-                    lgd = Decimal("0.5500")
+                    pd = Decimal("1.0000")
+                    lgd = Decimal("0.4500")
                 elif cid == 3:
-                    # Caso 3: Operação com 95 dias de atraso (Estágio 3 e Over90)
                     dias_atraso = 95
                     over90 = saldo_atual
                     renegociado = 0
                     ap = 1
                     estagio = 3
-                    pd = Decimal("0.5000")
-                    lgd = Decimal("0.6000")
+                    pd = Decimal("1.0000")
+                    lgd = Decimal("0.5500")
                 else:
-                    # Contratos normais com variabilidade realista
-                    sorteio = (cid + idx_mes) % 100
-                    if sorteio < 78:
-                        # Estágio 1 regular
-                        dias_atraso = self.rng.choice([0, 0, 0, 5, 12, 18])
-                        over90 = Decimal("0.00")
+                    perfil = c["perfil_risco"]
+                    if mob <= 1:
+                        # Recém-concedido: 100% adimplente
+                        dias_atraso = 0
                         renegociado = 0
-                        ap = 0
                         estagio = 1
-                        pd = Decimal("0.0120")
-                        lgd = Decimal("0.4000")
-                    elif sorteio < 91:
-                        # Estágio 2 por atraso moderado ou rating
-                        dias_atraso = 40 + (cid % 35)
-                        over90 = Decimal("0.00")
-                        renegociado = 0
                         ap = 0
-                        estagio = 2
-                        pd = Decimal("0.0580")
-                        lgd = Decimal("0.4800")
+                        over90 = Decimal("0.00")
+                        pd = Decimal("0.0180")
+                        lgd = Decimal("0.4000")
+                    elif mob <= 3:
+                        if perfil == "estresse":
+                            dias_atraso = min(20, max(0, idade_dias - 10))
+                            renegociado = 0
+                            estagio = 1
+                            ap = 0
+                            over90 = Decimal("0.00")
+                            pd = Decimal("0.0250")
+                            lgd = Decimal("0.4000")
+                        else:
+                            dias_atraso = 0
+                            renegociado = 0
+                            estagio = 1
+                            ap = 0
+                            over90 = Decimal("0.00")
+                            pd = Decimal("0.0160")
+                            lgd = Decimal("0.4000")
+                    elif mob <= 6:
+                        if perfil == "estresse":
+                            dias_atraso = min(45, max(0, idade_dias - 15))
+                            renegociado = 0
+                            estagio = 2
+                            ap = 0
+                            over90 = Decimal("0.00")
+                            pd = Decimal("0.0850")
+                            lgd = Decimal("0.4500")
+                        else:
+                            dias_atraso = 0
+                            renegociado = 0
+                            estagio = 1
+                            ap = 0
+                            over90 = Decimal("0.00")
+                            pd = Decimal("0.0180")
+                            lgd = Decimal("0.4000")
                     else:
-                        # Estágio 3 por atraso elevado
-                        dias_atraso = 110 + (cid % 40)
-                        over90 = saldo_atual
-                        renegociado = 1 if (cid % 2 == 0) else 0
-                        ap = 1
-                        estagio = 3
-                        pd = Decimal("0.3500")
-                        lgd = Decimal("0.6500")
+                        # Maturação avançada (mob > 6)
+                        if perfil == "estresse":
+                            # No período inicial (2020 a 2022), programas de apoio contiveram
+                            # a inadimplência crônica em Estágio 2
+                            if competencia < date(2022, 9, 1):
+                                dias_atraso = min(45, max(0, idade_dias - 20))
+                                renegociado = 0
+                                ap = 0
+                                estagio = 2
+                                over90 = Decimal("0.00")
+                                pd = Decimal("0.0850")
+                                lgd = Decimal("0.4500")
+                            else:
+                                dias_atraso = min(115, max(0, idade_dias - 20))
+                                renegociado = 1 if (cid % 3 == 0) else 0
+                                ap = 1
+                                estagio = 3
+                                over90 = saldo_atual if dias_atraso > 90 else Decimal("0.00")
+                                # Estágio 3 = default materializado -> PD = 1.0000
+                                pd = Decimal("1.0000")
+                                lgd = Decimal("0.5000")
+                        elif perfil == "medio":
+                            if (cid + idx_mes) % 5 == 0:
+                                dias_atraso = min(40, max(0, idade_dias - 20))
+                                renegociado = 0
+                                estagio = 2
+                                ap = 0
+                                over90 = Decimal("0.00")
+                                pd = Decimal("0.0800")
+                                lgd = Decimal("0.4500")
+                            else:
+                                dias_atraso = 0
+                                renegociado = 0
+                                estagio = 1
+                                ap = 0
+                                over90 = Decimal("0.00")
+                                pd = Decimal("0.0350")
+                                lgd = Decimal("0.4500")
+                        else:
+                            dias_atraso = 0
+                            renegociado = 0
+                            estagio = 1
+                            ap = 0
+                            over90 = Decimal("0.00")
+                            pd = Decimal("0.0340")
+                            lgd = Decimal("0.4500")
+
+                # Transição da Resolução CMN 4.966 em 01/01/2025:
+                # Reconhecimento prospectivo e forward-looking de perdas esperadas
+                if competencia >= date(2025, 1, 1):
+                    if estagio == 1:
+                        pd = Decimal("0.0450")
+                    elif estagio == 2:
+                        pd = Decimal("0.1250")
 
                 # Cálculo de Provisão Constituída (ECL = Saldo * PD * LGD)
-                provisao = (saldo_atual * pd * lgd).quantize(Decimal("0.01"))
+                provisao = (saldo_atual * pd * lgd).quantize(
+                    Decimal("0.01"), rounding=ROUND_HALF_UP
+                )
 
                 contrato_dto = FatoCarteiraMensalSchema(
                     data_fechamento=competencia,
                     id_contrato=cid,
-                    id_associado=base["id_associado"],
-                    id_linha=base["id_linha"],
-                    data_concessao=base["data_concessao"],
+                    id_associado=c["id_associado"],
+                    id_linha=c["id_linha"],
+                    data_concessao=c["data_concessao"],
                     saldo_devedor_contabil=saldo_atual,
                     dias_atraso=dias_atraso,
                     saldo_vencido_over90=over90,
@@ -421,35 +576,48 @@ class SyntheticDataGenerator:
                 )
                 registros_mes.append(contrato_dto)
 
-            # Conciliação Estrita com a DRE Gerencial
+            # Conciliação Estrita com o Balancete e a DRE Gerencial
             total_carteira_mes = sum(
-                (c.saldo_devedor_contabil for c in registros_mes), Decimal("0.00")
+                (c_reg.saldo_devedor_contabil for c_reg in registros_mes), Decimal("0.00")
+            )
+            total_provisao_mes = sum(
+                (c_reg.saldo_provisao_constituida for c_reg in registros_mes), Decimal("0.00")
             )
 
-            # Fluxo da DRE do mês aderente ao Custo de Risco (CoR anual ~3.5%)
-            despesa_pdd = (total_carteira_mes * Decimal("0.0035")).quantize(Decimal("0.01"))
-            recuperacao = (total_carteira_mes * Decimal("0.0006")).quantize(Decimal("0.01"))
-            despesa_liquida = despesa_pdd - recuperacao
+            # Integração contábil da DRE com a variação real do estoque de provisão
+            delta_prov = (
+                total_provisao_mes - provisao_mes_anterior
+                if idx_mes > 0
+                else Decimal("0.00")
+            )
+            provisao_mes_anterior = total_provisao_mes
 
-            # RWA e Patrimônio de Referência aderentes à Credijequitinhonha (Basileia ~17.18%)
-            rwa = (total_carteira_mes * Decimal("0.75")).quantize(Decimal("0.01"))
+            recuperacao = (total_carteira_mes * Decimal("0.0004")).quantize(Decimal("0.01"))
+            baixas_prejuizo = (total_carteira_mes * Decimal("0.0012")).quantize(Decimal("0.01"))
+            despesa_pdd = max(
+                Decimal("100000.00"),
+                delta_prov + baixas_prejuizo + recuperacao,
+            ).quantize(Decimal("0.01"))
+            despesa_liquida = (despesa_pdd - recuperacao).quantize(Decimal("0.01"))
+
+            # RWA e Patrimônio de Referência alinhados à Credijequitinhonha (Basileia ~17.18%)
+            rwa = (total_carteira_mes * Decimal("1.35")).quantize(Decimal("0.01"))
             pr = (rwa * Decimal("0.1718")).quantize(Decimal("0.01"))
-            sobras = (Decimal("1500000.00") - (despesa_liquida * Decimal("0.35"))).quantize(
-                Decimal("0.01")
-            )
+            sobras = (
+                Decimal("1650000.00") - (despesa_liquida * Decimal("0.12"))
+            ).quantize(Decimal("0.01"))
 
             dre_mes = FatoDREGerencialSchema(
                 data_fechamento=competencia,
-                despesa_pdd_mes=despesa_pdd.quantize(Decimal("0.01")),
-                recuperacao_credito_mes=recuperacao.quantize(Decimal("0.01")),
-                despesa_liquida_pdd_mes=despesa_liquida.quantize(Decimal("0.01")),
+                despesa_pdd_mes=despesa_pdd,
+                recuperacao_credito_mes=recuperacao,
+                despesa_liquida_pdd_mes=despesa_liquida,
                 saldo_carteira_total=total_carteira_mes.quantize(Decimal("0.01")),
                 sobras_liquidas_exercicio=sobras,
                 patrimonio_referencia_pr=pr,
                 rwa_risco_credito=rwa,
             )
 
-            # Verificação de segurança de conciliação no próprio gerador
             if dre_mes.saldo_carteira_total != total_carteira_mes:
                 raise ValueError(
                     f"Divergência contábil na data {competencia}: "

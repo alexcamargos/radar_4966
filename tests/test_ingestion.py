@@ -234,3 +234,36 @@ def test_synthetic_generator_reprodutibilidade() -> None:
         ds1.carteira_mensal[0].saldo_devedor_contabil
         == ds2.carteira_mensal[0].saldo_devedor_contabil
     )
+
+
+def test_synthetic_generator_consistencia_temporal() -> None:
+    """Verifica ausência de anacronismo temporal e consistência física dos dias de atraso."""
+    gen = SyntheticDataGenerator(seed=42)
+    ds = gen.gerar_dataset_completo()
+
+    for c in ds.carteira_mensal:
+        # Nenhum contrato pode ter data de concessão futura à data de fechamento contábil
+        assert c.data_concessao <= c.data_fechamento, (
+            f"Anacronismo temporal no contrato {c.id_contrato}: "
+            f"concessão {c.data_concessao} > fechamento {c.data_fechamento}"
+        )
+        idade_dias = (c.data_fechamento - c.data_concessao).days
+        # Dias de atraso nunca podem exceder a idade biológica do contrato desde a concessão
+        assert c.dias_atraso <= idade_dias, (
+            f"Inconsistência de atraso no contrato {c.id_contrato}: "
+            f"atraso {c.dias_atraso}d > idade {idade_dias}d"
+        )
+
+
+def test_synthetic_generator_pd_estagio_3() -> None:
+    """Verifica que contratos em default / Estágio 3 possuem PD calculada em 100% (1.0000)."""
+    gen = SyntheticDataGenerator(seed=42)
+    ds = gen.gerar_dataset_completo()
+
+    contratos_e3 = [c for c in ds.carteira_mensal if c.estagio_contabil == 3]
+    assert len(contratos_e3) > 0
+    for c in contratos_e3:
+        assert c.probabilidade_default_pd == Decimal("1.0000"), (
+            f"Contrato {c.id_contrato} em Estágio 3 com PD incorreta: {c.probabilidade_default_pd}"
+        )
+        assert c.indicador_ativo_problematico == 1
