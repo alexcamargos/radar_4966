@@ -12,13 +12,26 @@
   <!-- Cabeçalho Executivo -->
   <header class="header-container">
     <div class="header-branding">
-      <span class="brand-badge">Resolução CMN nº 4.966 / IFRS 9</span>
+      <div class="brand-row">
+        <span class="brand-badge">Resolução CMN nº 4.966 / IFRS 9</span>
+        <span class="brand-badge secondary">Resolução BCB nº 352</span>
+      </div>
       <h1 class="header-title">Radar 4966 — Gestão Estratégica de Risco e Provisão</h1>
-      <p class="header-subtitle">Cooperativa de Crédito Singular | Série Histórica Contínua: 2020 a 06/2026 (5 Anos Pré-4.966 até Última Data-Base Bacen)</p>
+      <p class="header-subtitle">Painel de Decisão para Conselho de Administração e Diretoria Executiva | Série 2020 a 06/2026</p>
     </div>
-    <div class="header-meta">
-      <p>Data-Base Mais Recente: <strong id="meta-competencia">--/----</strong></p>
-      <p>Marco 4.966: <strong style="color: var(--color-warning)">01/01/2025</strong> | Status: <strong style="color: var(--color-success)">Conciliação Auditada</strong></p>
+    <div class="header-actions-meta">
+      <div class="header-quick-actions">
+        <button id="btn-open-briefing" class="action-btn primary" title="Visualizar síntese dos pontos críticos para o C-level">
+          <span class="btn-icon">📋</span> Briefing da Diretoria
+        </button>
+        <button id="btn-open-glossario" class="action-btn secondary" title="Consultar conceitos e regras da Res. 4.966">
+          <span class="btn-icon">📖</span> Glossário &amp; Regulação
+        </button>
+      </div>
+      <div class="header-meta">
+        <p>Data-Base Mais Recente: <strong id="meta-competencia">--/----</strong></p>
+        <p>Vigência 4.966: <strong style="color: var(--color-warning)">01/01/2025</strong> | Status: <strong style="color: var(--color-success)">Conciliação Auditada</strong></p>
+      </div>
     </div>
   </header>
 
@@ -26,17 +39,17 @@
   <div class="nav-bar-container">
     <nav class="nav-tabs" aria-label="Navegação do Dashboard">
       <button class="tab-btn active" data-target="pane-post-executivo">
-        1. Posicionamento &amp; Benchmarking
+        <span class="tab-number">1</span> Posicionamento &amp; Benchmarking
       </button>
       <button class="tab-btn" data-target="pane-anatomia-risco">
-        2. Anatomia do Risco 4.966
+        <span class="tab-number">2</span> Anatomia do Risco 4.966
       </button>
       <button class="tab-btn" data-target="pane-safras-capital">
-        3. Safras &amp; Simulador de Capital
+        <span class="tab-number">3</span> Safras &amp; Simulador de Capital
       </button>
     </nav>
     <div class="period-filter-group" aria-label="Filtro de Período Temporal">
-      <span class="filter-label">Janela Temporal:</span>
+      <span class="filter-label">Recorte Temporal:</span>
       <button class="filter-chip active" data-period="all">Série Completa (2020 - 2026)</button>
       <button class="filter-chip" data-period="pre">5 Anos Pré-4.966 (2020 - 2024)</button>
       <button class="filter-chip" data-period="post">Vigência 4.966 (2025 - 2026)</button>
@@ -47,51 +60,86 @@
   <main class="content-wrapper">
     <!-- TELA 1: Posicionamento Estratégico e Benchmarking (O Post Executivo) -->
     <section id="pane-post-executivo" class="tab-pane active">
-      <!-- KPI Header Cards -->
+      <!-- KPI Header Cards com Contexto Executivo -->
       <div class="kpi-grid">
-        <div class="kpi-card">
+        <div class="kpi-card" title="Proporção da carteira de crédito em situação de atraso superior a 90 dias, renegociação por estresse ou Estágio 3.">
           <div class="kpi-card-header">
-            <span class="kpi-label">% Ativo Problemático</span>
-            <span class="kpi-badge warning" id="kpi-ap-tag">vs. SNCC</span>
+            <span class="kpi-label">% Ativo Problemático (AP)</span>
+            <span class="kpi-badge warning" id="kpi-ap-tag">SNCC: 5,30%</span>
           </div>
           <div class="kpi-value" id="kpi-ap-valor">--%</div>
           <div class="kpi-subtext" id="kpi-ap-sub">Saldo: R$ --</div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator alert"></span>
+            <span class="status-text">Exposição elevada vs. média setorial</span>
+          </div>
         </div>
 
-        <div class="kpi-card">
+        <div class="kpi-card" title="Volume total de Provisão para Perdas Esperadas (PDD) constituído no balanço patrimonial.">
           <div class="kpi-card-header">
             <span class="kpi-label">% Provisão Constituída</span>
             <span class="kpi-badge danger" id="kpi-prov-tag">Gap: --%</span>
           </div>
           <div class="kpi-value" id="kpi-prov-valor">--%</div>
           <div class="kpi-subtext" id="kpi-prov-sub">Estoque PDD: R$ --</div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator danger"></span>
+            <span class="status-text">Descompasso frente aos ativos em risco</span>
+          </div>
         </div>
 
-        <div class="kpi-card">
+        <div class="kpi-card" title="Despesa líquida de provisão acumulada nos últimos 12 meses dividida pela carteira de crédito classificada média.">
           <div class="kpi-card-header">
             <span class="kpi-label">Custo do Crédito (CoR 12M)</span>
-            <span class="kpi-badge success">Móvel 12M</span>
+            <span class="kpi-badge info">Móvel 12M</span>
           </div>
           <div class="kpi-value" id="kpi-cor-valor">--%</div>
-          <div class="kpi-subtext" id="kpi-cor-sub">Despesa Líq 12M / Carteira</div>
+          <div class="kpi-subtext" id="kpi-cor-sub">Despesa Líquida 12M / Carteira</div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator info"></span>
+            <span class="status-text">Impacto direto no resultado (DRE)</span>
+          </div>
         </div>
 
-        <div class="kpi-card">
+        <div class="kpi-card" title="Fração do Ativo Problemático que já atingiu estágio de inadimplência crônica superior a 90 dias.">
           <div class="kpi-card-header">
-            <span class="kpi-label">% Over90 no Ativo Problemático</span>
-            <span class="kpi-badge info">Maturidade</span>
+            <span class="kpi-label">% Over90 no AP</span>
+            <span class="kpi-badge warning">Maturidade</span>
           </div>
           <div class="kpi-value" id="kpi-over90-valor">--%</div>
           <div class="kpi-subtext" id="kpi-over90-sub">Inadimplência Efetiva no AP</div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator warning"></span>
+            <span class="status-text">Prevalência de default consolidado</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" title="Relação entre o Patrimônio de Referência (PR) e os Ativos Ponderados pelo Risco (RWA). Piso Bacen: 10,50%.">
+          <div class="kpi-card-header">
+            <span class="kpi-label">Índice de Basileia Atual</span>
+            <span class="kpi-badge success">Piso Bacen: 10,5%</span>
+          </div>
+          <div class="kpi-value" id="kpi-basileia-valor">16,50%</div>
+          <div class="kpi-subtext" id="kpi-basileia-sub">Folga Prudencial: +6,00 p.p.</div>
+          <div class="kpi-footer-status">
+            <span class="status-indicator success"></span>
+            <span class="status-text">Solvência regulatória confortável</span>
+          </div>
         </div>
       </div>
 
-      <!-- Alerta Dinâmico de Cruzamento (Prov cruzou abaixo de AP) -->
+      <!-- Alerta Executivo da Diretoria de Riscos (Cruzamento de Linhas) -->
       <div class="alert-callout" id="cruzamento-callout">
         <div class="alert-callout-icon">⚠️</div>
-        <div class="alert-callout-text">
-          <h4 id="alerta-cruzamento-titulo">Alerta de Inflexão de Risco: Provisão cruzou abaixo do Ativo Problemático</h4>
-          <p id="alerta-cruzamento-desc">Identificado momento em que o volume de provisão constituída tornou-se inferior aos ativos em estresse, exigindo reforço preventivo de capital.</p>
+        <div class="alert-callout-content">
+          <div class="alert-callout-header">
+            <span class="alert-badge">Alerta do Comitê de Risco e Auditoria</span>
+            <h4 id="alerta-cruzamento-titulo">Inflexão Histórica de Cobertura: Provisão cruzou abaixo do Ativo Problemático</h4>
+          </div>
+          <p id="alerta-cruzamento-desc">O volume de provisão constituída tornou-se inferior aos ativos classificados em estresse e perda esperada, abrindo um déficit de cobertura que requer monitoramento contínuo da Diretoria.</p>
+          <div class="alert-callout-action">
+            <strong>Direcionamento Executivo:</strong> Avaliar reforço prudencial de provisionamento e revisar políticas de renegociação de crédito (forbearance) para conter a expansão do Estágio 3.
+          </div>
         </div>
       </div>
 
@@ -100,24 +148,53 @@
         <div class="chart-card">
           <div class="chart-header">
             <div>
+              <div class="chart-badge-row">
+                <span class="chart-tag">Monitoramento Estratégico</span>
+                <span class="chart-tag outline">Comparativo Setorial Bacen</span>
+              </div>
               <h3 class="chart-title">Evolução Histórica: Taxa de AP vs. Provisão Constituída</h3>
-              <p class="chart-desc">Comparativo de 24 meses: Singular (AP% e Prov%) versus Média Agregada do SNCC (IF.data Bacen)</p>
+              <p class="chart-desc">Série contínua da Cooperativa Singular confrontada com a média agregada do Sistema Nacional de Crédito Cooperativo (SNCC / IF.data Bacen)</p>
             </div>
           </div>
           <div class="chart-body">
             <canvas id="chart-historico-ap-prov"></canvas>
+          </div>
+          <!-- Box de Diagnóstico Executivo -->
+          <div class="executive-insight-box">
+            <div class="insight-header">
+              <span class="insight-icon">💡</span>
+              <span class="insight-title">Diagnóstico para o C-Level</span>
+            </div>
+            <div class="insight-content">
+              <p><strong>Diagnóstico:</strong> A taxa de Ativo Problemático da Singular iniciou trajetória ascendente contínua a partir de 2022, distanciando-se da média do SNCC (~5,3%). Com o marco da Resolução 4.966 em 01/2025, o modelo de perda esperada exige reconhecimento prospectivo do risco.</p>
+              <p><strong>Impacto nas Sobras:</strong> A manutenção do gap de provisão (-10,21 p.p. frente ao AP) expõe as sobras futuras a amortizações imediatas de PDD caso haja aceleração das perdas efetivas.</p>
+            </div>
           </div>
         </div>
 
         <div class="chart-card">
           <div class="chart-header">
             <div>
-              <h3 class="chart-title">Régua de Cobertura da Perda Esperada</h3>
-              <p class="chart-desc">Provisão Constituída sobre ECL Estimada vs. Benchmarking Bacen (REF)</p>
+              <div class="chart-badge-row">
+                <span class="chart-tag">Conformidade e Cobertura</span>
+              </div>
+              <h3 class="chart-title">Régua de Cobertura da Perda Esperada (ECL)</h3>
+              <p class="chart-desc">Provisão Constituída sobre ECL Estimada vs. Benchmarking Bacen (Relatório de Estabilidade Financeira - REF)</p>
             </div>
           </div>
           <div class="chart-body">
             <canvas id="chart-regua-cobertura"></canvas>
+          </div>
+          <!-- Box de Diagnóstico Executivo -->
+          <div class="executive-insight-box">
+            <div class="insight-header">
+              <span class="insight-icon">⚖️</span>
+              <span class="insight-title">Leitura de Adequação Regulatória</span>
+            </div>
+            <div class="insight-content">
+              <p><strong>Posicionamento Singular (1,000x):</strong> A Singular cobre exatamente 100% da perda esperada calculada, satisfazendo estritamente a Resolução 4.966.</p>
+              <p><strong>Referência de Mercado:</strong> O SNCC opera em 1,030x (colchão prudencial de 3%), enquanto o total do Sistema Financeiro Nacional opera em 0,980x.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -129,24 +206,52 @@
         <div class="chart-card">
           <div class="chart-header">
             <div>
-              <h3 class="chart-title">Migração de Carteira por Estágios (Res. 4.966)</h3>
-              <p class="chart-desc">Evolução temporal dos saldos: Estágio 1 (Regular), Estágio 2 (SICR) e Estágio 3 (AP)</p>
+              <div class="chart-badge-row">
+                <span class="chart-tag">Pilares da Resolução 4.966</span>
+              </div>
+              <h3 class="chart-title">Migração de Carteira por Estágios</h3>
+              <p class="chart-desc">Acompanhamento temporal: Estágio 1 (Risco Inicial), Estágio 2 (SICR - Alerta) e Estágio 3 (Ativo Problemático)</p>
+            </div>
+            <div class="view-toggle-group" aria-label="Alternar exibição de saldos">
+              <button class="toggle-btn active" id="btn-toggle-estagios-nominal" data-mode="nominal">Saldo (R$)</button>
+              <button class="toggle-btn" id="btn-toggle-estagios-pct" data-mode="pct">Share (%)</button>
             </div>
           </div>
           <div class="chart-body">
             <canvas id="chart-evolucao-estagios"></canvas>
+          </div>
+          <div class="executive-insight-box">
+            <div class="insight-header">
+              <span class="insight-icon">🔍</span>
+              <span class="insight-title">Interpretação para Tomada de Decisão</span>
+            </div>
+            <div class="insight-content">
+              <p><strong>Estágio 2 (SICR):</strong> Operações em alerta preventivo (degradação de rating em 2+ níveis ou atraso 31-90 dias) demandam provisão vitalícia (Lifetime ECL). Controlar a entrada no Estágio 2 é a melhor defesa contra perdas futuras no resultado.</p>
+            </div>
           </div>
         </div>
 
         <div class="chart-card">
           <div class="chart-header">
             <div>
+              <div class="chart-badge-row">
+                <span class="chart-tag">Composição do Risco</span>
+              </div>
               <h3 class="chart-title">Decomposição das Causas do Ativo Problemático</h3>
-              <p class="chart-desc">Inadimplência prolongada (>90d), Renegociações (Forbearance) e Alertas Preventivos (SICR)</p>
+              <p class="chart-desc">Inadimplência prolongada (&gt;90d), Renegociações por Estresse (Forbearance) e Alertas de Rating/SICR</p>
             </div>
           </div>
           <div class="chart-body">
             <canvas id="chart-decomposicao-ap"></canvas>
+          </div>
+          <div class="executive-insight-box">
+            <div class="insight-header">
+              <span class="insight-icon">📊</span>
+              <span class="insight-title">Diagnóstico de Recuperação</span>
+            </div>
+            <div class="insight-content">
+              <p><strong>Atraso Prolongado (&gt;90d):</strong> Representa a esmagadora maioria do saldo de AP (92,0%). Priorizar acordos judiciais/extrajudiciais e intensificar a esteira de cobrança ágil antes da marcação contábil definitiva de prejuízo.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -154,12 +259,25 @@
       <div class="chart-card">
         <div class="chart-header">
           <div>
-            <h3 class="chart-title">Dispersão por Linha de Crédito: Carteira vs. Taxa de Provisão</h3>
-            <p class="chart-desc">Identificação de concentração e risco relativo por produto</p>
+            <div class="chart-badge-row">
+              <span class="chart-tag">Portfólio de Produtos</span>
+              <span class="chart-tag outline">Sensibilidade de Risco</span>
+            </div>
+            <h3 class="chart-title">Mapa de Exposição e Risco por Linha de Crédito</h3>
+            <p class="chart-desc">Volume total concedido em cada linha versus respectiva taxa de provisão requerida pela Resolução 4.966</p>
           </div>
         </div>
         <div class="chart-body" style="min-height: 280px;">
           <canvas id="chart-dispersao-linhas"></canvas>
+        </div>
+        <div class="executive-insight-box">
+          <div class="insight-header">
+            <span class="insight-icon">🎯</span>
+            <span class="insight-title">Direcionamento de Mix de Carteira</span>
+          </div>
+          <div class="insight-content">
+            <p><strong>Apetite a Risco por Linha:</strong> Linhas de crédito pessoal e giro sem garantia real apresentam taxas de provisão substancialmente maiores. O direcionamento do comitê de crédito deve privilegiar linhas com garantia autoliquidável e custódia de recebíveis para otimizar o consumo de capital e PDD.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -169,39 +287,69 @@
       <div class="chart-card">
         <div class="chart-header">
           <div>
-            <h3 class="chart-title">Curvas de Safra (Vintage Analysis por MOB)</h3>
-            <p class="chart-desc">Evolução da taxa de Ativo Problemático ao longo dos meses de maturação (MOB: 1, 3, 6, 12 e 24)</p>
+            <div class="chart-badge-row">
+              <span class="chart-tag">Qualidade da Concessão</span>
+              <span class="chart-tag outline">Vintage Analysis</span>
+            </div>
+            <h3 class="chart-title">Curvas de Safra: Maturação do Ativo Problemático por MOB</h3>
+            <p class="chart-desc">Evolução percentual de Ativo Problemático ao longo dos meses de vida do contrato (MOB: 1, 3, 6, 12 e 24 meses pós-originação)</p>
           </div>
         </div>
         <div class="chart-body" style="min-height: 320px;">
           <canvas id="chart-vintages"></canvas>
+        </div>
+        <div class="executive-insight-box">
+          <div class="insight-header">
+            <span class="insight-icon">📈</span>
+            <span class="insight-title">Leitura de Safras Críticas</span>
+          </div>
+          <div class="insight-content">
+            <p><strong>Entendendo o MOB (Month on Book):</strong> Indica a idade da operação em meses. Safras que apresentam inclinação acentuada entre o MOB 1 e o MOB 6 denotam falhas na esteira de concessão e esteiras de crédito frouxas. Safras maduras tendem a estabilizar a curva de inadimplência após o MOB 12.</p>
+          </div>
         </div>
       </div>
 
       <!-- Simulador Interativo What-If de Capital -->
       <div class="simulator-panel">
         <div class="simulator-header">
+          <div class="simulator-badge-row">
+            <span class="chart-tag accent">Planejamento de Capital</span>
+            <span class="chart-tag outline">Resolução CMN nº 4.966 &amp; Basileia</span>
+          </div>
           <h3 class="chart-title">Simulador Executivo What-If: Estresse no Ativo Problemático</h3>
-          <p class="chart-desc">Avalie instantaneamente o impacto de deteriorações marginais no AP sobre as Sobras do Exercício e o Índice de Basileia.</p>
+          <p class="chart-desc">Avalie instantaneamente o impacto de choques marginais de inadimplência no AP sobre a necessidade de PDD na DRE, Sobras do Exercício e o Índice de Basileia.</p>
         </div>
 
         <div class="simulator-controls">
+          <div class="scenario-buttons-row">
+            <span class="scenario-label">Cenários Rápidos de Estresse:</span>
+            <button class="scenario-btn" data-stress="0.5">Leve (+0,5%)</button>
+            <button class="scenario-btn" data-stress="1.0">Base (+1,0%)</button>
+            <button class="scenario-btn active" data-stress="1.5">Moderado (+1,5%)</button>
+            <button class="scenario-btn" data-stress="2.5">Severo (+2,5%)</button>
+          </div>
+
           <div class="slider-group">
             <div class="slider-label-row">
-              <span>Cenário de Estresse Adicional no Ativo Problemático (+ΔAP):</span>
+              <span>Ajuste Fino do Choque Adicional no AP (+ΔAP):</span>
               <span class="stress-value" id="slider-valor-display">+1.5%</span>
             </div>
             <input type="range" id="stress-slider" min="0.5" max="3.0" step="0.1" value="1.5">
+            <div class="slider-scale-labels">
+              <span>+0,5% (Cenário Benigno)</span>
+              <span>+1,75% (Estresse Médio)</span>
+              <span>+3,0% (Estresse Crítico)</span>
+            </div>
           </div>
         </div>
 
         <div class="impact-grid">
           <div class="impact-box">
-            <div class="impact-box-title">Consumo Adicional de Provisão</div>
+            <div class="impact-box-title">Consumo Adicional de PDD</div>
             <div class="impact-comparison">
               <span class="impact-simulated negative" id="sim-delta-provisao">R$ +0,00</span>
             </div>
-            <p class="kpi-subtext">Necessidade imediata de aporte em PDD na DRE</p>
+            <p class="kpi-subtext">Débito imediato de despesa de provisão na DRE</p>
           </div>
 
           <div class="impact-box">
@@ -211,22 +359,148 @@
               <span class="impact-arrow">→</span>
               <span class="impact-simulated" id="sim-sobras-projetada">R$ --</span>
             </div>
-            <p class="kpi-subtext" id="sim-sobras-impacto-pct">Impacto no resultado líquido</p>
+            <p class="kpi-subtext" id="sim-sobras-impacto-pct">Impacto percentual nas sobras do exercício</p>
           </div>
 
           <div class="impact-box">
-            <div class="impact-box-title">Índice de Capital / Basileia Projetado</div>
+            <div class="impact-box-title">Índice de Basileia Projetado</div>
             <div class="impact-comparison">
               <span class="impact-curr" id="sim-capital-atual">--%</span>
               <span class="impact-arrow">→</span>
               <span class="impact-simulated" id="sim-capital-projetado">--%</span>
             </div>
-            <p class="kpi-subtext">Patrimônio de Referência sobre RWA</p>
+            <p class="kpi-subtext">Patrimônio de Referência sobre RWA (Piso: 10,50%)</p>
           </div>
+
+          <div class="impact-box">
+            <div class="impact-box-title">Margem de Solvência Restante</div>
+            <div class="impact-comparison">
+              <span class="impact-simulated" id="sim-margem-basileia">+0,00 p.p.</span>
+            </div>
+            <p class="kpi-subtext">Distância prudencial até o limite regulatório Bacen</p>
+          </div>
+        </div>
+
+        <!-- Parecer Executivo de Sensibilidade Dinâmico -->
+        <div class="dynamic-opinion-box" id="simulador-parecer-box">
+          <div class="opinion-header">
+            <span class="opinion-badge">Parecer de Sensibilidade da Diretoria de Riscos</span>
+            <span class="opinion-status-tag" id="sim-status-tag">Status: Adequado</span>
+          </div>
+          <p id="sim-parecer-texto">Carregando análise executiva...</p>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- MODAL 1: Briefing da Diretoria Executiva -->
+  <div class="modal-overlay" id="modal-briefing" role="dialog" aria-modal="true" aria-labelledby="modal-briefing-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="brand-badge">Documento Estratégico para C-Level</span>
+          <h2 class="modal-title" id="modal-briefing-title">Briefing da Diretoria Executiva &amp; Conselho de Administração</h2>
+          <p class="modal-subtitle">Síntese executiva da carteira de crédito sob a Resolução CMN nº 4.966 / IFRS 9</p>
+        </div>
+        <button class="modal-close-btn" id="btn-close-briefing" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="briefing-grid">
+          <div class="briefing-item">
+            <div class="briefing-item-header">
+              <span class="briefing-num">1</span>
+              <h4>Exposição em Ativo Problemático vs. Benchmarking Setorial</h4>
+            </div>
+            <p>A taxa de Ativo Problemático da Singular atingiu <strong>14,15%</strong> (saldo de <strong>R$ 4,33 milhões</strong>), posicionando-se substancialmente acima da média agregada do Sistema Nacional de Crédito Cooperativo (SNCC), que se situa em <strong>5,30%</strong>. Esse desvio de +8,85 p.p. decorre precipuamente do acúmulo de créditos vencidos há mais de 90 dias gerados em ciclos de concessão de 2022/2023.</p>
+          </div>
+
+          <div class="briefing-item">
+            <div class="briefing-item-header">
+              <span class="briefing-num">2</span>
+              <h4>Desafio do Gap de Provisão e Transição 4.966</h4>
+            </div>
+            <p>O estoque de Provisão Constituída é de <strong>R$ 1,21 milhão (3,94%)</strong>, gerando um gap de cobertura negativo de <strong>-10,21 p.p.</strong> frente ao saldo de AP. Embora a Singular cubra exatamente 1,000x a Perda Esperada estimada pela modelagem estatística (atendendo à exigência formal da Resolução 4.966), a magnitude nominal dos créditos problemáticos restringe a margem para absorção de volatilidades macroeconômicas.</p>
+          </div>
+
+          <div class="briefing-item">
+            <div class="briefing-item-header">
+              <span class="briefing-num">3</span>
+              <h4>Solvência e Conforto do Índice de Basileia</h4>
+            </div>
+            <p>O Índice de Basileia atual situa-se em <strong>16,50%</strong>, representando uma folga prudencial de <strong>+6,00 p.p.</strong> em relação ao piso regulatório do Banco Central (10,50%). Mesmo sob o cenário de estresse severo simulado (+2,5% no AP), o índice permanece acima de 15,0%, comprovando robustez patrimonial e capacidade de resposta institucional.</p>
+          </div>
+
+          <div class="briefing-item">
+            <div class="briefing-item-header">
+              <span class="briefing-num">4</span>
+              <h4>Recomendações Práticas do Comitê de Risco</h4>
+            </div>
+            <ul class="briefing-list">
+              <li><strong>Priorizar Cobrança Especializada:</strong> Atuar de forma assertiva sobre o estoque de Over90 (R$ 3,98 mi), que compõe 92% do AP.</li>
+              <li><strong>Gestão Ativa do Estágio 2:</strong> Monitorar precocemente aumentos significativos no risco (SICR) antes que operações migrem para o Estágio 3.</li>
+              <li><strong>Foco em Garantias Reais:</strong> Reorientar o mix de originação para linhas com garantias tangíveis e amortização autoliquidável.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="action-btn secondary" id="btn-print-briefing">🖨️ Imprimir Resumo</button>
+        <button class="action-btn primary" id="btn-dismiss-briefing">Entendido e Alinhado</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Glossário & Regulação CMN 4.966 -->
+  <div class="modal-overlay" id="modal-glossario" role="dialog" aria-modal="true" aria-labelledby="modal-glossario-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="brand-badge secondary">Guia Didático para Conselheiros</span>
+          <h2 class="modal-title" id="modal-glossario-title">Glossário Executivo: Resoluções CMN 4.966 e BCB 352</h2>
+          <p class="modal-subtitle">Conceitos fundamentais da regulação contábil bancária e mensuração de risco de crédito</p>
+        </div>
+        <button class="modal-close-btn" id="btn-close-glossario" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="glossary-grid">
+          <div class="glossary-card">
+            <h4>Ativo Problemático (AP)</h4>
+            <p>Conceito abrangente regulamentado pela Resolução 4.966 que engloba: (1) atrasos superiores a 90 dias; (2) renegociações/reestruturações por estresse financeiro do cooperado (<em>forbearance</em>); e (3) operações em Estágio 3 com indício objetivo de perda. Todo contrato em Estágio 3 é Ativo Problemático.</p>
+          </div>
+
+          <div class="glossary-card">
+            <h4>Modelo de Perda Esperada (ECL) vs. Incorrida (2.682)</h4>
+            <p>A antiga Resolução 2.682 operava por <em>perda incorrida</em> baseada estritamente em faixas de dias de atraso. A Resolução 4.966 / IFRS 9 substitui esse mecanismo pela <em>perda esperada</em>, calculada com variáveis prospectivas (<em>forward-looking</em>), probabilidade de default (PD), perda dada o default (LGD) e exposição no default (EAD).</p>
+          </div>
+
+          <div class="glossary-card">
+            <h4>Estágios 1, 2 e 3 da Resolução 4.966</h4>
+            <p><strong>Estágio 1:</strong> Operações sem deterioração relevante de crédito desde a originação (provisão para perdas esperadas em 12 meses).<br>
+            <strong>Estágio 2:</strong> Operações com Aumento Significativo do Risco de Crédito - SICR (provisão para a vida útil inteira do contrato).<br>
+            <strong>Estágio 3:</strong> Operações com perda creditícia objetiva / Ativo Problemático (provisão vitalícia).</p>
+          </div>
+
+          <div class="glossary-card">
+            <h4>SICR (Significant Increase in Credit Risk)</h4>
+            <p>Gatilho que aciona a migração de um contrato do Estágio 1 para o Estágio 2. Ocorre quando há rebaixamento de rating &ge; 2 níveis, quando a PD atual &ge; 2,5 vezes a PD de origem, ou quando há atrasos entre 31 e 90 dias.</p>
+          </div>
+
+          <div class="glossary-card">
+            <h4>Cost of Risk (CoR / Custo do Crédito)</h4>
+            <p>Mensura o dispêndio líquido com provisões no período dividido pela carteira de crédito classificada média. Indica quantos centavos de provisão líquida a cooperativa precisa desembolsar para sustentar cada real concedido na carteira.</p>
+          </div>
+
+          <div class="glossary-card">
+            <h4>MOB (Month on Book) &amp; Vintage Analysis</h4>
+            <p>Métrica de safras que acompanha a maturidade dos contratos ao longo do tempo (ex.: 1, 3, 6, 12 e 24 meses após a contratação). Permite isolar a qualidade da originação de cada safra e diagnosticar se novas concessões estão mais ou menos sadias que as anteriores.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="action-btn primary" id="btn-dismiss-glossario">Fechar Glossário</button>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>
