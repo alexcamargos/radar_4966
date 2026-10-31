@@ -15,9 +15,10 @@ wheels/
 htmlcov/
 
 # Dados brutos, processados e bancos locais (CCDS v2)
-data/*
+data/**
+!data/
+!data/**/
 !data/**/.gitkeep
-!data/external/
 !data/external/**
 *.duckdb
 *.duckdb.wal
