@@ -267,3 +267,66 @@ def test_synthetic_generator_pd_estagio_3() -> None:
             f"Contrato {c.id_contrato} em Estágio 3 com PD incorreta: {c.probabilidade_default_pd}"
         )
         assert c.indicador_ativo_problematico == 1
+
+
+def test_ref_client_obter_estudo_quebra_4966_sncc() -> None:
+    """Verifica a extração da série oficial do estudo de quebra da 4.966 no SNCC.
+
+    Returns:
+        None.
+    """
+    client = REFClient()
+    estudo = client.obter_estudo_quebra_4966_sncc()
+
+    assert estudo.titulo == "A 4.966 é a culpada?"
+    assert "1 p.p. ao ano" in estudo.subtitulo
+    assert len(estudo.serie_mensal_ap) == 43  # dez/22 a jun/26 (43 meses)
+
+    # Verificar pontos-chave exatos do gráfico do Banco Central
+    mapa_meses = {p.mes_ano: p for p in estudo.serie_mensal_ap}
+
+    assert mapa_meses["dez/22"].taxa_ap_sncc == Decimal("4.07")
+    assert mapa_meses["dez/22"].regime_normativo == "Res. 2.682"
+    assert mapa_meses["dez/22"].destaque_rotulo == "4,07%"
+
+    assert mapa_meses["dez/23"].taxa_ap_sncc == Decimal("5.16")
+    assert mapa_meses["dez/23"].regime_normativo == "Res. 2.682"
+    assert mapa_meses["dez/23"].destaque_rotulo == "5,16%"
+
+    assert mapa_meses["dez/24"].taxa_ap_sncc == Decimal("6.22")
+    assert mapa_meses["dez/24"].regime_normativo == "Res. 2.682"
+    assert mapa_meses["dez/24"].destaque_rotulo == "6,22%"
+
+    # Ponto de quebra em Jan/25
+    assert mapa_meses["jan/25"].taxa_ap_sncc == Decimal("5.92")
+    assert mapa_meses["jan/25"].regime_normativo == "Res. 4.966"
+    assert mapa_meses["jan/25"].marco_quebra is True
+    assert mapa_meses["jan/25"].destaque_rotulo == "5,92%"
+
+    assert mapa_meses["jun/25"].taxa_ap_sncc == Decimal("7.30")
+    assert mapa_meses["jun/25"].regime_normativo == "Res. 4.966"
+    assert mapa_meses["jun/25"].destaque_rotulo == "7,30%"
+
+    assert mapa_meses["jun/26"].taxa_ap_sncc == Decimal("8.34")
+    assert mapa_meses["jun/26"].regime_normativo == "Res. 4.966"
+    assert mapa_meses["jun/26"].destaque_rotulo == "8,34%"
+
+    # Validar cards de custo de provisão em 12 meses
+    assert len(estudo.custos_provisao_periodos) == 3
+    c1, c2, c3 = estudo.custos_provisao_periodos
+
+    assert c1.periodo_referencia == "12 meses até dez/24"
+    assert c1.custo_provisao_pct == Decimal("4.20")
+    assert c1.regime_normativo == "Res. 2.682"
+
+    assert c2.periodo_referencia == "12 meses até dez/25"
+    assert c2.custo_provisao_pct == Decimal("3.50")
+    assert c2.regime_normativo == "Transição 4.966"
+
+    assert c3.periodo_referencia == "12 meses até jun/26"
+    assert c3.custo_provisao_pct == Decimal("4.20")
+    assert c3.regime_normativo == "Regime 4.966"
+
+    # Validar frase síntese e fontes
+    assert "O risco de crédito continua sendo o risco da carteira" in estudo.frase_sintese
+    assert "REF out/2026" in estudo.fonte
