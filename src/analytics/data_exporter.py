@@ -105,6 +105,7 @@ def exportar_dashboard_data(
 
     ref_cli = REFClient()
     dados_ref = ref_cli.obter_dados_ref()
+    estudo_quebra_sncc = ref_cli.obter_estudo_quebra_4966_sncc()
 
     # 7. Distribuição de Estágios e Decomposição do AP
     dist_estagios = motor.calcular_distribuicao_estagios(data_base_recente)
@@ -186,6 +187,7 @@ def exportar_dashboard_data(
         "serie_temporal_mensal": serie_mensal,
         "benchmarking_ifdata": [d.model_dump() for d in dados_ifdata],
         "benchmarking_ref": [r.model_dump() for r in dados_ref],
+        "estudo_impacto_4966_sncc": estudo_quebra_sncc.model_dump(),
         "distribuicao_estagios_atual": dist_estagios,
         "evolucao_estagios_mensal": evolucao_estagios_mensal,
         "decomposicao_ap": decomposicao_ap,

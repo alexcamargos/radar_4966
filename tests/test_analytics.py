@@ -160,9 +160,23 @@ def test_exportar_dashboard_data(tmp_path: Path) -> None:
     assert "matriz_safras_vintages" in dados
     assert "matriz_safras_anuais" in dados
     assert "simulador_capital_base" in dados
+    assert "estudo_impacto_4966_sncc" in dados
+
+    estudo = dados["estudo_impacto_4966_sncc"]
+    assert estudo["titulo"] == "A 4.966 é a culpada?"
+    assert len(estudo["serie_mensal_ap"]) == 43
+    assert len(estudo["custos_provisao_periodos"]) == 3
+    assert estudo["custos_provisao_periodos"][0]["custo_provisao_pct"] == Decimal("4.20")
+    assert estudo["custos_provisao_periodos"][1]["custo_provisao_pct"] == Decimal("3.50")
+    assert estudo["custos_provisao_periodos"][2]["custo_provisao_pct"] == Decimal("4.20")
 
     with open(arquivo_teste, encoding="utf-8") as f:
         carregado = json.load(f)
     assert carregado["metadata"]["total_competencias"] == 78
     assert carregado["metadata"]["data_inicio"] == "2020-01-31"
     assert carregado["metadata"]["competencia_mais_recente"] == "2026-06-30"
+    assert "estudo_impacto_4966_sncc" in carregado
+    assert (
+        carregado["estudo_impacto_4966_sncc"]["custos_provisao_periodos"][0]["custo_provisao_pct"]
+        == 4.2
+    )
