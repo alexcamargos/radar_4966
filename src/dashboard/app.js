@@ -111,6 +111,7 @@ let chartMixSetorial = null;
 let chartGarantias = null;
 let chartMacroHistorico = null;
 let chartMacroREF = null;
+let chartQuebra4966Sncc = null;
 
 // Estado global de visualização de estágios: 'nominal' (R$) ou 'pct' (%)
 let modoExibicaoEstagios = 'nominal';
@@ -329,6 +330,7 @@ function configurarSeletorModo(dados) {
 
     if (chartMacroHistorico) chartMacroHistorico.resize();
     if (chartMacroREF) chartMacroREF.resize();
+    if (chartQuebra4966Sncc) chartQuebra4966Sncc.resize();
   };
 
   const ativarCoop = () => {
@@ -422,6 +424,7 @@ function renderizarVisaoMacro(dados) {
   // Renderizar Gráficos e Tabela
   renderizarGraficoMacroHistorico(sfnRegistros, snccRegistros, singularesRegistros);
   renderizarGraficoMacroREF(refData);
+  renderizarEstudoQuebra4966(dados.estudo_impacto_4966_sncc);
   preencherTabelaMacroBacen(ifdata);
 }
 
@@ -699,6 +702,226 @@ function preencherTabelaMacroBacen(ifdata) {
       <td><strong>${provPct}</strong></td>
     `;
     tbody.appendChild(tr);
+  });
+}
+
+// ============================================================================
+// Deep Dive Macro: "A 4.966 é a culpada?" (Série Quebrada SNCC Bacen REF out/2026)
+// ============================================================================
+function renderizarEstudoQuebra4966(estudo) {
+  if (!estudo) return;
+
+  const canvas = document.getElementById('chart-quebra-4966-sncc');
+  if (!canvas) return;
+
+  // Atualização dinâmica dos textos e cabeçalhos
+  const elTitulo = document.getElementById('deepdive-title');
+  if (elTitulo && estudo.titulo) elTitulo.textContent = estudo.titulo;
+
+  const elSubtitulo = document.getElementById('deepdive-subtitle');
+  if (elSubtitulo && estudo.subtitulo) elSubtitulo.textContent = estudo.subtitulo;
+
+  const elFootnote = document.getElementById('deepdive-footnote');
+  if (elFootnote && estudo.fonte) {
+    elFootnote.innerHTML = `<strong>Fonte:</strong> ${estudo.fonte} ${estudo.nota_metodologica}`;
+  }
+
+  // Preenchimento dos 3 Cards de Custo de Provisão 12M
+  if (Array.isArray(estudo.custos_provisao_periodos)) {
+    const c1 = estudo.custos_provisao_periodos[0];
+    const c2 = estudo.custos_provisao_periodos[1];
+    const c3 = estudo.custos_provisao_periodos[2];
+
+    const elC1 = document.getElementById('kpi-cor-dez24');
+    if (elC1 && c1) elC1.textContent = formatarPct(c1.custo_provisao_pct, 1).replace('.', ',');
+
+    const elC2 = document.getElementById('kpi-cor-dez25');
+    if (elC2 && c2) elC2.textContent = formatarPct(c2.custo_provisao_pct, 1).replace('.', ',');
+
+    const elC3 = document.getElementById('kpi-cor-jun26');
+    if (elC3 && c3) elC3.textContent = formatarPct(c3.custo_provisao_pct, 1).replace('.', ',');
+  }
+
+  const serie = estudo.serie_mensal_ap || [];
+  const labels = serie.map((p) => p.mes_ano);
+
+  // Separar em duas séries para explicitar a descontinuidade metodológica em Jan/25:
+  // Série 1 (Antes: 2.682): valores de dez/22 até dez/24
+  // Série 2 (Depois: 4.966): valores de jan/25 até jun/26
+  const dadosAntes = [];
+  const dadosDepois = [];
+  const pointRadiiAntes = [];
+  const pointRadiiDepois = [];
+
+  let indiceQuebra = -1;
+
+  serie.forEach((p, idx) => {
+    const valor = Number(p.taxa_ap_sncc);
+    const isQuebra = p.marco_quebra || p.mes_ano === 'jan/25';
+    if (isQuebra) {
+      indiceQuebra = idx;
+    }
+
+    const ehDestaque = Boolean(p.destaque_rotulo);
+    const raio = ehDestaque ? 6 : 0;
+
+    if (p.regime_normativo.includes('2.682')) {
+      dadosAntes.push(valor);
+      dadosDepois.push(null);
+      pointRadiiAntes.push(raio);
+      pointRadiiDepois.push(0);
+    } else {
+      dadosAntes.push(null);
+      dadosDepois.push(valor);
+      pointRadiiAntes.push(0);
+      pointRadiiDepois.push(raio);
+    }
+  });
+
+  if (chartQuebra4966Sncc) {
+    chartQuebra4966Sncc.destroy();
+  }
+
+  // Plugin customizado para desenhar a linha divisória tracejada e anotações nos marcos
+  const pluginQuebra = {
+    id: 'linhaDivisoriaQuebra',
+    afterDatasetsDraw(chart) {
+      const { ctx, chartArea: { top, bottom }, scales: { x, y } } = chart;
+      if (indiceQuebra === -1) return;
+
+      const xPos = x.getPixelForValue(indiceQuebra) - (x.getPixelForValue(1) - x.getPixelForValue(0)) / 2;
+
+      ctx.save();
+
+      // Faixa sutil demarcando a zona de transição
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.08)';
+      ctx.fillRect(xPos - 10, top, 20, bottom - top);
+
+      // Linha tracejada divisória vertical
+      ctx.beginPath();
+      ctx.setLineDash([6, 6]);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#f87171';
+      ctx.moveTo(xPos, top + 26);
+      ctx.lineTo(xPos, bottom);
+      ctx.stroke();
+
+      // Anotações de topo
+      ctx.setLineDash([]);
+      ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#cbd5e1';
+      ctx.fillText('Antes: 2.682', xPos - 12, top + 18);
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#f87171';
+      ctx.fillText('Depois: 4.966', xPos + 12, top + 18);
+
+      // Rótulos numéricos dos marcos do Bacen (4,07%, 5,16%, 6,22%, 5,92%, 7,30%, 8,34%)
+      ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      serie.forEach((p, idx) => {
+        if (!p.destaque_rotulo) return;
+
+        const posX = x.getPixelForValue(idx);
+        const posY = y.getPixelForValue(Number(p.taxa_ap_sncc));
+
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+
+        const offset = p.mes_ano === 'jan/25' ? 20 : -12;
+        ctx.fillText(p.destaque_rotulo, posX, posY + offset);
+      });
+
+      ctx.restore();
+    },
+  };
+
+  chartQuebra4966Sncc = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Antes: Res. 2.682 (Perda Incorrida)',
+          data: dadosAntes,
+          borderColor: '#38bdf8',
+          backgroundColor: 'rgba(56, 189, 248, 0.12)',
+          borderWidth: 3,
+          tension: 0.15,
+          pointRadius: pointRadiiAntes,
+          pointBackgroundColor: '#fbbf24',
+          pointBorderColor: '#0f172a',
+          pointBorderWidth: 2,
+          pointHoverRadius: 7,
+          spanGaps: false,
+        },
+        {
+          label: 'Depois: Res. 4.966 (Perda Esperada)',
+          data: dadosDepois,
+          borderColor: '#f59e0b',
+          backgroundColor: 'rgba(245, 158, 11, 0.12)',
+          borderWidth: 3,
+          tension: 0.15,
+          pointRadius: pointRadiiDepois,
+          pointBackgroundColor: '#fbbf24',
+          pointBorderColor: '#0f172a',
+          pointBorderWidth: 2,
+          pointHoverRadius: 7,
+          spanGaps: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        y: {
+          min: 3.5,
+          max: 9.2,
+          grid: { color: 'rgba(255, 255, 255, 0.06)' },
+          ticks: {
+            color: '#94a3b8',
+            callback: (v) => `${v}%`,
+            stepSize: 1,
+          },
+        },
+        x: {
+          grid: { color: 'rgba(255, 255, 255, 0.03)' },
+          ticks: {
+            color: '#94a3b8',
+            maxRotation: 0,
+            callback: function (val) {
+              const lbl = this.getLabelForValue(val);
+              const marcos = ['dez/22', 'dez/23', 'dez/24', 'jun/25', 'jun/26'];
+              return marcos.includes(lbl) ? lbl : '';
+            },
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: '#f8fafc',
+            font: { size: 11, weight: 'bold' },
+            usePointStyle: true,
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => {
+              if (ctx.raw === null || ctx.raw === undefined) return '';
+              return `${ctx.dataset.label}: ${ctx.raw}%`;
+            },
+          },
+        },
+      },
+    },
+    plugins: [pluginQuebra],
   });
 }
 
@@ -2015,7 +2238,7 @@ function preencherModalBriefing(dados) {
 
   if (elItem1) {
     const delta = (kpis.taxa_ativo_problematico_pct - mediaSNCC).toFixed(2);
-    elItem1.innerHTML = `A taxa de Ativo Problemático do <strong>Sicoob Credijequitinhonha</strong> atingiu <strong>${formatarPct(kpis.taxa_ativo_problematico_pct)}</strong> (saldo de <strong>${formatarMoeda(kpis.saldo_ativo_problematico)}</strong>), posicionando-se <strong>+${delta} p.p.</strong> acima da média consolidada do SNCC (${formatarPct(mediaSNCC)}). Esse distanciamento decorre predominantemente da maturação de safras concedidas entre 2022 e 2024 que alcançaram atraso superior a 90 dias.`;
+    elItem1.innerHTML = `A taxa de Ativo Problemático do <strong>Sicoob Credijequitinhonha</strong> atingiu <strong>${formatarPct(kpis.taxa_ativo_problematico_pct)}</strong> (saldo de <strong>${formatarMoeda(kpis.saldo_ativo_problematico)}</strong>), posicionando-se <strong>+${delta} p.p.</strong> acima da média consolidada do SNCC (${formatarPct(mediaSNCC)}). Esse distanciamento decorre predominantemente da maturação de safras concedidas entre 2022 e 2024 que alcançaram atraso superior a 90 dias.<br><br><strong>Evidência Regulatória Bacen (REF out/2026):</strong> Conforme atestado pelas estatísticas oficiais do Banco Central no estudo <em>"A 4.966 é a culpada?"</em>, o Ativo Problemático do cooperativismo já crescia ~1,0 p.p. ao ano sob a regra antiga (Res. 2.682). A Resolução 4.966 não gerou novos riscos: apenas antecipou tempestivamente o reconhecimento de perdas via ECL, mantendo o Custo de Provisão em 12 meses do sistema estável em 4,2%.`;
   }
 
   if (elItem2) {

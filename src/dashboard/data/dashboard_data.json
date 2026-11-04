@@ -9,7 +9,7 @@
       "codigo_bcb": 71243034,
       "sede": "Capelinha - MG"
     },
-    "data_geracao": "2026-10-31",
+    "data_geracao": "2026-11-04",
     "data_inicio": "2020-01-31",
     "competencia_mais_recente": "2026-06-30",
     "marco_vigencia_4966": "2025-01-01",
@@ -2394,6 +2394,379 @@
       "custo_credito_12m_percentual": 0.046
     }
   ],
+  "estudo_impacto_4966_sncc": {
+    "titulo": "A 4.966 é a culpada?",
+    "subtitulo": "O AP do SNCC já subia cerca de 1 p.p. ao ano antes da regra.",
+    "serie_mensal_ap": [
+      {
+        "mes_ano": "dez/22",
+        "data_competencia": "2022-12-31",
+        "taxa_ap_sncc": 4.07,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": "4,07%"
+      },
+      {
+        "mes_ano": "jan/23",
+        "data_competencia": "2023-01-31",
+        "taxa_ap_sncc": 4.14,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "fev/23",
+        "data_competencia": "2023-02-28",
+        "taxa_ap_sncc": 4.22,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mar/23",
+        "data_competencia": "2023-03-31",
+        "taxa_ap_sncc": 4.31,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "abr/23",
+        "data_competencia": "2023-04-30",
+        "taxa_ap_sncc": 4.4,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mai/23",
+        "data_competencia": "2023-05-31",
+        "taxa_ap_sncc": 4.52,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jun/23",
+        "data_competencia": "2023-06-30",
+        "taxa_ap_sncc": 4.65,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jul/23",
+        "data_competencia": "2023-07-31",
+        "taxa_ap_sncc": 4.78,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "ago/23",
+        "data_competencia": "2023-08-31",
+        "taxa_ap_sncc": 4.96,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "set/23",
+        "data_competencia": "2023-09-30",
+        "taxa_ap_sncc": 4.94,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "out/23",
+        "data_competencia": "2023-10-31",
+        "taxa_ap_sncc": 4.98,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "nov/23",
+        "data_competencia": "2023-11-30",
+        "taxa_ap_sncc": 5.06,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "dez/23",
+        "data_competencia": "2023-12-31",
+        "taxa_ap_sncc": 5.16,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": "5,16%"
+      },
+      {
+        "mes_ano": "jan/24",
+        "data_competencia": "2024-01-31",
+        "taxa_ap_sncc": 5.25,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "fev/24",
+        "data_competencia": "2024-02-29",
+        "taxa_ap_sncc": 5.38,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mar/24",
+        "data_competencia": "2024-03-31",
+        "taxa_ap_sncc": 5.51,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "abr/24",
+        "data_competencia": "2024-04-30",
+        "taxa_ap_sncc": 5.66,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mai/24",
+        "data_competencia": "2024-05-31",
+        "taxa_ap_sncc": 5.8,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jun/24",
+        "data_competencia": "2024-06-30",
+        "taxa_ap_sncc": 5.88,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jul/24",
+        "data_competencia": "2024-07-31",
+        "taxa_ap_sncc": 5.94,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "ago/24",
+        "data_competencia": "2024-08-31",
+        "taxa_ap_sncc": 6.08,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "set/24",
+        "data_competencia": "2024-09-30",
+        "taxa_ap_sncc": 6.12,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "out/24",
+        "data_competencia": "2024-10-31",
+        "taxa_ap_sncc": 6.15,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "nov/24",
+        "data_competencia": "2024-11-30",
+        "taxa_ap_sncc": 6.19,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "dez/24",
+        "data_competencia": "2024-12-31",
+        "taxa_ap_sncc": 6.22,
+        "regime_normativo": "Res. 2.682",
+        "marco_quebra": false,
+        "destaque_rotulo": "6,22%"
+      },
+      {
+        "mes_ano": "jan/25",
+        "data_competencia": "2025-01-31",
+        "taxa_ap_sncc": 5.92,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": true,
+        "destaque_rotulo": "5,92%"
+      },
+      {
+        "mes_ano": "fev/25",
+        "data_competencia": "2025-02-28",
+        "taxa_ap_sncc": 6.1,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mar/25",
+        "data_competencia": "2025-03-31",
+        "taxa_ap_sncc": 6.38,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "abr/25",
+        "data_competencia": "2025-04-30",
+        "taxa_ap_sncc": 6.72,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mai/25",
+        "data_competencia": "2025-05-31",
+        "taxa_ap_sncc": 7.05,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jun/25",
+        "data_competencia": "2025-06-30",
+        "taxa_ap_sncc": 7.3,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": "7,30%"
+      },
+      {
+        "mes_ano": "jul/25",
+        "data_competencia": "2025-07-31",
+        "taxa_ap_sncc": 7.55,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "ago/25",
+        "data_competencia": "2025-08-31",
+        "taxa_ap_sncc": 7.74,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "set/25",
+        "data_competencia": "2025-09-30",
+        "taxa_ap_sncc": 7.92,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "out/25",
+        "data_competencia": "2025-10-31",
+        "taxa_ap_sncc": 7.8,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "nov/25",
+        "data_competencia": "2025-11-30",
+        "taxa_ap_sncc": 7.78,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "dez/25",
+        "data_competencia": "2025-12-31",
+        "taxa_ap_sncc": 7.7,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jan/26",
+        "data_competencia": "2026-01-31",
+        "taxa_ap_sncc": 7.64,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "fev/26",
+        "data_competencia": "2026-02-28",
+        "taxa_ap_sncc": 7.75,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mar/26",
+        "data_competencia": "2026-03-31",
+        "taxa_ap_sncc": 7.85,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "abr/26",
+        "data_competencia": "2026-04-30",
+        "taxa_ap_sncc": 7.9,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "mai/26",
+        "data_competencia": "2026-05-31",
+        "taxa_ap_sncc": 8.01,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": null
+      },
+      {
+        "mes_ano": "jun/26",
+        "data_competencia": "2026-06-30",
+        "taxa_ap_sncc": 8.34,
+        "regime_normativo": "Res. 4.966",
+        "marco_quebra": false,
+        "destaque_rotulo": "8,34%"
+      }
+    ],
+    "custos_provisao_periodos": [
+      {
+        "periodo_referencia": "12 meses até dez/24",
+        "custo_provisao_pct": 4.2,
+        "regime_normativo": "Res. 2.682",
+        "descricao": "Custo sob modelo de perda incorrida antes da vigência da nova regra"
+      },
+      {
+        "periodo_referencia": "12 meses até dez/25",
+        "custo_provisao_pct": 3.5,
+        "regime_normativo": "Transição 4.966",
+        "descricao": "Primeiro ano completo sob modelo de perda esperada (ECL)"
+      },
+      {
+        "periodo_referencia": "12 meses até jun/26",
+        "custo_provisao_pct": 4.2,
+        "regime_normativo": "Regime 4.966",
+        "descricao": "Regime estabilizado com antecipação de provisões por SICR"
+      }
+    ],
+    "frase_sintese": "A regra mudou. O risco de crédito continua sendo o risco da carteira.",
+    "nota_metodologica": "Dados agregados. A variação de jan/25 mistura a quebra e o movimento do mês. O 1º semestre de 2025 subiu mais rápido, o que pode incluir efeito de transição.",
+    "fonte": "Banco Central do Brasil, REF out/2026, Anexo Estatístico (gráficos 1.2.2.17 e 1.2.3.5)."
+  },
   "distribuicao_estagios_atual": [
     {
       "estagio": 1,
