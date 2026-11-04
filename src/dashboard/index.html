@@ -256,6 +256,68 @@
         </div>
       </div>
 
+      <!-- DEEP DIVE REGULATÓRIO: A 4.966 É A CULPADA? (REF BACEN OUT/2026) -->
+      <section class="deepdive-4966-card" id="deepdive-4966-section" style="margin-top: 1.75rem;">
+        <div class="deepdive-header">
+          <div class="deepdive-header-meta">
+            <span class="deepdive-badge">RESOLUÇÃO CMN 4.966 | SNCC</span>
+            <span class="deepdive-badge highlight">REF Bacen Out/2026</span>
+            <span class="deepdive-badge break-indicator">Série Quebrada em Jan/25</span>
+          </div>
+          <h2 class="deepdive-title" id="deepdive-title">A 4.966 é a culpada?</h2>
+          <p class="deepdive-subtitle" id="deepdive-subtitle">
+            O AP do SNCC já subia cerca de 1 p.p. ao ano antes da regra.
+          </p>
+          <p class="deepdive-chart-legend">
+            Ativos problemáticos do SNCC, % da carteira, mensal (série quebrada em jan/25)
+          </p>
+        </div>
+
+        <!-- Gráfico de Quebra Estrutural com Linha Divisória Tracejada -->
+        <div class="deepdive-chart-wrapper">
+          <canvas id="chart-quebra-4966-sncc"></canvas>
+        </div>
+
+        <!-- Três Cards de Custo de Provisão em 12 Meses -->
+        <div class="deepdive-kpi-grid">
+          <div class="deepdive-kpi-box">
+            <div class="deepdive-kpi-value" id="kpi-cor-dez24">4,2%</div>
+            <div class="deepdive-kpi-label">custo de provisão</div>
+            <div class="deepdive-kpi-period">12 meses até dez/24</div>
+            <div class="deepdive-kpi-regime">Antes: Res. 2.682</div>
+          </div>
+          <div class="deepdive-kpi-box highlight">
+            <div class="deepdive-kpi-value" id="kpi-cor-dez25">3,5%</div>
+            <div class="deepdive-kpi-label">custo de provisão</div>
+            <div class="deepdive-kpi-period">12 meses até dez/25</div>
+            <div class="deepdive-kpi-regime">Transição: Res. 4.966 (1º Ano)</div>
+          </div>
+          <div class="deepdive-kpi-box">
+            <div class="deepdive-kpi-value" id="kpi-cor-jun26">4,2%</div>
+            <div class="deepdive-kpi-label">custo de provisão</div>
+            <div class="deepdive-kpi-period">12 meses até jun/26</div>
+            <div class="deepdive-kpi-regime">Depois: Res. 4.966 (Regime Pleno)</div>
+          </div>
+        </div>
+
+        <!-- Punchline / Frase Síntese Executiva -->
+        <div class="deepdive-punchline-box">
+          <div class="punchline-statement">
+            A regra mudou. <span class="punchline-highlight">O risco de crédito continua sendo o risco da carteira.</span>
+          </div>
+          <p class="punchline-explanation">
+            A elevação contínua do Ativo Problemático observada entre 2022 e 2026 decorre da maturação do ciclo macroeconômico de crédito. A Resolução CMN nº 4.966 não gerou novos riscos: ela apenas eliminou a assimetria do modelo de perda incorrida (Res. 2.682), forçando o reconhecimento tempestivo (ECL) de operações renegociadas ou com aumento significativo de risco (SICR). A estabilidade do Custo de Provisão anualizado (4,2% em 2024 vs. 4,2% em 2026) atesta a solvência e resiliência do cooperativismo.
+          </p>
+        </div>
+
+        <!-- Rodapé e Citação Oficial da Fonte -->
+        <div class="deepdive-footer">
+          <p class="deepdive-footnote" id="deepdive-footnote">
+            <strong>Fonte:</strong> Banco Central do Brasil, Relatório de Estabilidade Financeira (REF out/2026), Anexo Estatístico (gráficos 1.2.2.17 e 1.2.3.5). Dados agregados. A variação de jan/25 mistura a quebra metodológica e o movimento do mês. O 1º semestre de 2025 subiu mais rápido, o que pode incluir efeito de transição.
+          </p>
+        </div>
+      </section>
+
       <!-- Tabela Comparativa de Séries Oficiais do Bacen (IF.data) -->
       <div class="chart-card" style="margin-top: 1.75rem;">
         <div class="chart-header">
@@ -912,6 +974,7 @@
             <ul class="role-actions-list">
               <li><strong>Preservação das Sobras:</strong> Proteger o resultado anual (R$ 18,45M) estabelecendo limite orçamentário para contingenciamento de perdas esperadas.</li>
               <li><strong>Pacto de Capital com Conselho:</strong> Apresentar ao Conselho de Administração a destinação prudencial das sobras para o Fundo de Reserva, mantendo Basileia &ge; 15,0%.</li>
+              <li><strong>Evidência Regulatória para o Conselho:</strong> Utilizar as séries históricas do REF Bacen comprovando que o crescimento do AP é ciclo macroeconômico (~1 p.p./ano), blindando a governança de falsas correlações com a vigência da Res. 4.966.</li>
               <li><strong>Liderança Regional no Jequitinhonha:</strong> Alinhar a expansão comercial à capacidade de retenção patrimonial sem recorrer a chamadas de capital aos associados.</li>
             </ul>
           </div>
@@ -926,6 +989,7 @@
             <ul class="role-actions-list">
               <li><strong>Esteira de Alerta Precoce (Early Warning):</strong> Acionar comitê preventivo quando a operação apresentar degradação de rating &ge; 2 níveis antes do atraso financeiro.</li>
               <li><strong>Barreira ao Estágio 2:</strong> Evitar migrações em massa para provisão vitalícia (Lifetime ECL), refinando as réguas de renegociação sem caracterizar <em>forbearance</em> involuntário.</li>
+              <li><strong>Desmistificação da 4.966 em Auditoria:</strong> Demonstrar perante conselhos e auditores que a estabilidade do Custo de Provisão em 4,2% (dez/24 e jun/26) decorre da antecipação tempestiva de perdas, e não de explosão de risco novo.</li>
               <li><strong>Calibragem de LGD Agrícola:</strong> Incorporar o histórico de valorização de garantias rurais (imóveis e penhor de café/eucalipto) para otimizar o percentual de provisão.</li>
             </ul>
           </div>
