@@ -243,3 +243,91 @@ class FatoREFMacroBCBSchema(BaseModel):
         ge=Decimal("0.0000"),
         le=Decimal("1.0000"),
     )
+
+
+class PontoSerieQuebraSNCCSchema(BaseModel):
+    """Ponto mensal da série de Ativo Problemático do SNCC com quebra estrutural.
+
+    Attributes:
+        mes_ano: Competência formatada em mês/ano (ex.: 'dez/22', 'jan/25').
+        data_competencia: Data correspondente ao fechamento mensal.
+        taxa_ap_sncc: Percentual do Ativo Problemático sobre a carteira total.
+        regime_normativo: Regime contábil de apuração ('Res. 2.682' ou 'Res. 4.966').
+        marco_quebra: Indicador booleano de transição da norma (True para jan/25).
+        destaque_rotulo: Rótulo textual destacado nos marcos principais do gráfico.
+    """
+
+    model_config = ConfigDict(strict=True)
+
+    mes_ano: str = Field(..., description="Competência no formato mês/ano")
+    data_competencia: date = Field(..., description="Data contábil mensal")
+    taxa_ap_sncc: Decimal = Field(
+        ...,
+        max_digits=5,
+        decimal_places=2,
+        ge=Decimal("0.00"),
+        le=Decimal("100.00"),
+        description="Taxa de AP em percentual (ex: 4.07 para 4,07%)",
+    )
+    regime_normativo: str = Field(..., description="Norma regulatória de referência")
+    marco_quebra: bool = Field(
+        default=False,
+        description="Indica se é o ponto de corte da mudança regulatória em Jan/2025",
+    )
+    destaque_rotulo: str | None = Field(
+        default=None,
+        description="Texto do valor destacado nas datas-chave (ex.: '4,07%')",
+    )
+
+
+class CustoProvisaoBenchmarkSchema(BaseModel):
+    """Métrica de Custo de Provisão acumulado em 12 meses (Cost of Risk - CoR).
+
+    Attributes:
+        periodo_referencia: Descrição do período de referência (ex: '12 meses até dez/24').
+        custo_provisao_pct: Percentual anualizado do custo de provisão em 12 meses.
+        regime_normativo: Classificação do regime normativo do ciclo.
+        descricao: Resumo analítico do comportamento do indicador.
+    """
+
+    model_config = ConfigDict(strict=True)
+
+    periodo_referencia: str = Field(..., description="Identificador do horizonte temporal")
+    custo_provisao_pct: Decimal = Field(
+        ...,
+        max_digits=5,
+        decimal_places=2,
+        ge=Decimal("0.00"),
+        le=Decimal("100.00"),
+        description="Percentual de custo de crédito (ex.: 4.20 para 4,2%)",
+    )
+    regime_normativo: str = Field(..., description="Regime contábil aplicável")
+    descricao: str = Field(..., description="Contexto analítico do indicador")
+
+
+class EstudoQuebra4966SNCCSchema(BaseModel):
+    """Estudo regulatório de impacto e quebra estrutural da Resolução CMN 4.966 no SNCC.
+
+    Attributes:
+        titulo: Título da análise executiva.
+        subtitulo: Subtítulo descritivo com a tese central.
+        serie_mensal_ap: Lista ordenada cronologicamente dos pontos mensais de AP.
+        custos_provisao_periodos: Lista com os 3 períodos de CoR 12M do REF Bacen.
+        frase_sintese: Declaração executiva de conclusão sobre risco de carteira.
+        nota_metodologica: Esclarecimento técnico sobre a descontinuidade em jan/25.
+        fonte: Citação oficial do Banco Central do Brasil.
+    """
+
+    model_config = ConfigDict(strict=True)
+
+    titulo: str = Field(..., description="Título da investigação executiva")
+    subtitulo: str = Field(..., description="Tese da taxa de subida anual prévia")
+    serie_mensal_ap: list[PontoSerieQuebraSNCCSchema] = Field(
+        ..., description="Série temporal mensal de AP"
+    )
+    custos_provisao_periodos: list[CustoProvisaoBenchmarkSchema] = Field(
+        ..., description="Cards de benchmark de custo de provisão em 12 meses"
+    )
+    frase_sintese: str = Field(..., description="Conclusão executiva de síntese")
+    nota_metodologica: str = Field(..., description="Detalhes sobre a quebra de série em jan/25")
+    fonte: str = Field(..., description="Fonte primária oficial dos dados")

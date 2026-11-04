@@ -13,23 +13,29 @@ from src.schemas.dimensions import (
     TipoPessoaEnum,
 )
 from src.schemas.facts import (
+    CustoProvisaoBenchmarkSchema,
+    EstudoQuebra4966SNCCSchema,
     FatoCarteiraMensalSchema,
     FatoDREGerencialSchema,
     FatoIFDataSNCCSchema,
     FatoREFMacroBCBSchema,
+    PontoSerieQuebraSNCCSchema,
     SegmentoIFDataEnum,
     SegmentoREFEnum,
 )
 
 __all__ = [
+    "CustoProvisaoBenchmarkSchema",
     "DimAssociadoSchema",
     "DimCalendarioSchema",
     "DimLinhaCreditoSchema",
+    "EstudoQuebra4966SNCCSchema",
     "FatoCarteiraMensalSchema",
     "FatoDREGerencialSchema",
     "FatoIFDataSNCCSchema",
     "FatoREFMacroBCBSchema",
     "GrupoModalidadeBacenEnum",
+    "PontoSerieQuebraSNCCSchema",
     "SegmentoCooperadoEnum",
     "SegmentoIFDataEnum",
     "SegmentoREFEnum",

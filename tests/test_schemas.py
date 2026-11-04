@@ -20,10 +20,13 @@ from src.schemas.dimensions import (
     TipoPessoaEnum,
 )
 from src.schemas.facts import (
+    CustoProvisaoBenchmarkSchema,
+    EstudoQuebra4966SNCCSchema,
     FatoCarteiraMensalSchema,
     FatoDREGerencialSchema,
     FatoIFDataSNCCSchema,
     FatoREFMacroBCBSchema,
+    PontoSerieQuebraSNCCSchema,
     SegmentoIFDataEnum,
     SegmentoREFEnum,
 )
@@ -152,3 +155,71 @@ def test_fato_ref_macro_bcb_valida() -> None:
     )
     assert ref.segmento == SegmentoREFEnum.SNCC
     assert ref.indice_cobertura_perda_esperada == Decimal("1.0350")
+
+
+def test_ponto_serie_quebra_sncc_schema_valido() -> None:
+    """Valida a criação de ponto mensal da série de quebra do SNCC com dados válidos.
+
+    Returns:
+        None.
+    """
+    ponto = PontoSerieQuebraSNCCSchema(
+        mes_ano="dez/22",
+        data_competencia=date(2022, 12, 31),
+        taxa_ap_sncc=Decimal("4.07"),
+        regime_normativo="Res. 2.682",
+        marco_quebra=False,
+        destaque_rotulo="4,07%",
+    )
+    assert ponto.mes_ano == "dez/22"
+    assert ponto.taxa_ap_sncc == Decimal("4.07")
+    assert ponto.destaque_rotulo == "4,07%"
+
+
+def test_custo_provisao_benchmark_schema_valido() -> None:
+    """Valida o schema de custo de provisão de benchmark do REF.
+
+    Returns:
+        None.
+    """
+    custo = CustoProvisaoBenchmarkSchema(
+        periodo_referencia="12 meses até dez/24",
+        custo_provisao_pct=Decimal("4.20"),
+        regime_normativo="Res. 2.682",
+        descricao="Custo sob a regra de perda incorrida",
+    )
+    assert custo.custo_provisao_pct == Decimal("4.20")
+    assert custo.regime_normativo == "Res. 2.682"
+
+
+def test_estudo_quebra_4966_sncc_schema_valido() -> None:
+    """Valida o schema do estudo consolidado de quebra regulatória da 4.966.
+
+    Returns:
+        None.
+    """
+    ponto = PontoSerieQuebraSNCCSchema(
+        mes_ano="jan/25",
+        data_competencia=date(2025, 1, 31),
+        taxa_ap_sncc=Decimal("5.92"),
+        regime_normativo="Res. 4.966",
+        marco_quebra=True,
+        destaque_rotulo="5,92%",
+    )
+    custo = CustoProvisaoBenchmarkSchema(
+        periodo_referencia="12 meses até dez/25",
+        custo_provisao_pct=Decimal("3.50"),
+        regime_normativo="Transição 4.966",
+        descricao="1º ano sob a regra de perda esperada",
+    )
+    estudo = EstudoQuebra4966SNCCSchema(
+        titulo="A 4.966 é a culpada?",
+        subtitulo="O AP do SNCC já subia cerca de 1 p.p. ao ano antes da regra.",
+        serie_mensal_ap=[ponto],
+        custos_provisao_periodos=[custo],
+        frase_sintese="A regra mudou. O risco de crédito continua sendo o risco da carteira.",
+        nota_metodologica="A variação de jan/25 mistura a quebra e o movimento do mês.",
+        fonte="Banco Central do Brasil, REF out/2026, Anexo Estatístico (gráficos 1.2.2.17 e 1.2.3.5).",
+    )
+    assert len(estudo.serie_mensal_ap) == 1
+    assert estudo.custos_provisao_periodos[0].custo_provisao_pct == Decimal("3.50")
