@@ -42,6 +42,12 @@ radar_4966/
 ├── README.md
 ├── spec.md
 ├── agents.md
+├── dashboard/                # Aplicação Web Nativa (HTML5 / CSS3 / Vanilla JS)
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── data/
+│       └── dashboard_data.json
 ├── src/
 │   ├── __init__.py
 │   ├── schemas/              # Modelos formais Pydantic V2 de todas as tabelas
@@ -56,16 +62,10 @@ radar_4966/
 │   ├── staging/              # Regras de enquadramento da Res. 4.966 (Estágios e AP)
 │   │   ├── __init__.py
 │   │   └── classifier_4966.py
-│   ├── analytics/            # Fórmulas de CoR, Vintages, conciliação e exportação
-│   │   ├── __init__.py
-│   │   ├── metrics.py
-│   │   └── data_exporter.py
-│   └── dashboard/            # Aplicação Web Nativa (HTML5 / CSS3 / Vanilla JS)
-│       ├── index.html
-│       ├── styles.css
-│       ├── app.js
-│       └── data/
-│           └── dashboard_data.json
+│   └── analytics/            # Fórmulas de CoR, Vintages, conciliação e exportação
+│       ├── __init__.py
+│       ├── metrics.py
+│       └── data_exporter.py
 └── tests/
     ├── conftest.py
     ├── test_schemas.py
@@ -102,7 +102,7 @@ radar_4966/
 * **Stack Principal:** DuckDB, Python 3.12+, SQL Analítico.
 * **Responsabilidades:**
   * Implementar em `src/analytics/metrics.py` as queries SQL analíticas de: Carteira Ativa, Saldo de AP, Taxa de Provisão, Gap de Cobertura, Over90 no AP e CoR 12M em janela móvel.
-  * Implementar em `src/analytics/data_exporter.py` a exportação estruturada para `src/dashboard/data/dashboard_data.json`.
+  * Implementar em `src/analytics/data_exporter.py` a exportação estruturada para `dashboard/data/dashboard_data.json`.
   * Garantir conciliação auditada de centavos entre as tabelas fato analíticas e o balancete.
 * **Critério de Sucesso:** `uv run pytest tests/test_analytics.py tests/test_reconciliation.py` aprova todas as contas sem divergência.
 
@@ -125,8 +125,8 @@ Nenhum agente deve iniciar sua etapa sem que o artefato da etapa anterior tenha 
 | :--- | :--- | :--- | :--- |
 | **Etapa 1** | `@data-engineer` | `src/schemas/`, `src/ingestion/` e dados sintéticos validados | `uv run pytest tests/test_schemas.py tests/test_ingestion.py` |
 | **Etapa 2** | `@credit-risk-quant` | `src/staging/classifier_4966.py` | `uv run pytest tests/test_classifier_4966.py` |
-| **Etapa 3** | `@bi-architect` | `src/analytics/` e `src/dashboard/data/dashboard_data.json` | `uv run pytest tests/test_analytics.py tests/test_reconciliation.py` |
-| **Etapa 4** | `@frontend-engineer` | `src/dashboard/index.html`, `styles.css`, `app.js` | Verificação do carregamento de dados e ausência de erros de console |
+| **Etapa 3** | `@bi-architect` | `src/analytics/` e `dashboard/data/dashboard_data.json` | `uv run pytest tests/test_analytics.py tests/test_reconciliation.py` |
+| **Etapa 4** | `@frontend-engineer` | `dashboard/index.html`, `styles.css`, `app.js` | Verificação do carregamento de dados e ausência de erros de console |
 
 ---
 
@@ -139,7 +139,7 @@ Nenhum agente deve iniciar sua etapa sem que o artefato da etapa anterior tenha 
 > "Atue como `@credit-risk-quant`. Implemente o motor de enquadramento em `src/staging/classifier_4966.py`. Siga rigorosamente as regras da Resolução CMN 4.966 para Estágios 1, 2 (incluindo critérios SICR matemáticos) e 3 (Ativo Problemático). Implemente a perda esperada (ECL) e as curvas de safra (MOB). Crie a suíte de testes em `tests/test_classifier_4966.py` com `pytest` testando todos os casos de borda."
 
 ### Para o `@bi-architect`:
-> "Atue como `@bi-architect`. Crie em `src/analytics/metrics.py` as rotinas analíticas em DuckDB/SQL que calculam: Carteira Ativa, Saldo de AP, Taxa de Provisão, Gap de Cobertura, % Over90 no AP, CoR 12M e Índice de Cobertura ECL. Implemente em `src/analytics/data_exporter.py` a exportação para `src/dashboard/data/dashboard_data.json`. Crie `tests/test_analytics.py` e `tests/test_reconciliation.py` para certificar a conciliação contábil."
+> "Atue como `@bi-architect`. Crie em `src/analytics/metrics.py` as rotinas analíticas em DuckDB/SQL que calculam: Carteira Ativa, Saldo de AP, Taxa de Provisão, Gap de Cobertura, % Over90 no AP, CoR 12M e Índice de Cobertura ECL. Implemente em `src/analytics/data_exporter.py` a exportação para `dashboard/data/dashboard_data.json`. Crie `tests/test_analytics.py` e `tests/test_reconciliation.py` para certificar a conciliação contábil."
 
 ### Para o `@frontend-engineer`:
-> "Atue como `@frontend-engineer`. Construa o painel executivo em `src/dashboard/` utilizando estritamente HTML5 semântico, CSS3 puro (com variáveis CSS e layout responsivo escuro) e JavaScript Vanilla moderno com Chart.js. Não utilize React, Tailwind ou qualquer outro framework pesado. O painel deve consumir `data/dashboard_data.json` e apresentar as 3 telas estratégicas, incluindo o marcador dinâmico de cruzamento de linhas e o simulador interativo What-If de sensibilidade de capital."
+> "Atue como `@frontend-engineer`. Construa o painel executivo em `dashboard/` utilizando estritamente HTML5 semântico, CSS3 puro (com variáveis CSS e layout responsivo escuro) e JavaScript Vanilla moderno com Chart.js. Não utilize React, Tailwind ou qualquer outro framework pesado. O painel deve consumir `data/dashboard_data.json` e apresentar as 3 telas estratégicas, incluindo o marcador dinâmico de cruzamento de linhas e o simulador interativo What-If de sensibilidade de capital."
