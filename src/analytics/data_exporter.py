@@ -39,7 +39,7 @@ def converter_serializavel(obj: Any) -> Any:
 
 
 def exportar_dashboard_data(
-    caminho_saida: Path | str = "src/dashboard/data/dashboard_data.json",
+    caminho_saida: Path | str = "dashboard/data/dashboard_data.json",
     seed: int = 42,
 ) -> dict[str, Any]:
     """Compila e grava o arquivo JSON consumido diretamente pelo dashboard nativo.

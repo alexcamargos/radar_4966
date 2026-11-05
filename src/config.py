@@ -32,7 +32,7 @@ REFERENCES_DIR: Path = PROJECT_ROOT / "references"
 DOCS_DIR: Path = PROJECT_ROOT / "docs"
 
 # Diretório do dashboard nativo web
-DASHBOARD_DIR: Path = PROJECT_ROOT / "src" / "dashboard"
+DASHBOARD_DIR: Path = PROJECT_ROOT / "dashboard"
 DASHBOARD_DATA_DIR: Path = DASHBOARD_DIR / "data"
 DASHBOARD_DATA_PATH: Path = DASHBOARD_DATA_DIR / "dashboard_data.json"
 
