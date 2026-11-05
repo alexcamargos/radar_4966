@@ -1,0 +1,60 @@
+name: Deploy Dashboard to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar Astral uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Configurar Python
+        run: uv python install 3.12
+
+      - name: Instalar dependências
+        run: uv sync --frozen
+
+      - name: Executar testes automatizados
+        run: uv run pytest
+
+      - name: Atualizar dados do dashboard
+        run: uv run python -c "from src.analytics.data_exporter import exportar_dashboard_data; exportar_dashboard_data()"
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Fazer upload do artefato do dashboard
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "src/dashboard"
+
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
