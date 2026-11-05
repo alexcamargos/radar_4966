@@ -388,7 +388,7 @@ Todas as métricas descritas a seguir devem ser calculadas no motor DuckDB e exp
 
 ## 6. Layout e Storytelling do Painel C-Level (HTML5 / CSS3 / Vanilla JS)
 
-O painel deve ser entregue como uma aplicação web nativa leve contida no diretório `src/dashboard/`:
+O painel deve ser entregue como uma aplicação web nativa leve contida no diretório `dashboard/`:
 * `index.html`: Estrutura semântica das 3 visões executivas.
 * `styles.css`: Estilização corporativa sóbria (paleta escura bancária, design tokens, tipografia nativa Inter/Segoe UI, layouts CSS Grid e Flexbox responsivos).
 * `app.js`: Script Vanilla moderno para carregamento assíncrono do arquivo compilado `data/dashboard_data.json`, manipulação dinâmica dos cards e renderização de gráficos via Chart.js.

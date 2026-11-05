@@ -11,7 +11,7 @@ O projeto adota uma arquitetura de alta performance, 100% em código aberto e li
 * **Engine Analítico & Pipeline:** Python 3.12+ gerenciado pelo Astral `uv`, **DuckDB** para agregação analítica em SQL canônico e precisão monetária fixa (`Decimal(18, 2)`).
 * **Contratos de Dados:** Modelos formais estritos em **Pydantic V2** em `src/schemas/`.
 * **Benchmarking Oficial Bacen:** Clientes para séries históricas do **IF.data** (SNCC e SFN) e **Relatório de Estabilidade Financeira (REF)** em `src/ingestion/`.
-* **Painel Executivo C-Level:** Aplicação web estática em HTML5 semântico, CSS3 corporativo puro (Dark Theme) e JavaScript Vanilla moderno (ESModules e Chart.js) em `src/dashboard/`.
+* **Painel Executivo C-Level:** Aplicação web estática em HTML5 semântico, CSS3 corporativo puro (Dark Theme) e JavaScript Vanilla moderno (ESModules e Chart.js) em `dashboard/`.
 
 ---
 
@@ -22,17 +22,17 @@ radar_4966/
 ├── pyproject.toml               # Dependências uv, pytest, ruff e mypy
 ├── spec.md                      # Especificação técnica e negocial (PRD)
 ├── agents.md                    # Diretrizes de IA, personas e eval gates
+├── dashboard/                   # Interface Web executiva (HTML5 / CSS3 / Vanilla JS)
+│   ├── index.html
+│   ├── styles.css
+│   ├── app.js
+│   └── data/
+│       └── dashboard_data.json
 ├── src/
 │   ├── schemas/                 # Contratos Pydantic V2 (dimensões e fatos)
 │   ├── ingestion/               # Conectores Bacen e gerador sintético determinístico
 │   ├── staging/                 # Motor de enquadramento 4.966 (Estágios 1, 2 e 3 e AP)
-│   ├── analytics/               # DuckDB, CoR 12M, Vintages e exportador do dashboard
-│   └── dashboard/               # Interface Web executiva (HTML5 / CSS3 / Vanilla JS)
-│       ├── index.html
-│       ├── styles.css
-│       ├── app.js
-│       └── data/
-│           └── dashboard_data.json
+│   └── analytics/               # DuckDB, CoR 12M, Vintages e exportador do dashboard
 └── tests/                       # Suíte completa de testes automatizados com pytest
 ```
 
@@ -58,7 +58,7 @@ uv run python -m src.analytics.data_exporter
 ### Visualização do Dashboard C-Level
 Inicie um servidor web local leve e abra no navegador:
 ```bash
-uv run python -m http.server 8000 --directory src/dashboard
+uv run python -m http.server 8000 --directory dashboard
 ```
 Acesse: [http://localhost:8000](http://localhost:8000)
 
