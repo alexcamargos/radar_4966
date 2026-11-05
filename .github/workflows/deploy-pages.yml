@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "src/**"
+      - "dashboard/**"
       - "pyproject.toml"
       - "uv.lock"
       - ".github/workflows/deploy-pages.yml"
@@ -53,7 +54,7 @@ jobs:
       - name: Fazer upload do artefato do dashboard
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "src/dashboard"
+          path: "dashboard"
 
       - name: Publicar no GitHub Pages
         id: deployment

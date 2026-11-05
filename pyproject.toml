@@ -61,7 +61,6 @@ convention = "google"
 [tool.ruff.lint.isort]
 known-first-party = [
     "analytics",
-    "dashboard",
     "ingestion",
     "schemas",
     "src",
@@ -87,7 +86,6 @@ ignore_missing_imports = true
 
 [tool.coverage.run]
 source = ["src"]
-omit = ["src/dashboard/*"]
 
 [tool.coverage.report]
 show_missing = true
